@@ -1,0 +1,28 @@
+{
+  "September": {
+    "New Teams": 100,
+    "Ops Leader updates": 1,
+    "DL Promotions": 16,
+    "DL Alignment updates": 166,
+    "Rejected": 11,
+    "Dissolves": 67,
+    "Site changes": 31,
+    "Late Requests": 9,
+    "Total MIP forms": 108,
+    "Total Line Items": 403,
+    "Avg Line Items per MIP form": 3.7314
+  },
+  "October": {
+    "New Teams": 66,
+    "Ops Leader updates": 0,
+    "DL Promotions": 18,
+    "DL Alignment updates": 169,
+    "Rejected": 8,
+    "Dissolves": 68,
+    "Site changes": 22,
+    "Late Requests": 4,
+    "Total MIP forms": 87,
+    "Total Line Items": 354,
+    "Avg Line Items per MIP form": 4.0689
+  }
+}
