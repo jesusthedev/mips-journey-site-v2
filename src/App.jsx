@@ -60,7 +60,7 @@ export default function App(){
     <div className={'vhs'}>
       {/*<Ambient />*/}
 
-      <GlitchLayer active={glitch} />
+      {/*<GlitchLayer active={glitch} />*/}
 
       {/* HERO */}
       <section className='section'>
