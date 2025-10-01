@@ -7,7 +7,11 @@ import Ambient from './components/Ambient.jsx'
 import Leaderboard from './components/Leaderboard.jsx'
 import Portrait from './components/Portrait.jsx'
 import { portraits } from './components/portraits.js'
-const getPortrait = id => portraits.find(p => p.id === id);
+const P = ({ id, ...pos }) => {
+  const p = portraits.find(x => x.id === id)
+  if (!p) return null
+  return <Portrait {...p} {...pos} />
+}
 import { burst } from './components/Confetti.js'
 import data from './data/mips.json'
 import { useScrollProgress } from './hooks/useScrollProgress.js'
@@ -175,7 +179,6 @@ export default function App(){
           </div>
         </div>
         <Portrait {...portraits('jerome')} x={window.innerWidth-160} y={-10} delay={0.2} />
-        <Portrait {...portraits('thai')} x={window.innerWidth-220} y={80} delay={0.35} />
       </section>
     </div>
   )
