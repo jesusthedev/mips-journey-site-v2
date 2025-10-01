@@ -58,7 +58,8 @@ export default function App(){
 
   return (
     <div className={'vhs'}>
-      <Ambient />
+      {/*<Ambient />*/}
+
       <GlitchLayer active={glitch} />
 
       {/* HERO */}
