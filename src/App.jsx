@@ -1,6 +1,6 @@
 import React, { useMemo, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import Bars from './components/Bars.jsx'
+//import Bars from './components/Bars.jsx'
 import Counter from './components/Counter.jsx'
 import GlitchLayer from './components/GlitchLayer.jsx'
 //import Ambient from './components/Ambient.jsx'
@@ -89,7 +89,7 @@ export default function App(){
             <h2 className='h2'>September Recap</h2>
             <div className='grid'>
               <div className='col-12'>
-                <Bars data={sepCounts.list.map(d=>({metric:d.metric, September:d.value, October:0}))} keys={['September']} />
+               {/*<Bars data={sepCounts.list.map(d=>({metric:d.metric, September:d.value, October:0}))} keys={['September']} />*/}
               </div>
               <div className='col-6'>
                 <div className='badge'>Total MIP forms</div>
@@ -112,7 +112,7 @@ export default function App(){
             <h2 className='h2'>October Recap</h2>
             <div className='grid'>
               <div className='col-12'>
-                <Bars data={octCounts.list.map(d=>({metric:d.metric, October:d.value, September:0}))} keys={['October']} />
+                {/*<Bars data={octCounts.list.map(d=>({metric:d.metric, October:d.value, September:0}))} keys={['October']} />*/}
               </div>
               <div className='col-6'>
                 <div className='badge'>Total MIP forms</div>
@@ -136,7 +136,8 @@ export default function App(){
             <p className='p'>Green is up where you want it. Red is a learning opportunity we pretend we asked for.</p>
             <div className='grid'>
               <div className='col-12'>
-                <Bars data={comparison.map(d=>({metric:d.metric, September:d.September, October:d.October}))} keys={['September','October']} />
+                {/*<Bars data={comparison.map(d=>({metric:d.metric, September:d.September, October:d.October}))} keys={['September','October']} />*/}
+
               </div>
               <div className='col-12'>
                 <ul>
