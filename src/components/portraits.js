@@ -1,3 +1,5 @@
+const base = import.meta.env.BASE_URL; // "/mips-journey-site-v2/" on Pages, "/" locally
+
 export const portraits = [
   { id:'abhishek', src:'/portraits/abhishek_portrait.png', alt:'Portrait Abhishek' },
   { id:'jesus',    src:'/portraits/jesus_portrait.png',    alt:'Portrait Jesus' },
