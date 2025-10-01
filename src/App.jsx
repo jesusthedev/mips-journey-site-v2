@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState } from 'react'
-import { motion } from './shims/motion'
+import { motion } from 'framer-motion'
 import Bars from './components/Bars.jsx'
 import Counter from './components/Counter.jsx'
 import GlitchLayer from './components/GlitchLayer.jsx'
