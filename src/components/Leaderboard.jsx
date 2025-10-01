@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence } from './shims/motion'
 import data from '../data/mips.json'
 export default function Leaderboard(){
   const rank = useMemo(()=>{

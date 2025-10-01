@@ -1,5 +1,5 @@
 import React from 'react'
-import { motion } from 'framer-motion'
+import { motion } from './shims/motion'
 export default function Portrait({src, alt='cameo', x=0, y=0, delay=0, mode='peeker'}){
   const size = 96
   const style = { position:'absolute', top:y, left:x, width:size, height:size }
