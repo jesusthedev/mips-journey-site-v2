@@ -2,7 +2,7 @@ import React, { useMemo, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 //import Bars from './components/Bars.jsx'
 import Counter from './components/Counter.jsx'
-import GlitchLayer from './components/GlitchLayer.jsx'
+{/*import GlitchLayer from './components/GlitchLayer.jsx'*/}
 //import Ambient from './components/Ambient.jsx'
 import Leaderboard from './components/Leaderboard.jsx'
 import Portrait from './components/Portrait.jsx'
@@ -12,7 +12,7 @@ const P = ({ id, ...pos }) => {
   if (!p) return null
   return <Portrait {...p} {...pos} />
 }
-import { burst } from './components/Confetti.js'
+//import { burst } from './components/Confetti.js'
 import data from './data/mips.json'
 import { useScrollProgress } from './hooks/useScrollProgress.js'
 
@@ -51,7 +51,7 @@ export default function App(){
     if(bigDelta(name, delta)){
       triggerGlitch()
       if(ref?.current){
-        burst(ref.current, { reverse: delta<0, count: 24 })
+        //burst(ref.current, { reverse: delta<0, count: 24 })
       }
     }
   }
