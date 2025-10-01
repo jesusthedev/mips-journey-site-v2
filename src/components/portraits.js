@@ -6,4 +6,4 @@ export const portraits = [
   { id:'niki',     src:'/portraits/niki_portrait.png',     alt:'Portrait Niki' },
   { id:'luis',     src:'/portraits/luis_portrait.png',     alt:'Portrait Luis' },
   { id:'jerome',   src:'/portraits/jerome_portrait.png',   alt:'Portrait Jerome' },
-]
+];

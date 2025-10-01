@@ -76,8 +76,8 @@ export default function App(){
           </div>
         </div>
         {/* portraits organically sprinkled */}
-        <Portrait {...portraits('abhishek')} x={24} y={24} delay={0.2} />
-        <Portrait {...portraits('jesus')} x={window.innerWidth-140} y={40} delay={0.35} />
+        <P id="abhishek" x={24} y={24} delay={0.2} />
+        <P id="jesus" x={window.innerWidth-140} y={40} delay={0.35} />
       </section>
 
       {/* LEADERBOARD docked during MoM */}
@@ -103,7 +103,7 @@ export default function App(){
             </div>
           </div>
         </div>
-        <Portrait {...portraits('thai')} x={120} y={-10} delay={0.2} />
+        <P id="thai" x={120} y={-10} delay={0.2} />
       </section>
 
       {/* RECAP: OCT */}
@@ -126,7 +126,7 @@ export default function App(){
             </div>
           </div>
         </div>
-        <Portrait {...portraits('saily')} x={260} y={30} delay={0.45} />
+        <P id="saily" x={260} y={30} delay={0.45} />
       </section>
 
       {/* MOM */}
@@ -156,7 +156,7 @@ export default function App(){
             </div>
           </div>
         </div>
-        <Portrait {...portraits('niki')} x={window.innerWidth*0.75} y={-10} delay={0.3} />
+        <P id="niki" x={window.innerWidth*0.75} y={-10} delay={0.3} />
       </section>
 
       {/* OUTLOOK / CORPORATE RETURN */}
@@ -168,7 +168,7 @@ export default function App(){
             <p className='p'><em>Finalizing this communication requires your acceptance of the implied joy contained herein.</em></p>
           </div>
         </div>
-        <Portrait {...portraits('luis')} x={60} y={20} delay={0.25} />
+        <P id="luis" x={60} y={20} delay={0.25} />
       </section>
 
       {/* SIGN-OFF */}
@@ -180,7 +180,7 @@ export default function App(){
             <p className='p'>Performance indicators will be monitored. Synergies will be leveraged. The tape stops now.</p>
           </div>
         </div>
-        <Portrait {...portraits('jerome')} x={window.innerWidth-160} y={-10} delay={0.2} />
+        <P id="jerome" x={window.innerWidth-160} y={-10} delay={0.2} />
       </section>
     </div>
   )
