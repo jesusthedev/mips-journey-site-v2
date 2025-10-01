@@ -7,6 +7,7 @@ import Ambient from './components/Ambient.jsx'
 import Leaderboard from './components/Leaderboard.jsx'
 import Portrait from './components/Portrait.jsx'
 import { portraits } from './components/portraits.js'
+const getPortrait = id => portraits.find(p => p.id === id);
 import { burst } from './components/Confetti.js'
 import data from './data/mips.json'
 import { useScrollProgress } from './hooks/useScrollProgress.js'
@@ -70,8 +71,8 @@ export default function App(){
           </div>
         </div>
         {/* portraits organically sprinkled */}
-        <Portrait {...portraits[0]} x={24} y={24} delay={0.2} />
-        <Portrait {...portraits[1]} x={window.innerWidth-140} y={40} delay={0.35} />
+        <Portrait {...portraits('abhishek')} x={24} y={24} delay={0.2} />
+        <Portrait {...portraits('jesus')} x={window.innerWidth-140} y={40} delay={0.35} />
       </section>
 
       {/* LEADERBOARD docked during MoM */}
@@ -97,7 +98,7 @@ export default function App(){
             </div>
           </div>
         </div>
-        <Portrait {...portraits[2]} x={120} y={-10} delay={0.2} />
+        <Portrait {...portraits('thai')} x={120} y={-10} delay={0.2} />
       </section>
 
       {/* RECAP: OCT */}
@@ -120,7 +121,7 @@ export default function App(){
             </div>
           </div>
         </div>
-        <Portrait {...portraits[3]} x={260} y={30} delay={0.45} />
+        <Portrait {...portraits('saily')} x={260} y={30} delay={0.45} />
       </section>
 
       {/* MOM */}
@@ -149,7 +150,7 @@ export default function App(){
             </div>
           </div>
         </div>
-        <Portrait {...portraits[4]} x={window.innerWidth*0.75} y={-10} delay={0.3} />
+        <Portrait {...portraits('niki')} x={window.innerWidth*0.75} y={-10} delay={0.3} />
       </section>
 
       {/* OUTLOOK / CORPORATE RETURN */}
@@ -161,7 +162,7 @@ export default function App(){
             <p className='p'><em>Finalizing this communication requires your acceptance of the implied joy contained herein.</em></p>
           </div>
         </div>
-        <Portrait {...portraits[5]} x={60} y={20} delay={0.25} />
+        <Portrait {...portraits('luis')} x={60} y={20} delay={0.25} />
       </section>
 
       {/* SIGN-OFF */}
@@ -173,8 +174,8 @@ export default function App(){
             <p className='p'>Performance indicators will be monitored. Synergies will be leveraged. The tape stops now.</p>
           </div>
         </div>
-        <Portrait {...portraits[6]} x={window.innerWidth-160} y={-10} delay={0.2} />
-        <Portrait {...portraits[7]} x={window.innerWidth-220} y={80} delay={0.35} />
+        <Portrait {...portraits('jerome')} x={window.innerWidth-160} y={-10} delay={0.2} />
+        <Portrait {...portraits('thai')} x={window.innerWidth-220} y={80} delay={0.35} />
       </section>
     </div>
   )
