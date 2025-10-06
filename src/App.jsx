@@ -1,9 +1,9 @@
 import React, { useMemo, useRef, useState } from 'react'
-import { motion } from 'framer-motion'
-//import Bars from './components/Bars.jsx'
+import { motion } from 'framer-motion';
+import Bars from './components/Bars.jsx'
 import Counter from './components/Counter.jsx'
-{/*import GlitchLayer from './components/GlitchLayer.jsx'*/}
-//import Ambient from './components/Ambient.jsx'
+import GlitchLayer from './components/GlitchLayer.jsx'
+import Ambient from './components/Ambient.jsx'
 import Leaderboard from './components/Leaderboard.jsx'
 import Portrait from './components/Portrait.jsx'
 import { portraits } from './components/portraits.js'
@@ -12,7 +12,9 @@ const P = ({ id, ...pos }) => {
   if (!p) return null
   return <Portrait {...p} {...pos} />
 }
-//import { burst } from './components/Confetti.js'
+import { burst } from './components/confetti.js';
+// on celebrate moment:
+burst('positive');
 import data from './data/mips.json'
 import { useScrollProgress } from './hooks/useScrollProgress.js'
 
@@ -24,7 +26,13 @@ function splitCounts(obj){
 
 export default function App(){
   const progress = useScrollProgress()
-  const [glitch, setGlitch] = useState(false)
+  useEffect(() => {
+  const p = Math.max(0, Math.min(1, progress)); 
+  document.documentElement.style.setProperty('--fun', String(p));
+}, [progress]);
+  const [glitch, setGlitch] = useState(false);
+// Example: briefly glitch when user clicks "Start the Tape"
+const start = () => { setGlitch(true); setTimeout(()=>setGlitch(false), 800); };
   const sep = data['September']
   const oct = data['October']
   const sepCounts = useMemo(()=>splitCounts(sep),[])
@@ -51,16 +59,16 @@ export default function App(){
     if(bigDelta(name, delta)){
       triggerGlitch()
       if(ref?.current){
-        //burst(ref.current, { reverse: delta<0, count: 24 })
+        burst(ref.current, { reverse: delta<0, count: 24 })
       }
     }
   }
 
   return (
+    <ErrorBoundary>
     <div className={'vhs'}>
-      {/*<Ambient />*/}
-
-      {/*<GlitchLayer active={glitch} />*/}
+      <Ambient />
+      <GlitchLayer active={glitch} bigDelta={bigDelta} />
 
       {/* HERO */}
       <section className='section'>
@@ -70,7 +78,7 @@ export default function App(){
             <h1 className='h1'>September → October</h1>
             <p className='p'>We start buttoned-up. We detour through neon. We end with a handshake and a compliance-friendly smile.</p>
             <div style={{display:'flex', gap:'1rem', marginTop:'1rem'}}>
-              <a className='button' href='#recap'>Start the Tape ▷</a>
+              <a className='button' href='#recap' onClick={start}>Start the Tape ▷</a>
               <span className='caption'>Theme morph: <strong>{Math.round(funRatio*100)}%</strong> fun</span>
             </div>
           </div>
@@ -84,27 +92,44 @@ export default function App(){
       <Leaderboard />
 
       {/* RECAP: SEPT */}
-      <section id='recap' className='section'>
-        <div className='container'>
-          <div className='card'>
-            <h2 className='h2'>September Recap</h2>
-            <div className='grid'>
-              <div className='col-12'>
-               {/*<Bars data={sepCounts.list.map(d=>({metric:d.metric, September:d.value, October:0}))} keys={['September']} />*/}
-              </div>
-              <div className='col-6'>
-                <div className='badge'>Total MIP forms</div>
-                <div style={{fontSize:'3rem', fontWeight:800}}><Counter to={sep['Total MIP forms']} /></div>
-                <p className='p'>Line items: <strong>{sep['Total Line Items']}</strong> • Avg per form: <strong>{sep['Avg Line Items per MIP form'].toFixed(2)}</strong></p>
-              </div>
-              <div className='col-6'>
-                <p className='p'>New Teams: <strong ref={refNew}>{sep['New Teams']}</strong><br/>Rejected: <strong ref={refRejected}>{sep['Rejected']}</strong> • Late Requests: <strong ref={refLate}>{sep['Late Requests']}</strong><br/>Dissolves: <strong>{sep['Dissolves']}</strong></p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <P id="thai" x={120} y={-10} delay={0.2} />
-      </section>
+     <section id='recap' className='section'>
+  <motion.div
+    className='container'
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.6 }}
+  >
+    <div className='card'>
+      <div className='badge'>Recap</div>
+      <h2 className='h2'>September Numbers</h2>
+      <p className='p'>
+        A clean close to the quarter — good completion rate, a few spikes in cycle time,
+        and a quiet sigh of relief echoing through the halls.
+      </p>
+      <Bars
+        data={[
+          { label: 'Completed', value: 12 },
+          { label: 'Pending', value: 3 },
+          { label: 'Blocked', value: 1 },
+        ]}
+      />
+    </div>
+  </motion.div>
+</section>
+
+{/* LEADERBOARD */}
+<section id='leaderboard' className='section'>
+  <motion.div
+    className='container'
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.6, delay: 0.15 }}
+  >
+    <Leaderboard />
+  </motion.div>
+</section>
 
       {/* RECAP: OCT */}
       <section className='section'>
@@ -113,7 +138,7 @@ export default function App(){
             <h2 className='h2'>October Recap</h2>
             <div className='grid'>
               <div className='col-12'>
-                {/*<Bars data={octCounts.list.map(d=>({metric:d.metric, October:d.value, September:0}))} keys={['October']} />*/}
+                <Bars data={octCounts.list.map(d=>({metric:d.metric, October:d.value, September:0}))} keys={['October']} />
               </div>
               <div className='col-6'>
                 <div className='badge'>Total MIP forms</div>
@@ -137,7 +162,7 @@ export default function App(){
             <p className='p'>Green is up where you want it. Red is a learning opportunity we pretend we asked for.</p>
             <div className='grid'>
               <div className='col-12'>
-                {/*<Bars data={comparison.map(d=>({metric:d.metric, September:d.September, October:d.October}))} keys={['September','October']} />*/}
+                <Bars data={comparison.map(d=>({metric:d.metric, September:d.September, October:d.October}))} keys={['September','October']} />
 
               </div>
               <div className='col-12'>
@@ -183,5 +208,7 @@ export default function App(){
         <P id="jerome" x={window.innerWidth-160} y={-10} delay={0.2} />
       </section>
     </div>
-  )
+    </ErrorBoundary>
+  );
 }
+// test change
