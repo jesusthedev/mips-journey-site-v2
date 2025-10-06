@@ -1,4 +1,20 @@
-import React, { useMemo, useRef, useState } from 'react'
+import React, { useMemo, useRef, useState, Suspense } from 'react';
+
+<div className="vhs" ref={ref}>
+  <Suspense fallback={null}>
+    {glitch ? <GlitchLayer active /> : null}
+  </Suspense>
+  {/* rest of your sections */}
+</div>
+
+
+// Lazy-load GlitchLayer so it can't crash first paint
+const GlitchLayer = React.lazy(() => import('./components/GlitchLayer.jsx'));
+
+// Safe window helper
+const isClient = typeof window !== 'undefined';
+const W = isClient ? window : { innerWidth: 0 };
+
 import { motion } from 'framer-motion';
 import Bars from './components/Bars.jsx'
 import Counter from './components/Counter.jsx'
@@ -16,11 +32,24 @@ import { burst } from './components/confetti.js';
 // on celebrate moment:
 burst('positive');
 import data from './data/mips.json'
-import { useScrollProgress } from './hooks/useScrollProgress.js'
+import { useScrollProgress } from './hooks/ueScrollProgress.js'
 
 function splitCounts(obj){
   const rateKey = 'Avg Line Items per MIP form'
   const entries = Object.entries(obj).filter(([k])=>k!==rateKey)
+  const ref = useRef(null);
+
+// call confetti safely
+function safeBurst(reverse = false, count = 24) {
+  try {
+    const el = ref?.current;
+    if (!el) return;
+    setTimeout(() => burst(el, { reverse, count }), 0);
+  } catch {
+    // swallow — confetti is optional fun
+  }
+}
+
   return { list: entries.map(([metric,value])=>({metric, value})), rate: obj[rateKey] }
 }
 
@@ -59,7 +88,7 @@ const start = () => { setGlitch(true); setTimeout(()=>setGlitch(false), 800); };
     if(bigDelta(name, delta)){
       triggerGlitch()
       if(ref?.current){
-        burst(ref.current, { reverse: delta<0, count: 24 })
+        safeBurst(delta < 0, 24);
       }
     }
   }
@@ -85,7 +114,7 @@ const start = () => { setGlitch(true); setTimeout(()=>setGlitch(false), 800); };
         </div>
         {/* portraits organically sprinkled */}
         <P id="abhishek" x={24} y={24} delay={0.2} />
-        <P id="jesus" x={window.innerWidth-140} y={40} delay={0.35} />
+        <P id="jesus" x={W.innerWidth-140} y={40} delay={0.35} />
       </section>
 
       {/* LEADERBOARD docked during MoM */}
@@ -181,7 +210,7 @@ const start = () => { setGlitch(true); setTimeout(()=>setGlitch(false), 800); };
             </div>
           </div>
         </div>
-        <P id="niki" x={window.innerWidth*0.75} y={-10} delay={0.3} />
+        <P id="niki" x={W.innerWidth*0.75} y={-10} delay={0.3} />
       </section>
 
       {/* OUTLOOK / CORPORATE RETURN */}
@@ -205,7 +234,7 @@ const start = () => { setGlitch(true); setTimeout(()=>setGlitch(false), 800); };
             <p className='p'>Performance indicators will be monitored. Synergies will be leveraged. The tape stops now.</p>
           </div>
         </div>
-        <P id="jerome" x={window.innerWidth-160} y={-10} delay={0.2} />
+        <P id="jerome" x={W.innerWidth-160} y={-10} delay={0.2} />
       </section>
     </div>
     </ErrorBoundary>
