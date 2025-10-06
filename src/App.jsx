@@ -1,6 +1,7 @@
 // at top of src/App.jsx
 import { burst } from './components/confetti.js';
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useMemo, useState } from 'react';
+
 
 
 
@@ -18,7 +19,6 @@ function safeBurst(el, opts = {}) {
   }
 }
 
-import React, { useMemo, useRef, useState, Suspense } from 'react';
 
 <div className="vhs" ref={ref}>
   <Suspense fallback={null}>
@@ -49,7 +49,6 @@ const P = ({ id, ...pos }) => {
   return <Portrait {...p} {...pos} />
 }
 import { burst } from './components/confetti.js';
-import React, { useRef } from 'react';
 
 // --- Safety Wrapper: Prevents Confetti from Crashing the App ---
 function safeBurst(el, opts = {}) {
