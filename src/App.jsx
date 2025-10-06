@@ -1,3 +1,23 @@
+// at top of src/App.jsx
+import { burst } from './components/confetti.js';
+import React, { useRef } from 'react';
+
+
+
+function safeBurst(el, opts = {}) {
+  try {
+    if (!el) return;
+    // sanitize options
+    const count = Math.max(8, Math.min(200, Number(opts.count ?? 24)));
+    const reverse = !!opts.reverse;
+    safeBurst(el, { count, reverse });
+  } catch (e) {
+    // don’t crash the app over party sprinkles
+    console.error('[confetti burst failed]', e);
+    window.__SAFE_MODE__ = true; // tell the app to go low-fi if needed
+  }
+}
+
 import React, { useMemo, useRef, useState, Suspense } from 'react';
 
 <div className="vhs" ref={ref}>
@@ -29,8 +49,22 @@ const P = ({ id, ...pos }) => {
   return <Portrait {...p} {...pos} />
 }
 import { burst } from './components/confetti.js';
+import React, { useRef } from 'react';
+
+// --- Safety Wrapper: Prevents Confetti from Crashing the App ---
+function safeBurst(el, opts = {}) {
+  try {
+    if (!el) return; // no element, no burst
+    const count = Math.max(8, Math.min(200, Number(opts.count ?? 24)));
+    const reverse = !!opts.reverse;
+    safeBurst(el, { count, reverse });
+  } catch (e) {
+    console.error('[confetti burst failed]', e);
+    window.__SAFE_MODE__ = true; // switch to safe mode on failure
+  }
+}
+
 // on celebrate moment:
-burst('positive');
 import data from './data/mips.json'
 import { useScrollProgress } from './hooks/ueScrollProgress.js'
 
@@ -44,7 +78,7 @@ function safeBurst(reverse = false, count = 24) {
   try {
     const el = ref?.current;
     if (!el) return;
-    setTimeout(() => burst(el, { reverse, count }), 0);
+    setTimeout(() => safeBurst(el, { reverse, count }), 0);
   } catch {
     // swallow — confetti is optional fun
   }
