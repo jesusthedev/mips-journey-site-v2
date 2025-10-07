@@ -7106,8 +7106,8 @@ function useVisualElement(Component, visualState, props, createVisualElement) {
   });
   return visualElement;
 }
-function isRefObject(ref) {
-  return typeof ref === "object" && Object.prototype.hasOwnProperty.call(ref, "current");
+function isRefObject(ref2) {
+  return typeof ref2 === "object" && Object.prototype.hasOwnProperty.call(ref2, "current");
 }
 function useMotionRef(visualState, visualElement, externalRef) {
   return reactExports.useCallback(
@@ -7717,14 +7717,14 @@ function useSVGProps(props, visualState, _isStatic, Component) {
   return visualProps;
 }
 function createUseRender(forwardMotionProps = false) {
-  const useRender = (Component, props, ref, { latestValues }, isStatic) => {
+  const useRender = (Component, props, ref2, { latestValues }, isStatic) => {
     const useVisualProps = isSVGComponent(Component) ? useSVGProps : useHTMLProps;
     const visualProps = useVisualProps(props, latestValues, isStatic, Component);
     const filteredProps = filterProps(props, typeof Component === "string", forwardMotionProps);
     const elementProps = {
       ...filteredProps,
       ...visualProps,
-      ref
+      ref: ref2
     };
     const { children: children2 } = props;
     const renderedChildren = reactExports.useMemo(() => isMotionValue(children2) ? children2.get() : children2, [children2]);
@@ -7805,11 +7805,11 @@ function resolveVariantFromProps(props, definition, custom, currentValues = {}, 
   return definition;
 }
 function useConstant(init2) {
-  const ref = reactExports.useRef(null);
-  if (ref.current === null) {
-    ref.current = init2();
+  const ref2 = reactExports.useRef(null);
+  if (ref2.current === null) {
+    ref2.current = init2();
   }
-  return ref.current;
+  return ref2.current;
 }
 const isKeyframesTarget = (v) => {
   return Array.isArray(v);
@@ -12604,7 +12604,7 @@ function shouldAnimatePositionOnly(animationType, snapshot, layout2) {
   return animationType === "position" || animationType === "preserve-aspect" && !isNear(aspectRatio(snapshot), aspectRatio(layout2), 0.2);
 }
 const DocumentProjectionNode = createProjectionNode({
-  attachResizeListener: (ref, notify) => addDomEvent(ref, "resize", notify),
+  attachResizeListener: (ref2, notify) => addDomEvent(ref2, "resize", notify),
   measureScroll: () => ({
     x: document.documentElement.scrollLeft || document.body.scrollLeft,
     y: document.documentElement.scrollTop || document.body.scrollTop
@@ -13447,7 +13447,7 @@ class PopChildMeasure extends reactExports.Component {
 }
 function PopChild({ children: children2, isPresent }) {
   const id2 = reactExports.useId();
-  const ref = reactExports.useRef(null);
+  const ref2 = reactExports.useRef(null);
   const size = reactExports.useRef({
     width: 0,
     height: 0,
@@ -13456,9 +13456,9 @@ function PopChild({ children: children2, isPresent }) {
   });
   reactExports.useInsertionEffect(() => {
     const { width, height, top: top2, left: left2 } = size.current;
-    if (isPresent || !ref.current || !width || !height)
+    if (isPresent || !ref2.current || !width || !height)
       return;
-    ref.current.dataset.motionPopId = id2;
+    ref2.current.dataset.motionPopId = id2;
     const style = document.createElement("style");
     document.head.appendChild(style);
     if (style.sheet) {
@@ -13476,7 +13476,7 @@ function PopChild({ children: children2, isPresent }) {
       document.head.removeChild(style);
     };
   }, [isPresent]);
-  return reactExports.createElement(PopChildMeasure, { isPresent, childRef: ref, sizeRef: size }, reactExports.cloneElement(children2, { ref }));
+  return reactExports.createElement(PopChildMeasure, { isPresent, childRef: ref2, sizeRef: size }, reactExports.cloneElement(children2, { ref: ref2 }));
 }
 const PresenceChild = ({ children: children2, initial, isPresent, onExitComplete, custom, presenceAffectsLayout, mode }) => {
   const presenceChildren = useConstant(newChildrenMap);
@@ -16415,8 +16415,8 @@ Transform.prototype = {
   applyY: function(y) {
     return y * this.k + this.y;
   },
-  invert: function(location) {
-    return [(location[0] - this.x) / this.k, (location[1] - this.y) / this.k];
+  invert: function(location2) {
+    return [(location2[0] - this.x) / this.k, (location2[1] - this.y) / this.k];
   },
   invertX: function(x) {
     return (x - this.x) / this.k;
@@ -16436,10 +16436,10 @@ Transform.prototype = {
 };
 Transform.prototype;
 function Bars({ data: data2, keys, height = 340 }) {
-  const ref = reactExports.useRef(null);
+  const ref2 = reactExports.useRef(null);
   reactExports.useEffect(() => {
-    if (!ref.current) return;
-    const el = ref.current;
+    if (!ref2.current) return;
+    const el = ref2.current;
     el.innerHTML = "";
     const width = el.clientWidth;
     const margin = { top: 18, right: 12, bottom: 48, left: 60 };
@@ -16464,7 +16464,7 @@ function Bars({ data: data2, keys, height = 340 }) {
       row.append("text").text(k2).attr("x", 18).attr("y", 10).attr("fill", "#ccd3e0").attr("font-size", 12);
     });
   }, [data2, keys, height]);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref, style: { width: "100%" } });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: ref2, style: { width: "100%" } });
 }
 function Counter({ to = 0, duration = 900, prefix = "", suffix = "" }) {
   const [n, setN] = reactExports.useState(0);
@@ -51808,9 +51808,9 @@ const isOrthographicCamera = (def) => def && def.isOrthographicCamera;
 const isRef = (obj) => obj && obj.hasOwnProperty("current");
 const useIsomorphicLayoutEffect = typeof window !== "undefined" && ((_window$document = window.document) != null && _window$document.createElement || ((_window$navigator = window.navigator) == null ? void 0 : _window$navigator.product) === "ReactNative") ? reactExports.useLayoutEffect : reactExports.useEffect;
 function useMutableCallback(fn) {
-  const ref = reactExports.useRef(fn);
-  useIsomorphicLayoutEffect(() => void (ref.current = fn), [fn]);
-  return ref;
+  const ref2 = reactExports.useRef(fn);
+  useIsomorphicLayoutEffect(() => void (ref2.current = fn), [fn]);
+  return ref2;
 }
 function Block({
   set: set2
@@ -52597,11 +52597,11 @@ const createStore = (invalidate2, advance2) => {
         initialClick: [0, 0],
         initialHits: [],
         capturedMap: /* @__PURE__ */ new Map(),
-        subscribe: (ref, priority, store) => {
+        subscribe: (ref2, priority, store) => {
           const internal = get2().internal;
           internal.priority = internal.priority + (priority > 0 ? 1 : 0);
           internal.subscribers.push({
-            ref,
+            ref: ref2,
             priority,
             store
           });
@@ -52610,7 +52610,7 @@ const createStore = (invalidate2, advance2) => {
             const internal2 = get2().internal;
             if (internal2 != null && internal2.subscribers) {
               internal2.priority = internal2.priority - (priority > 0 ? 1 : 0);
-              internal2.subscribers = internal2.subscribers.filter((s) => s.ref !== ref);
+              internal2.subscribers = internal2.subscribers.filter((s) => s.ref !== ref2);
             }
           };
         }
@@ -53453,9 +53453,9 @@ const CanvasImpl = /* @__PURE__ */ reactExports.forwardRef(function Canvas({
     }
   }, fallback)));
 });
-const Canvas2 = /* @__PURE__ */ reactExports.forwardRef(function CanvasWrapper(props, ref) {
+const Canvas2 = /* @__PURE__ */ reactExports.forwardRef(function CanvasWrapper(props, ref2) {
   return /* @__PURE__ */ reactExports.createElement(FiberProvider, null, /* @__PURE__ */ reactExports.createElement(CanvasImpl, _extends({}, props, {
-    ref
+    ref: ref2
   })));
 });
 function Particles({ speed = 0.2 }) {
@@ -53541,55 +53541,6 @@ const portraits = [
   { id: "luis", src: `${base}portraits/luis_portrait.png`, alt: "Portrait Luis" },
   { id: "jerome", src: `${base}portraits/jerome_portrait.png`, alt: "Portrait Jerome" }
 ];
-function resolveEl(input) {
-  if (!input || typeof document === "undefined") return null;
-  if (typeof input === "object" && "current" in input) input = input.current;
-  if (typeof Event !== "undefined" && input instanceof Event) {
-    input = input.currentTarget || input.target;
-  }
-  if (typeof input === "string") {
-    const node = document.querySelector(input);
-    if (node) return node;
-  }
-  if (input && input.nodeType === 1 && typeof input.getBoundingClientRect === "function") {
-    return input;
-  }
-  return null;
-}
-function burst(target, opts = {}) {
-  try {
-    const el = resolveEl(target) || document.body;
-    const { count = 14, reverse = false } = opts;
-    const rect = el.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    for (let i2 = 0; i2 < count; i2++) {
-      const node = document.createElement("span");
-      node.textContent = "🎉";
-      node.style.position = "fixed";
-      node.style.left = cx + "px";
-      node.style.top = cy + "px";
-      node.style.pointerEvents = "none";
-      node.style.zIndex = "9999";
-      node.style.fontSize = 14 + Math.floor(Math.random() * 10) + "px";
-      const angle = i2 / count * Math.PI * 2;
-      const dist = 60 + Math.random() * 80;
-      const dx = Math.cos(angle) * dist;
-      const dy = (reverse ? -1 : 1) * Math.sin(angle) * dist;
-      const duration = 600 + Math.random() * 500;
-      node.animate(
-        [
-          { transform: "translate(0,0) rotate(0deg)", opacity: 1 },
-          { transform: `translate(${dx}px, ${dy}px) rotate(${360 * (Math.random() > 0.5 ? 1 : -1)}deg)`, opacity: 0 }
-        ],
-        { duration, easing: "cubic-bezier(.2,.8,.2,1)", fill: "forwards" }
-      );
-      setTimeout(() => node.remove(), duration + 80);
-      document.body.appendChild(node);
-    }
-  } catch (_) {
-  }
-}
 function useScrollProgress() {
   const [progress2, setProgress] = reactExports.useState(0);
   reactExports.useEffect(() => {
@@ -53607,6 +53558,16 @@ function useScrollProgress() {
   }, []);
   return progress2;
 }
+const SAFE_MODE = typeof window !== "undefined" && (window.__SAFE_MODE__ === true || new URLSearchParams(location.search).has("safe"));
+function safeTry(fn, tag) {
+  try {
+    return fn();
+  } catch (e) {
+    console.error(`[render fail] ${tag}`, e);
+    window.__SAFE_MODE__ = true;
+    return null;
+  }
+}
 const P = ({ id: id2, ...pos }) => {
   const p = portraits.find((x) => x.id === id2);
   if (!p) return null;
@@ -53617,7 +53578,7 @@ function safeBurst(el, opts = {}) {
     if (!el) return;
     const count = Math.max(8, Math.min(200, Number(opts.count ?? 24)));
     const reverse = !!opts.reverse;
-    burst(el, { count, reverse });
+    if (!SAFE_MODE) safeTry(() => safeBurst(ref?.current, { count: 28, reverse: false }), "confetti");
   } catch (e) {
     console.error("confetti burst failed", e);
     window.__SAFE_MODE__ = true;
@@ -53663,17 +53624,17 @@ function App() {
   const refRejected = reactExports.useRef(null);
   const refLate = reactExports.useRef(null);
   const refNew = reactExports.useRef(null);
-  const onSectionVisible = (name, delta, ref) => {
+  const onSectionVisible = (name, delta, ref2) => {
     if (bigDelta(name, delta)) {
       triggerGlitch();
-      if (ref?.current) {
-        safeBurst(delta < 0, 24);
+      if (ref2?.current) {
+        if (!SAFE_MODE) safeTry(() => safeBurst(ref2?.current, { count: 28, reverse: false }), "confetti");
       }
     }
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsx(ErrorBoundary, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "vhs", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(Ambient, {}),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(GlitchLayer, { active: glitch, bigDelta }),
+    !SAFE_MODE && safeTry(() => /* @__PURE__ */ jsxRuntimeExports.jsx(Ambient, {}), "Ambient"),
+    !SAFE_MODE && safeTry(() => /* @__PURE__ */ jsxRuntimeExports.jsx(GlitchLayer, { active: glitch }), "GlitchLayer"),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "section", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "container", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "card", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "badge", children: "MIPs Journey" }),
@@ -53694,7 +53655,7 @@ function App() {
       /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "abhishek", x: 24, y: 24, delay: 0.2 }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "jesus", x: W.innerWidth - 140, y: 40, delay: 0.35 })
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(Leaderboard, {}),
+    safeTry(() => /* @__PURE__ */ jsxRuntimeExports.jsx(Leaderboard, {}), "Leaderboard"),
     /* @__PURE__ */ jsxRuntimeExports.jsx("section", { id: "recap", className: "section", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       motion.div,
       {
@@ -53839,4 +53800,4 @@ let ErrorBoundary$1 = class ErrorBoundary3 extends React.Component {
   }
 };
 ReactDOM.createRoot(document.getElementById("root")).render(/* @__PURE__ */ jsxRuntimeExports.jsx(React.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(ErrorBoundary$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(App, {}) }) }));
-//# sourceMappingURL=index-BjFYZB9x.js.map
+//# sourceMappingURL=index-B7BaqBvj.js.map

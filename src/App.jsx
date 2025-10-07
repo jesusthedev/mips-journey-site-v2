@@ -14,6 +14,15 @@ import { burst } from './components/confetti.js';
 import data from './data/mips.json';
 import { useScrollProgress } from './hooks/useScrollProgress.js'; // fix typo
 
+// --- SAFETY FLAG ------------------------------------------------------------
+const SAFE_MODE =
+  typeof window !== 'undefined' &&
+  (window.__SAFE_MODE__ === true || new URLSearchParams(location.search).has('safe'));
+
+function safeTry(fn, tag) {
+  try { return fn(); } catch (e) { console.error(`[render fail] ${tag}`, e); window.__SAFE_MODE__ = true; return null; }
+}
+
 // helper to render a portrait by id
 const P = ({ id, ...pos }) => {
   const p = portraits.find(x => x.id === id);
@@ -27,7 +36,9 @@ function safeBurst(el, opts = {}) {
     if (!el) return;
     const count = Math.max(8, Math.min(200, Number(opts.count ?? 24)));
     const reverse = !!opts.reverse;
-    burst(el, { count, reverse });
+    // example call inside a click/effect/etc.
+if (!SAFE_MODE) safeTry(() => safeBurst(ref?.current, { count: 28, reverse: false }), 'confetti');
+
   } catch (e) {
     console.error('confetti burst failed', e);
     window.__SAFE_MODE__ = true;
@@ -82,7 +93,9 @@ const start = () => { setGlitch(true); setTimeout(()=>setGlitch(false), 800); };
     if(bigDelta(name, delta)){
       triggerGlitch()
       if(ref?.current){
-        safeBurst(delta < 0, 24);
+    // example call inside a click/effect/etc.
+if (!SAFE_MODE) safeTry(() => safeBurst(ref?.current, { count: 28, reverse: false }), 'confetti');
+
       }
     }
   }
@@ -90,8 +103,10 @@ const start = () => { setGlitch(true); setTimeout(()=>setGlitch(false), 800); };
   return (
     <ErrorBoundary>
     <div className={'vhs'}>
-      <Ambient />
-      <GlitchLayer active={glitch} bigDelta={bigDelta} />
+   {!SAFE_MODE && safeTry(() => <Ambient />, 'Ambient')}
+     {/* Glitch layer (disabled in safe mode) */}
+{!SAFE_MODE && safeTry(() => <GlitchLayer active={glitch} />, 'GlitchLayer')}
+
 
       {/* HERO */}
       <section className='section'>
@@ -112,7 +127,7 @@ const start = () => { setGlitch(true); setTimeout(()=>setGlitch(false), 800); };
       </section>
 
       {/* LEADERBOARD docked during MoM */}
-      <Leaderboard />
+     {safeTry(() => <Leaderboard />, 'Leaderboard')}
 
       {/* RECAP: SEPT */}
      <section id='recap' className='section'>
