@@ -1,15 +1,15 @@
-import React, { useEffect, useRef } from 'react'
-import * as d3 from 'd3'
-// Bars.jsx
+// src/components/Bars.jsx
 import React from 'react';
+
 export default function Bars({ data = [], progress = 0 }) {
-    const items = Array.isArray(data) ? data : [];
+  const items = Array.isArray(data) ? data : [];
+
   return (
-    <ul className="bars">
+    <div className="bars">
       {items.map((d, i) => {
         const label = String(d?.metric ?? d?.name ?? `Item ${i + 1}`);
-        const value = Number(d?.value ?? d?.count ?? 0);
-        const trend = Number(d?.trend ?? 0);   // -1, 0, +1 if you computed it
+        const value = Number(d?.value ?? d?.count ?? 0);     // 0–100 expected
+        const trend = Number(d?.trend ?? 0);                 // -1 | 0 | +1
 
         const color =
           trend > 0 ? 'var(--bar-up)' :
@@ -17,7 +17,7 @@ export default function Bars({ data = [], progress = 0 }) {
                       'var(--bar-flat)';
 
         return (
-          <li key={`${label}-${i}`} className="bar-row">
+          <div className="bar-row" key={`${label}-${i}`}>
             <span className="bar-label">{label}</span>
             <div className="bar-track">
               <div
@@ -28,9 +28,9 @@ export default function Bars({ data = [], progress = 0 }) {
                 }}
               />
             </div>
-          </li>
+          </div>
         );
       })}
-    </ul>
+    </div>
   );
 }
