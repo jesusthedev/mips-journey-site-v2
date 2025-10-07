@@ -126,6 +126,7 @@ export default function App() {
       <section className="section">
         <div className="container">
           <Bars progress={progress} />
+          + <Bars data={octCounts.list || []} progress={progress} />
           <div style={{ marginTop: '1rem' }}>
             <Counter value={funRatio} label="Fun Morph" />
           </div>

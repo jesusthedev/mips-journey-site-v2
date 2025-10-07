@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import * as d3 from 'd3'
-export default function Bars({data, keys, height=340}){
-  const ref = useRef(null)
+export default function Bars({ data = [], progress = 0 }) {
+  const items = Array.isArray(data) ? data : [];
   useEffect(()=>{
     if(!ref.current) return
     const el = ref.current; el.innerHTML = ''
