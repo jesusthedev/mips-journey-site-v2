@@ -1,6 +1,7 @@
 // ---------- App.jsx (clean rebuild) ----------
 import React, { useEffect, useMemo, useRef, useState, Suspense } from 'react';
 import { motion } from 'framer-motion';
+import Peekers from './components/Peekers.jsx';
 
 import Bars from './components/Bars.jsx';
 import Counter from './components/Counter.jsx';
@@ -124,6 +125,8 @@ export default function App() {
           </div>
         </div>
       </section>
+      {/* Peeking characters — fun little cameos */}
+<Peekers />
     </div>
   );
 }
