@@ -1,89 +1,50 @@
-// at top of src/App.jsx
-import { burst } from './components/confetti.js';
+// App.jsx — cleaned header
+
 import React, { useRef, useEffect, useMemo, useState } from 'react';
 
+import { motion } from 'framer-motion';                     // keep only if used
+import Bars from './components/Bars.jsx';
+import Counter from './components/Counter.jsx';
+import GlitchLayer from './components/GlitchLayer.jsx';     // NOT lazy below
+import Ambient from './components/Ambient.jsx';             // remove if unused
+import Leaderboard from './components/Leaderboard.jsx';
+import Portrait from './components/Portrait.jsx';
+import { portraits } from './components/portraits.js';
+import { burst } from './components/confetti.js';
+import data from './data/mips.json';
+import { useScrollProgress } from './hooks/useScrollProgress.js'; // fix typo
 
+// helper to render a portrait by id
+const P = ({ id, ...pos }) => {
+  const p = portraits.find(x => x.id === id);
+  if (!p) return null;
+  return <Portrait {...p} {...pos} />;
+};
 
-
+// safety wrapper so confetti can't crash the app
 function safeBurst(el, opts = {}) {
   try {
     if (!el) return;
-    // sanitize options
     const count = Math.max(8, Math.min(200, Number(opts.count ?? 24)));
     const reverse = !!opts.reverse;
-    safeBurst(el, { count, reverse });
+    burst(el, { count, reverse });
   } catch (e) {
-    // don’t crash the app over party sprinkles
-    console.error('[confetti burst failed]', e);
-    window.__SAFE_MODE__ = true; // tell the app to go low-fi if needed
+    console.error('confetti burst failed', e);
+    window.__SAFE_MODE__ = true;
   }
 }
 
-
-<div className="vhs" ref={ref}>
-  <Suspense fallback={null}>
-    {glitch ? <GlitchLayer active /> : null}
-  </Suspense>
-  {/* rest of your sections */}
-</div>
-
-
-// Lazy-load GlitchLayer so it can't crash first paint
-const GlitchLayer = React.lazy(() => import('./components/GlitchLayer.jsx'));
-
-// Safe window helper
-const isClient = typeof window !== 'undefined';
-const W = isClient ? window : { innerWidth: 0 };
-
-import { motion } from 'framer-motion';
-import Bars from './components/Bars.jsx'
-import Counter from './components/Counter.jsx'
-import GlitchLayer from './components/GlitchLayer.jsx'
-import Ambient from './components/Ambient.jsx'
-import Leaderboard from './components/Leaderboard.jsx'
-import Portrait from './components/Portrait.jsx'
-import { portraits } from './components/portraits.js'
-const P = ({ id, ...pos }) => {
-  const p = portraits.find(x => x.id === id)
-  if (!p) return null
-  return <Portrait {...p} {...pos} />
-}
-import { burst } from './components/confetti.js';
-
-// --- Safety Wrapper: Prevents Confetti from Crashing the App ---
-function safeBurst(el, opts = {}) {
-  try {
-    if (!el) return; // no element, no burst
-    const count = Math.max(8, Math.min(200, Number(opts.count ?? 24)));
-    const reverse = !!opts.reverse;
-    safeBurst(el, { count, reverse });
-  } catch (e) {
-    console.error('[confetti burst failed]', e);
-    window.__SAFE_MODE__ = true; // switch to safe mode on failure
-  }
-}
-
-// on celebrate moment:
-import data from './data/mips.json'
-import { useScrollProgress } from './hooks/ueScrollProgress.js'
+// any other top-level constants you had (isClient, W, etc.) can live here.
+// DO NOT put any more import statements below this line.
 
 function splitCounts(obj){
   const rateKey = 'Avg Line Items per MIP form'
   const entries = Object.entries(obj).filter(([k])=>k!==rateKey)
-  const ref = useRef(null);
-
-// call confetti safely
-function safeBurst(reverse = false, count = 24) {
-  try {
-    const el = ref?.current;
-    if (!el) return;
-    setTimeout(() => safeBurst(el, { reverse, count }), 0);
-  } catch {
-    // swallow — confetti is optional fun
-  }
-}
-
-  return { list: entries.map(([metric,value])=>({metric, value})), rate: obj[rateKey] }
+  // Example implementation, adjust as needed:
+  return {
+    list: entries.map(([metric, value]) => ({ metric, value })),
+    rate: obj[rateKey]
+  };
 }
 
 export default function App(){
@@ -271,6 +232,5 @@ const start = () => { setGlitch(true); setTimeout(()=>setGlitch(false), 800); };
       </section>
     </div>
     </ErrorBoundary>
-  );
+  )
 }
-// test change
