@@ -138,6 +138,14 @@ export default function App() {
         <div className="container">
           <Bars progress={progress} />
           + <Bars data={octCounts.list || []} progress={progress} />
+          // before
+// <Bars progress={progress} />
+// + <Bars data={octCounts.list || []} progress={progress} />
+
+// after
+<Bars data={sepCounts.list || []} progress={progress} />
+<Bars data={octCounts.list || []} progress={progress} />
+
           <div style={{ marginTop: '1rem' }}>
             <Counter value={funRatio} label="Fun Morph" />
           </div>

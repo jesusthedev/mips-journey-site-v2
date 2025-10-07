@@ -1,57 +1,36 @@
 import React, { useEffect, useRef } from 'react'
 import * as d3 from 'd3'
+// Bars.jsx
+import React from 'react';
 export default function Bars({ data = [], progress = 0 }) {
+    const items = Array.isArray(data) ? data : [];
   return (
-    <div className="bars">
-      {data.map(({ metric, value, delta }) => {
-        const v = Number(value ?? 0);
-        const w = Math.max(6, Math.min(100, v)); // normalize if you're not already
-        const up = Number(delta ?? 0) > 0;
+    <ul className="bars">
+      {items.map((d, i) => {
+        const label = String(d?.metric ?? d?.name ?? `Item ${i + 1}`);
+        const value = Number(d?.value ?? d?.count ?? 0);
+        const trend = Number(d?.trend ?? 0);   // -1, 0, +1 if you computed it
+
+        const color =
+          trend > 0 ? 'var(--bar-up)' :
+          trend < 0 ? 'var(--bar-down)' :
+                      'var(--bar-flat)';
+
         return (
-          <div key={metric} className="row">
-            <span className="label">{metric}</span>
-            <div className={`track ${up ? 'up' : 'down'}`}>
-              <div className="fill" style={{ width: `${w}%` }} />
-              <span className="val">{v}</span>
+          <li key={`${label}-${i}`} className="bar-row">
+            <span className="bar-label">{label}</span>
+            <div className="bar-track">
+              <div
+                className="bar-fill"
+                style={{
+                  width: `${Math.max(0, Math.min(100, value))}%`,
+                  background: color
+                }}
+              />
             </div>
-          </div>
+          </li>
         );
       })}
-    </div>
+    </ul>
   );
 }
-  // Normalize and compute basic metrics
-  const items = Array.isArray(data) ? data : [];
-  const max = Math.max(1, ...items.map(d => Number(d.value) || 0));
-  const avg =
-    items.reduce((a, c) => a + (Number(c.value) || 0), 0) /
-    Math.max(1, items.length);
-
-  // helper: pick a color based on value vs average
-function trendColor(value, average) {
-  if (average == null) return 'var(--brand)';
-  if (value > average * 1.05) return 'var(--good)';      // green
-  if (value < average * 0.95) return 'var(--bad)';       // red
-  return 'var(--meh)';                                   // amber/neutral
-}
-
-// inside your map over data items:
-{data.map((d, i) => {
-  const v = Number(d.value ?? 0);
-  const avg = Number(d.average ?? d.avg ?? null);
-  const pct = Math.max(3, Math.min(100, (v / (max || 1)) * 100));
-  const width = pct + '%';
-
-  return (
-    <div className="bar-row" key={i}>
-      <div className="bar-label">{d.metric}</div>
-      <div className="bar-track">
-        <div
-          className="bar-fill"
-          style={{ width, background: trendColor(v, avg) }}
-          title={`${d.metric}: ${v}${avg ? ` (${v > avg ? '↑' : v < avg ? '↓' : '→'})` : ''}`}
-        />
-      </div>
-    </div>
-  );
-})}
