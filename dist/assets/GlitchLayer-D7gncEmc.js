@@ -1,4 +1,4 @@
-import { r as reactExports, j as jsxRuntimeExports } from "./index-cilMgzR7.js";
+import { r as reactExports, j as jsxRuntimeExports } from "./index-BAD190KC.js";
 function GlitchLayer({ bigDelta = 0 }) {
   const rootRef = reactExports.useRef(null);
   reactExports.useEffect(() => {
@@ -16,4 +16,4 @@ function GlitchLayer({ bigDelta = 0 }) {
 export {
   GlitchLayer as default
 };
-//# sourceMappingURL=GlitchLayer-DAT3FoWV.js.map
+//# sourceMappingURL=GlitchLayer-D7gncEmc.js.map

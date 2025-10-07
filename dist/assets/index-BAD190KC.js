@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/GlitchLayer-DAT3FoWV.js","assets/GlitchLayer-C0dWx6zP.css"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/GlitchLayer-D7gncEmc.js","assets/GlitchLayer-C0dWx6zP.css"])))=>i.map(i=>d[i]);
 (function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) return;
@@ -169,7 +169,7 @@ function requireReact_production_min() {
     if (1 === a._status) return a._result.default;
     throw a._result;
   }
-  var U = { current: null }, V = { transition: null }, W = { ReactCurrentDispatcher: U, ReactCurrentBatchConfig: V, ReactCurrentOwner: K };
+  var U = { current: null }, V = { transition: null }, W2 = { ReactCurrentDispatcher: U, ReactCurrentBatchConfig: V, ReactCurrentOwner: K };
   function X() {
     throw Error("act(...) is not supported in production builds of React.");
   }
@@ -197,7 +197,7 @@ function requireReact_production_min() {
   react_production_min.PureComponent = G;
   react_production_min.StrictMode = q;
   react_production_min.Suspense = w;
-  react_production_min.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = W;
+  react_production_min.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = W2;
   react_production_min.act = X;
   react_production_min.cloneElement = function(a, b, e) {
     if (null === a || void 0 === a) throw Error("React.cloneElement(...): The argument must be a React element, but you passed " + a + ".");
@@ -4896,7 +4896,7 @@ function requireReactDom_production_min() {
     if (null !== c) if ("function" === typeof c) try {
       c(null);
     } catch (d) {
-      W(a, b, d);
+      W2(a, b, d);
     }
     else c.current = null;
   }
@@ -4904,7 +4904,7 @@ function requireReactDom_production_min() {
     try {
       c();
     } catch (d) {
-      W(a, b, d);
+      W2(a, b, d);
     }
   }
   var Nj = false;
@@ -4982,7 +4982,7 @@ function requireReactDom_production_min() {
             throw Error(p(163));
         }
       } catch (F) {
-        W(b, b.return, F);
+        W2(b, b.return, F);
       }
       a = b.sibling;
       if (null !== a) {
@@ -5134,7 +5134,7 @@ function requireReactDom_production_min() {
         if (!U && (Lj(c, b), d = c.stateNode, "function" === typeof d.componentWillUnmount)) try {
           d.props = c.memoizedProps, d.state = c.memoizedState, d.componentWillUnmount();
         } catch (h) {
-          W(c, b, h);
+          W2(c, b, h);
         }
         Yj(a, b, c);
         break;
@@ -5191,7 +5191,7 @@ function requireReactDom_production_min() {
         null !== k && (k.return = null);
         e.return = null;
       } catch (l) {
-        W(e, b, l);
+        W2(e, b, l);
       }
     }
     if (b.subtreeFlags & 12854) for (b = b.child; null !== b; ) dk(b, a), b = b.sibling;
@@ -5209,12 +5209,12 @@ function requireReactDom_production_min() {
           try {
             Pj(3, a, a.return), Qj(3, a);
           } catch (t) {
-            W(a, a.return, t);
+            W2(a, a.return, t);
           }
           try {
             Pj(5, a, a.return);
           } catch (t) {
-            W(a, a.return, t);
+            W2(a, a.return, t);
           }
         }
         break;
@@ -5232,7 +5232,7 @@ function requireReactDom_production_min() {
           try {
             ob(e, "");
           } catch (t) {
-            W(a, a.return, t);
+            W2(a, a.return, t);
           }
         }
         if (d & 4 && (e = a.stateNode, null != e)) {
@@ -5266,7 +5266,7 @@ function requireReactDom_production_min() {
             }
             e[Pf] = f;
           } catch (t) {
-            W(a, a.return, t);
+            W2(a, a.return, t);
           }
         }
         break;
@@ -5280,7 +5280,7 @@ function requireReactDom_production_min() {
           try {
             e.nodeValue = f;
           } catch (t) {
-            W(a, a.return, t);
+            W2(a, a.return, t);
           }
         }
         break;
@@ -5290,7 +5290,7 @@ function requireReactDom_production_min() {
         if (d & 4 && null !== c && c.memoizedState.isDehydrated) try {
           bd(b.containerInfo);
         } catch (t) {
-          W(a, a.return, t);
+          W2(a, a.return, t);
         }
         break;
       case 4:
@@ -5330,7 +5330,7 @@ function requireReactDom_production_min() {
                     try {
                       b = d, n.props = b.memoizedProps, n.state = b.memoizedState, n.componentWillUnmount();
                     } catch (t) {
-                      W(d, c, t);
+                      W2(d, c, t);
                     }
                   }
                   break;
@@ -5354,14 +5354,14 @@ function requireReactDom_production_min() {
                 try {
                   e = q.stateNode, l ? (f = e.style, "function" === typeof f.setProperty ? f.setProperty("display", "none", "important") : f.display = "none") : (h = q.stateNode, k = q.memoizedProps.style, g = void 0 !== k && null !== k && k.hasOwnProperty("display") ? k.display : null, h.style.display = rb("display", g));
                 } catch (t) {
-                  W(a, a.return, t);
+                  W2(a, a.return, t);
                 }
               }
             } else if (6 === q.tag) {
               if (null === m) try {
                 q.stateNode.nodeValue = l ? "" : q.memoizedProps;
               } catch (t) {
-                W(a, a.return, t);
+                W2(a, a.return, t);
               }
             } else if ((22 !== q.tag && 23 !== q.tag || null === q.memoizedState || q === a) && null !== q.child) {
               q.child.return = q;
@@ -5424,7 +5424,7 @@ function requireReactDom_production_min() {
             throw Error(p(161));
         }
       } catch (k) {
-        W(a, a.return, k);
+        W2(a, a.return, k);
       }
       a.flags &= -3;
     }
@@ -5537,7 +5537,7 @@ function requireReactDom_production_min() {
           }
           U || b.flags & 512 && Rj(b);
         } catch (r) {
-          W(b, b.return, r);
+          W2(b, b.return, r);
         }
       }
       if (b === a) {
@@ -5581,7 +5581,7 @@ function requireReactDom_production_min() {
             try {
               Qj(4, b);
             } catch (k) {
-              W(b, c, k);
+              W2(b, c, k);
             }
             break;
           case 1:
@@ -5591,14 +5591,14 @@ function requireReactDom_production_min() {
               try {
                 d.componentDidMount();
               } catch (k) {
-                W(b, e, k);
+                W2(b, e, k);
               }
             }
             var f = b.return;
             try {
               Rj(b);
             } catch (k) {
-              W(b, f, k);
+              W2(b, f, k);
             }
             break;
           case 5:
@@ -5606,11 +5606,11 @@ function requireReactDom_production_min() {
             try {
               Rj(b);
             } catch (k) {
-              W(b, g, k);
+              W2(b, g, k);
             }
         }
       } catch (k) {
-        W(b, b.return, k);
+        W2(b, b.return, k);
       }
       if (b === a) {
         V = null;
@@ -6257,7 +6257,7 @@ function requireReactDom_production_min() {
                     Qj(9, h);
                 }
               } catch (na) {
-                W(h, h.return, na);
+                W2(h, h.return, na);
               }
               if (h === g) {
                 V = null;
@@ -6294,7 +6294,7 @@ function requireReactDom_production_min() {
     b = R();
     null !== a && (Ac(a, 1, b), Dk(a, b));
   }
-  function W(a, b, c) {
+  function W2(a, b, c) {
     if (3 === a.tag) Xk(a, a, c);
     else for (; null !== b; ) {
       if (3 === b.tag) {
@@ -13695,20 +13695,38 @@ const portraits = [
   { id: "luis", src: `${base}portraits/luis_portrait.png`, alt: "Portrait Luis" },
   { id: "jerome", src: `${base}portraits/jerome_portrait.png`, alt: "Portrait Jerome" }
 ];
-const edges = ["left", "right", "top", "bottom"];
+const EDGES = ["left", "right", "top", "bottom"];
 function Peekers() {
+  const list = Array.isArray(portraits) ? portraits.slice() : [];
   const cast = reactExports.useMemo(() => {
-    const pool = [...portraits];
-    return Array.from({ length: 5 }).map(() => pool.splice(Math.floor(Math.random() * pool.length), 1)[0]).filter(Boolean);
-  }, []);
+    if (!list.length) return [];
+    const pool = list.slice();
+    const out = [];
+    for (let i = 0; i < Math.min(5, pool.length); i += 1) {
+      const idx = Math.floor(Math.random() * pool.length);
+      const pick = pool.splice(idx, 1)[0];
+      if (pick && pick.id) out.push(pick);
+    }
+    return out;
+  }, [list.length]);
+  if (!cast.length) return null;
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { "aria-hidden": true, style: { position: "relative", height: 360, marginTop: 24 }, children: cast.map((p, i) => {
-    const edge = edges[i % edges.length];
-    const base2 = { position: "absolute", zIndex: 2, filter: "drop-shadow(0 6px 18px rgba(0,0,0,.35))" };
+    const edge = EDGES[i % EDGES.length];
+    const base2 = {
+      position: "absolute",
+      zIndex: 2,
+      filter: "drop-shadow(0 6px 18px rgba(0,0,0,.35))"
+    };
     const pos = edge === "left" ? { left: -72, top: 40 + i * 50 } : edge === "right" ? { right: -72, top: 10 + i * 60 } : edge === "top" ? { top: -72, left: 80 + i * 120 } : { bottom: -72, left: 30 + i * 140 };
-    const hidden = edge === "left" ? { x: -80, rotate: -4, opacity: 0 } : edge === "right" ? { x: 80, rotate: 4, opacity: 0 } : edge === "top" ? { y: -80, rotate: -2, opacity: 0 } : { y: 80, rotate: 2, opacity: 0 };
-    const shown = { x: 0, y: 0, opacity: 1, rotate: 0, transition: { delay: 0.2 + i * 0.15, duration: 0.7, ease: [0.17, 0.67, 0.2, 1] } };
-    const wiggle = { y: [0, -6, 0, 4, 0], rotate: [0, 2, 0, -2, 0], transition: { repeat: Infinity, duration: 4 + i * 0.4, ease: "easeInOut" } };
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(motion.div, { style: { ...base2, ...pos }, initial: hidden, animate: shown, whileHover: wiggle, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Portrait, { ...p }) }, p.id);
+    const hidden = edge === "left" ? { x: -80, opacity: 0, rotate: -4 } : edge === "right" ? { x: 80, opacity: 0, rotate: 4 } : edge === "top" ? { y: -80, opacity: 0, rotate: -2 } : { y: 80, opacity: 0, rotate: 2 };
+    const shown = {
+      x: 0,
+      y: 0,
+      opacity: 1,
+      rotate: 0,
+      transition: { delay: 0.2 + i * 0.15, duration: 0.7, ease: [0.17, 0.67, 0.2, 1] }
+    };
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(motion.div, { style: { ...base2, ...pos }, initial: hidden, animate: shown, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Portrait, { ...p }) }, p.id);
   }) });
 }
 var noop = { value: () => {
@@ -15939,7 +15957,8 @@ function useScrollProgress() {
   }, []);
   return progress2;
 }
-const GlitchLayer = React.lazy(() => __vitePreload(() => import("./GlitchLayer-DAT3FoWV.js"), true ? __vite__mapDeps([0,1]) : void 0));
+const GlitchLayer = React.lazy(() => __vitePreload(() => import("./GlitchLayer-D7gncEmc.js"), true ? __vite__mapDeps([0,1]) : void 0));
+const W = typeof window !== "undefined" ? window : { innerWidth: 1200 };
 function safeBurst(el, opts = {}) {
   try {
     if (!el) return;
@@ -15991,11 +16010,11 @@ function App() {
     ] }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "section", "aria-hidden": "true", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "abhishek", x: 24, y: 24, delay: 0.2 }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "jesus", x: window.innerWidth - 140, y: 40, delay: 0.35 }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "jesus", x: W.innerWidth - 140, y: 40, delay: 0.35 }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "thai", x: 120, y: 280, delay: 0.45 }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "saily", x: window.innerWidth - 220, y: 260, delay: 0.55 }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "saily", x: W.innerWidth - 220, y: 260, delay: 0.55 }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "niki", x: 220, y: 480, delay: 0.65 }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "luis", x: window.innerWidth - 180, y: 520, delay: 0.75 }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "luis", x: W.innerWidth - 180, y: 520, delay: 0.75 }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "jerome", x: 60, y: 560, delay: 0.85 })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(Peekers, {}),
@@ -16041,4 +16060,4 @@ export {
   jsxRuntimeExports as j,
   reactExports as r
 };
-//# sourceMappingURL=index-cilMgzR7.js.map
+//# sourceMappingURL=index-BAD190KC.js.map

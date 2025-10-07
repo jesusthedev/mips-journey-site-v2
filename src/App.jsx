@@ -8,6 +8,9 @@ import Counter from './components/Counter.jsx';
 
 // Lazy so it can’t crash first paint
 const GlitchLayer = React.lazy(() => import('./components/GlitchLayer.jsx'));
+// near the top of App.jsx, once:
+const W = typeof window !== 'undefined' ? window : { innerWidth: 1200 };
+
 
 import Ambient from './components/Ambient.jsx';
 import Leaderboard from './components/Leaderboard.jsx';
@@ -45,6 +48,12 @@ function splitCounts(obj) {
   const rateKey = 'Avg Line Items per MIP form';
   const entries = Object.entries(obj).filter(([k]) => k !== rateKey);
   return { list: entries.map(([metric, value]) => ({ metric, value })) };
+}
+function ErrorBoundary({ children }) {
+  try { return children; } catch (e) {
+    console.error(e);
+    return <div style={{padding:24,color:'#fff'}}>Something tripped—but I caught it.</div>;
+  }
 }
 
 export default function App() {
@@ -106,11 +115,11 @@ export default function App() {
       {/* Sprinkled portraits (quiet if file/id missing) */}
       <section className="section" aria-hidden="true">
         <P id="abhishek" x={24} y={24} delay={0.2} />
-        <P id="jesus" x={window.innerWidth - 140} y={40} delay={0.35} />
+        <P id="jesus" x={W.innerWidth - 140} y={40}  delay={0.35} />
         <P id="thai" x={120} y={280} delay={0.45} />
-        <P id="saily" x={window.innerWidth - 220} y={260} delay={0.55} />
+        <P id="saily" x={W.innerWidth - 220} y={260} delay={0.55} />
         <P id="niki" x={220} y={480} delay={0.65} />
-        <P id="luis" x={window.innerWidth - 180} y={520} delay={0.75} />
+        <P id="luis" x={W.innerWidth - 180} y={520} delay={0.75} />
         <P id="jerome" x={60} y={560} delay={0.85} />
       </section>
 
