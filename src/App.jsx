@@ -83,25 +83,17 @@ export default function App() {
       <Ambient />
 
       {/* HERO */}
-      <section className="section">
-        <div className="container">
-          <div className="card">
-            <div className="badge">MIPs Journey</div>
-            <h1 className="h1">September → October</h1>
-            <p className="p">
-              We start buttoned-up. We detour through neon. We end with a handshake and a
-              compliance-friendly smile.
-            </p>
+   <section className="section">
+  <div className="container">
+    <Bars data={sepCounts.list || []} progress={progress} />
+    <Bars data={octCounts.list || []} progress={progress} />
+    <div style={{ marginTop: '1rem' }}>
+      <Counter value={funRatio} label="Fun Morph" />
+    </div>
+  </div>
+</section>
 
-            <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
-              <a className="button" href="#recap" onClick={onStart}>
-                Start the Tape ▷
-              </a>
-              <span className="caption">Theme morph: <strong>{funRatio}% fun</strong></span>
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       {/* Sprinkled portraits (quiet if file/id missing) */}
       <section className="section" aria-hidden="true">

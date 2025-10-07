@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/GlitchLayer-B-tA4LDK.js","assets/GlitchLayer-C0dWx6zP.css"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/GlitchLayer-y4o0oI5k.js","assets/GlitchLayer-C0dWx6zP.css"])))=>i.map(i=>d[i]);
 (function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) return;
@@ -7161,8 +7161,8 @@ function useVisualElement(Component, visualState, props, createVisualElement) {
   });
   return visualElement;
 }
-function isRefObject(ref2) {
-  return typeof ref2 === "object" && Object.prototype.hasOwnProperty.call(ref2, "current");
+function isRefObject(ref) {
+  return typeof ref === "object" && Object.prototype.hasOwnProperty.call(ref, "current");
 }
 function useMotionRef(visualState, visualElement, externalRef) {
   return reactExports.useCallback(
@@ -7704,11 +7704,11 @@ const camelKeys = {
 };
 function buildSVGPath(attrs, length, spacing = 1, offset = 0, useDashCase = true) {
   attrs.pathLength = 1;
-  const keys2 = useDashCase ? dashKeys : camelKeys;
-  attrs[keys2.offset] = px$1.transform(-offset);
+  const keys = useDashCase ? dashKeys : camelKeys;
+  attrs[keys.offset] = px$1.transform(-offset);
   const pathLength = px$1.transform(length);
   const pathSpacing = px$1.transform(spacing);
-  attrs[keys2.array] = `${pathLength} ${pathSpacing}`;
+  attrs[keys.array] = `${pathLength} ${pathSpacing}`;
 }
 function buildSVGAttrs(state, {
   attrX,
@@ -7772,14 +7772,14 @@ function useSVGProps(props, visualState, _isStatic, Component) {
   return visualProps;
 }
 function createUseRender(forwardMotionProps = false) {
-  const useRender = (Component, props, ref2, { latestValues }, isStatic) => {
+  const useRender = (Component, props, ref, { latestValues }, isStatic) => {
     const useVisualProps = isSVGComponent(Component) ? useSVGProps : useHTMLProps;
     const visualProps = useVisualProps(props, latestValues, isStatic, Component);
     const filteredProps = filterProps(props, typeof Component === "string", forwardMotionProps);
     const elementProps = {
       ...filteredProps,
       ...visualProps,
-      ref: ref2
+      ref
     };
     const { children: children2 } = props;
     const renderedChildren = reactExports.useMemo(() => isMotionValue(children2) ? children2.get() : children2, [children2]);
@@ -7860,11 +7860,11 @@ function resolveVariantFromProps(props, definition, custom, currentValues = {}, 
   return definition;
 }
 function useConstant(init2) {
-  const ref2 = reactExports.useRef(null);
-  if (ref2.current === null) {
-    ref2.current = init2();
+  const ref = reactExports.useRef(null);
+  if (ref.current === null) {
+    ref.current = init2();
   }
-  return ref2.current;
+  return ref.current;
 }
 const isKeyframesTarget = (v) => {
   return Array.isArray(v);
@@ -9036,8 +9036,8 @@ function calcAngularFreq(undampedFreq, dampingRatio) {
 }
 const durationKeys = ["duration", "bounce"];
 const physicsKeys = ["stiffness", "damping", "mass"];
-function isSpringType(options, keys2) {
-  return keys2.some((key) => options[key] !== void 0);
+function isSpringType(options, keys) {
+  return keys.some((key) => options[key] !== void 0);
 }
 function getSpringOptions(options) {
   let springOptions = {
@@ -12659,7 +12659,7 @@ function shouldAnimatePositionOnly(animationType, snapshot, layout2) {
   return animationType === "position" || animationType === "preserve-aspect" && !isNear(aspectRatio(snapshot), aspectRatio(layout2), 0.2);
 }
 const DocumentProjectionNode = createProjectionNode({
-  attachResizeListener: (ref2, notify) => addDomEvent(ref2, "resize", notify),
+  attachResizeListener: (ref, notify) => addDomEvent(ref, "resize", notify),
   measureScroll: () => ({
     x: document.documentElement.scrollLeft || document.body.scrollLeft,
     y: document.documentElement.scrollTop || document.body.scrollTop
@@ -13502,7 +13502,7 @@ class PopChildMeasure extends reactExports.Component {
 }
 function PopChild({ children: children2, isPresent }) {
   const id2 = reactExports.useId();
-  const ref2 = reactExports.useRef(null);
+  const ref = reactExports.useRef(null);
   const size = reactExports.useRef({
     width: 0,
     height: 0,
@@ -13510,10 +13510,10 @@ function PopChild({ children: children2, isPresent }) {
     left: 0
   });
   reactExports.useInsertionEffect(() => {
-    const { width, height: height2, top: top2, left: left2 } = size.current;
-    if (isPresent || !ref2.current || !width || !height2)
+    const { width, height, top: top2, left: left2 } = size.current;
+    if (isPresent || !ref.current || !width || !height)
       return;
-    ref2.current.dataset.motionPopId = id2;
+    ref.current.dataset.motionPopId = id2;
     const style = document.createElement("style");
     document.head.appendChild(style);
     if (style.sheet) {
@@ -13521,7 +13521,7 @@ function PopChild({ children: children2, isPresent }) {
           [data-motion-pop-id="${id2}"] {
             position: absolute !important;
             width: ${width}px !important;
-            height: ${height2}px !important;
+            height: ${height}px !important;
             top: ${top2}px !important;
             left: ${left2}px !important;
           }
@@ -13531,7 +13531,7 @@ function PopChild({ children: children2, isPresent }) {
       document.head.removeChild(style);
     };
   }, [isPresent]);
-  return reactExports.createElement(PopChildMeasure, { isPresent, childRef: ref2, sizeRef: size }, reactExports.cloneElement(children2, { ref: ref2 }));
+  return reactExports.createElement(PopChildMeasure, { isPresent, childRef: ref, sizeRef: size }, reactExports.cloneElement(children2, { ref }));
 }
 const PresenceChild = ({ children: children2, initial, isPresent, onExitComplete, custom, presenceAffectsLayout, mode }) => {
   const presenceChildren = useConstant(newChildrenMap);
@@ -16491,19 +16491,22 @@ Transform.prototype = {
 };
 Transform.prototype;
 function Bars({ data: data2 = [], progress: progress2 = 0 }) {
+  const ref = reactExports.useRef(null);
   reactExports.useEffect(() => {
     if (!ref.current) return;
     const el = ref.current;
     el.innerHTML = "";
     const width = el.clientWidth;
+    const height = 320;
     const margin = { top: 18, right: 12, bottom: 48, left: 60 };
     const w = width - margin.left - margin.right;
     const h = height - margin.top - margin.bottom;
+    const keys = data2.length > 0 ? Object.keys(data2[0]).filter((k2) => k2 !== "metric") : [];
     const svg = select(el).append("svg").attr("width", width).attr("height", height);
     const g2 = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
     const x0 = band().domain(data2.map((d) => d.metric)).range([0, w]).padding(0.2);
     const x1 = band().domain(keys).range([0, x0.bandwidth()]).padding(0.1);
-    const y = linear().domain([0, max(data2, (d) => max(keys, (k2) => d[k2]))]).nice().range([h, 0]);
+    const y = linear().domain([0, max(data2, (d) => max(keys, (k2) => d[k2])) || 0]).nice().range([h, 0]);
     g2.append("g").attr("transform", `translate(0,${h})`).call(axisBottom(x0)).selectAll("text").attr("transform", "rotate(-28)").style("text-anchor", "end");
     g2.append("g").call(axisLeft(y).ticks(5));
     const color2 = ordinal().domain(keys).range(["#5da9ff", "#ff71ce"]);
@@ -16517,7 +16520,7 @@ function Bars({ data: data2 = [], progress: progress2 = 0 }) {
       row.append("rect").attr("width", 12).attr("height", 12).attr("rx", 3).attr("fill", color2(k2));
       row.append("text").text(k2).attr("x", 18).attr("y", 10).attr("fill", "#ccd3e0").attr("font-size", 12);
     });
-  }, [data2, keys, height]);
+  }, [data2]);
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref, style: { width: "100%" } });
 }
 function Counter({ to = 0, duration = 900, prefix = "", suffix = "" }) {
@@ -18337,16 +18340,16 @@ class Vector4 {
   }
 }
 class RenderTarget extends EventDispatcher {
-  constructor(width = 1, height2 = 1, options = {}) {
+  constructor(width = 1, height = 1, options = {}) {
     super();
     this.isRenderTarget = true;
     this.width = width;
-    this.height = height2;
+    this.height = height;
     this.depth = 1;
-    this.scissor = new Vector4(0, 0, width, height2);
+    this.scissor = new Vector4(0, 0, width, height);
     this.scissorTest = false;
-    this.viewport = new Vector4(0, 0, width, height2);
-    const image = { width, height: height2, depth: 1 };
+    this.viewport = new Vector4(0, 0, width, height);
+    const image = { width, height, depth: 1 };
     if (options.encoding !== void 0) {
       warnOnce("THREE.WebGLRenderTarget: option.encoding has been replaced by option.colorSpace.");
       options.colorSpace = options.encoding === sRGBEncoding ? SRGBColorSpace : NoColorSpace;
@@ -18370,18 +18373,18 @@ class RenderTarget extends EventDispatcher {
     this.depthTexture = options.depthTexture;
     this.samples = options.samples;
   }
-  setSize(width, height2, depth = 1) {
-    if (this.width !== width || this.height !== height2 || this.depth !== depth) {
+  setSize(width, height, depth = 1) {
+    if (this.width !== width || this.height !== height || this.depth !== depth) {
       this.width = width;
-      this.height = height2;
+      this.height = height;
       this.depth = depth;
       this.texture.image.width = width;
-      this.texture.image.height = height2;
+      this.texture.image.height = height;
       this.texture.image.depth = depth;
       this.dispose();
     }
-    this.viewport.set(0, 0, width, height2);
-    this.scissor.set(0, 0, width, height2);
+    this.viewport.set(0, 0, width, height);
+    this.scissor.set(0, 0, width, height);
   }
   clone() {
     return new this.constructor().copy(this);
@@ -18408,16 +18411,16 @@ class RenderTarget extends EventDispatcher {
   }
 }
 class WebGLRenderTarget extends RenderTarget {
-  constructor(width = 1, height2 = 1, options = {}) {
-    super(width, height2, options);
+  constructor(width = 1, height = 1, options = {}) {
+    super(width, height, options);
     this.isWebGLRenderTarget = true;
   }
 }
 class DataArrayTexture extends Texture {
-  constructor(data2 = null, width = 1, height2 = 1, depth = 1) {
+  constructor(data2 = null, width = 1, height = 1, depth = 1) {
     super(null);
     this.isDataArrayTexture = true;
-    this.image = { data: data2, width, height: height2, depth };
+    this.image = { data: data2, width, height, depth };
     this.magFilter = NearestFilter;
     this.minFilter = NearestFilter;
     this.wrapR = ClampToEdgeWrapping;
@@ -18427,19 +18430,19 @@ class DataArrayTexture extends Texture {
   }
 }
 class WebGLArrayRenderTarget extends WebGLRenderTarget {
-  constructor(width = 1, height2 = 1, depth = 1) {
-    super(width, height2);
+  constructor(width = 1, height = 1, depth = 1) {
+    super(width, height);
     this.isWebGLArrayRenderTarget = true;
     this.depth = depth;
-    this.texture = new DataArrayTexture(null, width, height2, depth);
+    this.texture = new DataArrayTexture(null, width, height, depth);
     this.texture.isRenderTargetTexture = true;
   }
 }
 class Data3DTexture extends Texture {
-  constructor(data2 = null, width = 1, height2 = 1, depth = 1) {
+  constructor(data2 = null, width = 1, height = 1, depth = 1) {
     super(null);
     this.isData3DTexture = true;
-    this.image = { data: data2, width, height: height2, depth };
+    this.image = { data: data2, width, height, depth };
     this.magFilter = NearestFilter;
     this.minFilter = NearestFilter;
     this.wrapR = ClampToEdgeWrapping;
@@ -18449,17 +18452,17 @@ class Data3DTexture extends Texture {
   }
 }
 class WebGL3DRenderTarget extends WebGLRenderTarget {
-  constructor(width = 1, height2 = 1, depth = 1) {
-    super(width, height2);
+  constructor(width = 1, height = 1, depth = 1) {
+    super(width, height);
     this.isWebGL3DRenderTarget = true;
     this.depth = depth;
-    this.texture = new Data3DTexture(null, width, height2, depth);
+    this.texture = new Data3DTexture(null, width, height, depth);
     this.texture.isRenderTargetTexture = true;
   }
 }
 class WebGLMultipleRenderTargets extends WebGLRenderTarget {
-  constructor(width = 1, height2 = 1, count = 1, options = {}) {
-    super(width, height2, options);
+  constructor(width = 1, height = 1, count = 1, options = {}) {
+    super(width, height, options);
     this.isWebGLMultipleRenderTargets = true;
     const texture = this.texture;
     this.texture = [];
@@ -18468,20 +18471,20 @@ class WebGLMultipleRenderTargets extends WebGLRenderTarget {
       this.texture[i2].isRenderTargetTexture = true;
     }
   }
-  setSize(width, height2, depth = 1) {
-    if (this.width !== width || this.height !== height2 || this.depth !== depth) {
+  setSize(width, height, depth = 1) {
+    if (this.width !== width || this.height !== height || this.depth !== depth) {
       this.width = width;
-      this.height = height2;
+      this.height = height;
       this.depth = depth;
       for (let i2 = 0, il = this.texture.length; i2 < il; i2++) {
         this.texture[i2].image.width = width;
-        this.texture[i2].image.height = height2;
+        this.texture[i2].image.height = height;
         this.texture[i2].image.depth = depth;
       }
       this.dispose();
     }
-    this.viewport.set(0, 0, width, height2);
-    this.scissor.set(0, 0, width, height2);
+    this.viewport.set(0, 0, width, height);
+    this.scissor.set(0, 0, width, height);
   }
   copy(source) {
     this.dispose();
@@ -23508,9 +23511,9 @@ class Mesh extends Object3D {
   updateMorphTargets() {
     const geometry = this.geometry;
     const morphAttributes = geometry.morphAttributes;
-    const keys2 = Object.keys(morphAttributes);
-    if (keys2.length > 0) {
-      const morphAttribute = morphAttributes[keys2[0]];
+    const keys = Object.keys(morphAttributes);
+    if (keys.length > 0) {
+      const morphAttribute = morphAttributes[keys[0]];
       if (morphAttribute !== void 0) {
         this.morphTargetInfluences = [];
         this.morphTargetDictionary = {};
@@ -23705,12 +23708,12 @@ function checkGeometryIntersection(object2, material, raycaster, ray, uv, uv1, n
   return intersection;
 }
 class BoxGeometry extends BufferGeometry {
-  constructor(width = 1, height2 = 1, depth = 1, widthSegments = 1, heightSegments = 1, depthSegments = 1) {
+  constructor(width = 1, height = 1, depth = 1, widthSegments = 1, heightSegments = 1, depthSegments = 1) {
     super();
     this.type = "BoxGeometry";
     this.parameters = {
       width,
-      height: height2,
+      height,
       depth,
       widthSegments,
       heightSegments,
@@ -23726,21 +23729,21 @@ class BoxGeometry extends BufferGeometry {
     const uvs = [];
     let numberOfVertices = 0;
     let groupStart = 0;
-    buildPlane("z", "y", "x", -1, -1, depth, height2, width, depthSegments, heightSegments, 0);
-    buildPlane("z", "y", "x", 1, -1, depth, height2, -width, depthSegments, heightSegments, 1);
-    buildPlane("x", "z", "y", 1, 1, width, depth, height2, widthSegments, depthSegments, 2);
-    buildPlane("x", "z", "y", 1, -1, width, depth, -height2, widthSegments, depthSegments, 3);
-    buildPlane("x", "y", "z", 1, -1, width, height2, depth, widthSegments, heightSegments, 4);
-    buildPlane("x", "y", "z", -1, -1, width, height2, -depth, widthSegments, heightSegments, 5);
+    buildPlane("z", "y", "x", -1, -1, depth, height, width, depthSegments, heightSegments, 0);
+    buildPlane("z", "y", "x", 1, -1, depth, height, -width, depthSegments, heightSegments, 1);
+    buildPlane("x", "z", "y", 1, 1, width, depth, height, widthSegments, depthSegments, 2);
+    buildPlane("x", "z", "y", 1, -1, width, depth, -height, widthSegments, depthSegments, 3);
+    buildPlane("x", "y", "z", 1, -1, width, height, depth, widthSegments, heightSegments, 4);
+    buildPlane("x", "y", "z", -1, -1, width, height, -depth, widthSegments, heightSegments, 5);
     this.setIndex(indices);
     this.setAttribute("position", new Float32BufferAttribute(vertices, 3));
     this.setAttribute("normal", new Float32BufferAttribute(normals, 3));
     this.setAttribute("uv", new Float32BufferAttribute(uvs, 2));
-    function buildPlane(u, v, w, udir, vdir, width2, height3, depth2, gridX, gridY, materialIndex) {
+    function buildPlane(u, v, w, udir, vdir, width2, height2, depth2, gridX, gridY, materialIndex) {
       const segmentWidth = width2 / gridX;
-      const segmentHeight = height3 / gridY;
+      const segmentHeight = height2 / gridY;
       const widthHalf = width2 / 2;
-      const heightHalf = height3 / 2;
+      const heightHalf = height2 / 2;
       const depthHalf = depth2 / 2;
       const gridX1 = gridX + 1;
       const gridY1 = gridY + 1;
@@ -24081,7 +24084,7 @@ class PerspectiveCamera extends Camera {
    *
    *   Note there is no reason monitors have to be the same size or in a grid.
    */
-  setViewOffset(fullWidth, fullHeight, x, y, width, height2) {
+  setViewOffset(fullWidth, fullHeight, x, y, width, height) {
     this.aspect = fullWidth / fullHeight;
     if (this.view === null) {
       this.view = {
@@ -24100,7 +24103,7 @@ class PerspectiveCamera extends Camera {
     this.view.offsetX = x;
     this.view.offsetY = y;
     this.view.width = width;
-    this.view.height = height2;
+    this.view.height = height;
     this.updateProjectionMatrix();
   }
   clearViewOffset() {
@@ -24112,20 +24115,20 @@ class PerspectiveCamera extends Camera {
   updateProjectionMatrix() {
     const near = this.near;
     let top2 = near * Math.tan(DEG2RAD * 0.5 * this.fov) / this.zoom;
-    let height2 = 2 * top2;
-    let width = this.aspect * height2;
+    let height = 2 * top2;
+    let width = this.aspect * height;
     let left2 = -0.5 * width;
     const view = this.view;
     if (this.view !== null && this.view.enabled) {
       const fullWidth = view.fullWidth, fullHeight = view.fullHeight;
       left2 += view.offsetX * width / fullWidth;
-      top2 -= view.offsetY * height2 / fullHeight;
+      top2 -= view.offsetY * height / fullHeight;
       width *= view.width / fullWidth;
-      height2 *= view.height / fullHeight;
+      height *= view.height / fullHeight;
     }
     const skew = this.filmOffset;
     if (skew !== 0) left2 += near * skew / this.getFilmWidth();
-    this.projectionMatrix.makePerspective(left2, left2 + width, top2, top2 - height2, near, this.far, this.coordinateSystem);
+    this.projectionMatrix.makePerspective(left2, left2 + width, top2, top2 - height, near, this.far, this.coordinateSystem);
     this.projectionMatrixInverse.copy(this.projectionMatrix).invert();
   }
   toJSON(meta) {
@@ -24695,23 +24698,23 @@ function WebGLAttributes(gl, capabilities) {
   };
 }
 class PlaneGeometry extends BufferGeometry {
-  constructor(width = 1, height2 = 1, widthSegments = 1, heightSegments = 1) {
+  constructor(width = 1, height = 1, widthSegments = 1, heightSegments = 1) {
     super();
     this.type = "PlaneGeometry";
     this.parameters = {
       width,
-      height: height2,
+      height,
       widthSegments,
       heightSegments
     };
     const width_half = width / 2;
-    const height_half = height2 / 2;
+    const height_half = height / 2;
     const gridX = Math.floor(widthSegments);
     const gridY = Math.floor(heightSegments);
     const gridX1 = gridX + 1;
     const gridY1 = gridY + 1;
     const segment_width = width / gridX;
-    const segment_height = height2 / gridY;
+    const segment_height = height / gridY;
     const indices = [];
     const vertices = [];
     const normals = [];
@@ -26201,7 +26204,7 @@ class OrthographicCamera extends Camera {
     this.view = source.view === null ? null : Object.assign({}, source.view);
     return this;
   }
-  setViewOffset(fullWidth, fullHeight, x, y, width, height2) {
+  setViewOffset(fullWidth, fullHeight, x, y, width, height) {
     if (this.view === null) {
       this.view = {
         enabled: true,
@@ -26219,7 +26222,7 @@ class OrthographicCamera extends Camera {
     this.view.offsetX = x;
     this.view.offsetY = y;
     this.view.width = width;
-    this.view.height = height2;
+    this.view.height = height;
     this.updateProjectionMatrix();
   }
   clearViewOffset() {
@@ -26399,7 +26402,7 @@ class PMREMGenerator {
   }
   _allocateTargets() {
     const width = 3 * Math.max(this._cubeSize, 16 * 7);
-    const height2 = 4 * this._cubeSize;
+    const height = 4 * this._cubeSize;
     const params = {
       magFilter: LinearFilter,
       minFilter: LinearFilter,
@@ -26409,15 +26412,15 @@ class PMREMGenerator {
       colorSpace: LinearSRGBColorSpace,
       depthBuffer: false
     };
-    const cubeUVRenderTarget = _createRenderTarget(width, height2, params);
-    if (this._pingPongRenderTarget === null || this._pingPongRenderTarget.width !== width || this._pingPongRenderTarget.height !== height2) {
+    const cubeUVRenderTarget = _createRenderTarget(width, height, params);
+    if (this._pingPongRenderTarget === null || this._pingPongRenderTarget.width !== width || this._pingPongRenderTarget.height !== height) {
       if (this._pingPongRenderTarget !== null) {
         this._dispose();
       }
-      this._pingPongRenderTarget = _createRenderTarget(width, height2, params);
+      this._pingPongRenderTarget = _createRenderTarget(width, height, params);
       const { _lodMax } = this;
       ({ sizeLods: this._sizeLods, lodPlanes: this._lodPlanes, sigmas: this._sigmas } = _createPlanes(_lodMax));
-      this._blurMaterial = _getBlurShader(_lodMax, width, height2);
+      this._blurMaterial = _getBlurShader(_lodMax, width, height);
     }
     return cubeUVRenderTarget;
   }
@@ -26661,18 +26664,18 @@ function _createPlanes(lodMax) {
   }
   return { lodPlanes, sizeLods, sigmas };
 }
-function _createRenderTarget(width, height2, params) {
-  const cubeUVRenderTarget = new WebGLRenderTarget(width, height2, params);
+function _createRenderTarget(width, height, params) {
+  const cubeUVRenderTarget = new WebGLRenderTarget(width, height, params);
   cubeUVRenderTarget.texture.mapping = CubeUVReflectionMapping;
   cubeUVRenderTarget.texture.name = "PMREM.cubeUv";
   cubeUVRenderTarget.scissorTest = true;
   return cubeUVRenderTarget;
 }
-function _setViewport(target, x, y, width, height2) {
-  target.viewport.set(x, y, width, height2);
-  target.scissor.set(x, y, width, height2);
+function _setViewport(target, x, y, width, height) {
+  target.viewport.set(x, y, width, height);
+  target.scissor.set(x, y, width, height);
 }
-function _getBlurShader(lodMax, width, height2) {
+function _getBlurShader(lodMax, width, height) {
   const weights = new Float32Array(MAX_SAMPLES);
   const poleAxis = new Vector3(0, 1, 0);
   const shaderMaterial = new ShaderMaterial({
@@ -26680,7 +26683,7 @@ function _getBlurShader(lodMax, width, height2) {
     defines: {
       "n": MAX_SAMPLES,
       "CUBEUV_TEXEL_WIDTH": 1 / width,
-      "CUBEUV_TEXEL_HEIGHT": 1 / height2,
+      "CUBEUV_TEXEL_HEIGHT": 1 / height,
       "CUBEUV_MAX_MIP": `${lodMax}.0`
     },
     uniforms: {
@@ -27241,13 +27244,13 @@ function WebGLMorphtargets(gl, capabilities, textures) {
         if (hasMorphNormals === true) vertexDataCount = 2;
         if (hasMorphColors === true) vertexDataCount = 3;
         let width = geometry.attributes.position.count * vertexDataCount;
-        let height2 = 1;
+        let height = 1;
         if (width > capabilities.maxTextureSize) {
-          height2 = Math.ceil(width / capabilities.maxTextureSize);
+          height = Math.ceil(width / capabilities.maxTextureSize);
           width = capabilities.maxTextureSize;
         }
-        const buffer = new Float32Array(width * height2 * 4 * morphTargetsCount);
-        const texture = new DataArrayTexture(buffer, width, height2, morphTargetsCount);
+        const buffer = new Float32Array(width * height * 4 * morphTargetsCount);
+        const texture = new DataArrayTexture(buffer, width, height, morphTargetsCount);
         texture.type = FloatType;
         texture.needsUpdate = true;
         const vertexDataStride = vertexDataCount * 4;
@@ -27255,7 +27258,7 @@ function WebGLMorphtargets(gl, capabilities, textures) {
           const morphTarget = morphTargets[i2];
           const morphNormal = morphNormals[i2];
           const morphColor = morphColors[i2];
-          const offset = width * height2 * 4 * i2;
+          const offset = width * height * 4 * i2;
           for (let j2 = 0; j2 < morphTarget.count; j2++) {
             const stride = j2 * vertexDataStride;
             if (hasMorphPosition === true) {
@@ -27284,7 +27287,7 @@ function WebGLMorphtargets(gl, capabilities, textures) {
         entry = {
           count: morphTargetsCount,
           texture,
-          size: new Vector2(width, height2)
+          size: new Vector2(width, height)
         };
         morphTextures.set(geometry, entry);
         geometry.addEventListener("dispose", disposeTexture);
@@ -30804,10 +30807,10 @@ function WebGLTextures(_gl, extensions, state, properties, capabilities, utils, 
     useOffscreenCanvas = typeof OffscreenCanvas !== "undefined" && new OffscreenCanvas(1, 1).getContext("2d") !== null;
   } catch (err) {
   }
-  function createCanvas(width, height2) {
+  function createCanvas(width, height) {
     return useOffscreenCanvas ? (
       // eslint-disable-next-line compat/compat
-      new OffscreenCanvas(width, height2)
+      new OffscreenCanvas(width, height)
     ) : createElementNS("canvas");
   }
   function resizeImage(image, needsPowerOfTwo, needsNewCanvas, maxSize) {
@@ -30819,14 +30822,14 @@ function WebGLTextures(_gl, extensions, state, properties, capabilities, utils, 
       if (typeof HTMLImageElement !== "undefined" && image instanceof HTMLImageElement || typeof HTMLCanvasElement !== "undefined" && image instanceof HTMLCanvasElement || typeof ImageBitmap !== "undefined" && image instanceof ImageBitmap) {
         const floor = needsPowerOfTwo ? floorPowerOfTwo : Math.floor;
         const width = floor(scale2 * image.width);
-        const height2 = floor(scale2 * image.height);
-        if (_canvas2 === void 0) _canvas2 = createCanvas(width, height2);
-        const canvas = needsNewCanvas ? createCanvas(width, height2) : _canvas2;
+        const height = floor(scale2 * image.height);
+        if (_canvas2 === void 0) _canvas2 = createCanvas(width, height);
+        const canvas = needsNewCanvas ? createCanvas(width, height) : _canvas2;
         canvas.width = width;
-        canvas.height = height2;
+        canvas.height = height;
         const context2 = canvas.getContext("2d");
-        context2.drawImage(image, 0, 0, width, height2);
-        console.warn("THREE.WebGLRenderer: Texture has been resized from (" + image.width + "x" + image.height + ") to (" + width + "x" + height2 + ").");
+        context2.drawImage(image, 0, 0, width, height);
+        console.warn("THREE.WebGLRenderer: Texture has been resized from (" + image.width + "x" + image.height + ") to (" + width + "x" + height + ").");
         return canvas;
       } else {
         if ("data" in image) {
@@ -31323,11 +31326,11 @@ function WebGLTextures(_gl, extensions, state, properties, capabilities, utils, 
           if (useTexStorage) {
             state.texStorage2D(_gl.TEXTURE_2D, levels, glInternalFormat, image.width, image.height);
           } else {
-            let width = image.width, height2 = image.height;
+            let width = image.width, height = image.height;
             for (let i2 = 0; i2 < levels; i2++) {
-              state.texImage2D(_gl.TEXTURE_2D, i2, glInternalFormat, width, height2, 0, glFormat, glType, null);
+              state.texImage2D(_gl.TEXTURE_2D, i2, glInternalFormat, width, height, 0, glFormat, glType, null);
               width >>= 1;
-              height2 >>= 1;
+              height >>= 1;
             }
           }
         }
@@ -31477,11 +31480,11 @@ function WebGLTextures(_gl, extensions, state, properties, capabilities, utils, 
     const renderTargetProperties = properties.get(renderTarget);
     if (!renderTargetProperties.__hasExternalTextures) {
       const width = Math.max(1, renderTarget.width >> level);
-      const height2 = Math.max(1, renderTarget.height >> level);
+      const height = Math.max(1, renderTarget.height >> level);
       if (textureTarget === _gl.TEXTURE_3D || textureTarget === _gl.TEXTURE_2D_ARRAY) {
-        state.texImage3D(textureTarget, level, glInternalFormat, width, height2, renderTarget.depth, 0, glFormat, glType, null);
+        state.texImage3D(textureTarget, level, glInternalFormat, width, height, renderTarget.depth, 0, glFormat, glType, null);
       } else {
-        state.texImage2D(textureTarget, level, glInternalFormat, width, height2, 0, glFormat, glType, null);
+        state.texImage2D(textureTarget, level, glInternalFormat, width, height, 0, glFormat, glType, null);
       }
     }
     state.bindFramebuffer(_gl.FRAMEBUFFER, framebuffer);
@@ -31754,7 +31757,7 @@ function WebGLTextures(_gl, extensions, state, properties, capabilities, utils, 
     if (isWebGL2 && renderTarget.samples > 0 && useMultisampledRTT(renderTarget) === false) {
       const textures = renderTarget.isWebGLMultipleRenderTargets ? renderTarget.texture : [renderTarget.texture];
       const width = renderTarget.width;
-      const height2 = renderTarget.height;
+      const height = renderTarget.height;
       let mask = _gl.COLOR_BUFFER_BIT;
       const invalidationArray = [];
       const depthStyle = renderTarget.stencilBuffer ? _gl.DEPTH_STENCIL_ATTACHMENT : _gl.DEPTH_ATTACHMENT;
@@ -31791,7 +31794,7 @@ function WebGLTextures(_gl, extensions, state, properties, capabilities, utils, 
           const webglTexture = properties.get(textures[i2]).__webglTexture;
           _gl.framebufferTexture2D(_gl.DRAW_FRAMEBUFFER, _gl.COLOR_ATTACHMENT0, _gl.TEXTURE_2D, webglTexture, 0);
         }
-        _gl.blitFramebuffer(0, 0, width, height2, 0, 0, width, height2, mask, _gl.NEAREST);
+        _gl.blitFramebuffer(0, 0, width, height, 0, 0, width, height, mask, _gl.NEAREST);
         if (supportsInvalidateFramebuffer) {
           _gl.invalidateFramebuffer(_gl.READ_FRAMEBUFFER, invalidationArray);
         }
@@ -32216,7 +32219,7 @@ class WebXRController {
   }
 }
 class DepthTexture extends Texture {
-  constructor(width, height2, type, mapping, wrapS, wrapT, magFilter, minFilter, anisotropy, format2) {
+  constructor(width, height, type, mapping, wrapS, wrapT, magFilter, minFilter, anisotropy, format2) {
     format2 = format2 !== void 0 ? format2 : DepthFormat;
     if (format2 !== DepthFormat && format2 !== DepthStencilFormat) {
       throw new Error("DepthTexture format must be either THREE.DepthFormat or THREE.DepthStencilFormat");
@@ -32225,7 +32228,7 @@ class DepthTexture extends Texture {
     if (type === void 0 && format2 === DepthStencilFormat) type = UnsignedInt248Type;
     super(null, mapping, wrapS, wrapT, magFilter, minFilter, format2, type, anisotropy);
     this.isDepthTexture = true;
-    this.image = { width, height: height2 };
+    this.image = { width, height };
     this.magFilter = magFilter !== void 0 ? magFilter : NearestFilter;
     this.minFilter = minFilter !== void 0 ? minFilter : NearestFilter;
     this.flipY = false;
@@ -32675,7 +32678,7 @@ function WebGLMaterials(renderer, properties) {
       uniforms.fogDensity.value = fog.density;
     }
   }
-  function refreshMaterialUniforms(uniforms, material, pixelRatio, height2, transmissionRenderTarget) {
+  function refreshMaterialUniforms(uniforms, material, pixelRatio, height, transmissionRenderTarget) {
     if (material.isMeshBasicMaterial) {
       refreshUniformsCommon(uniforms, material);
     } else if (material.isMeshLambertMaterial) {
@@ -32708,7 +32711,7 @@ function WebGLMaterials(renderer, properties) {
         refreshUniformsDash(uniforms, material);
       }
     } else if (material.isPointsMaterial) {
-      refreshUniformsPoints(uniforms, material, pixelRatio, height2);
+      refreshUniformsPoints(uniforms, material, pixelRatio, height);
     } else if (material.isSpriteMaterial) {
       refreshUniformsSprites(uniforms, material);
     } else if (material.isShadowMaterial) {
@@ -32800,11 +32803,11 @@ function WebGLMaterials(renderer, properties) {
     uniforms.totalSize.value = material.dashSize + material.gapSize;
     uniforms.scale.value = material.scale;
   }
-  function refreshUniformsPoints(uniforms, material, pixelRatio, height2) {
+  function refreshUniformsPoints(uniforms, material, pixelRatio, height) {
     uniforms.diffuse.value.copy(material.color);
     uniforms.opacity.value = material.opacity;
     uniforms.size.value = material.size * pixelRatio;
-    uniforms.scale.value = height2 * 0.5;
+    uniforms.scale.value = height * 0.5;
     if (material.map) {
       uniforms.map.value = material.map;
       refreshTransformUniform(material.map, uniforms.uvTransform);
@@ -33370,31 +33373,31 @@ class WebGLRenderer {
     this.getSize = function(target) {
       return target.set(_width, _height);
     };
-    this.setSize = function(width, height2, updateStyle = true) {
+    this.setSize = function(width, height, updateStyle = true) {
       if (xr.isPresenting) {
         console.warn("THREE.WebGLRenderer: Can't change size while VR device is presenting.");
         return;
       }
       _width = width;
-      _height = height2;
+      _height = height;
       canvas.width = Math.floor(width * _pixelRatio);
-      canvas.height = Math.floor(height2 * _pixelRatio);
+      canvas.height = Math.floor(height * _pixelRatio);
       if (updateStyle === true) {
         canvas.style.width = width + "px";
-        canvas.style.height = height2 + "px";
+        canvas.style.height = height + "px";
       }
-      this.setViewport(0, 0, width, height2);
+      this.setViewport(0, 0, width, height);
     };
     this.getDrawingBufferSize = function(target) {
       return target.set(_width * _pixelRatio, _height * _pixelRatio).floor();
     };
-    this.setDrawingBufferSize = function(width, height2, pixelRatio) {
+    this.setDrawingBufferSize = function(width, height, pixelRatio) {
       _width = width;
-      _height = height2;
+      _height = height;
       _pixelRatio = pixelRatio;
       canvas.width = Math.floor(width * pixelRatio);
-      canvas.height = Math.floor(height2 * pixelRatio);
-      this.setViewport(0, 0, width, height2);
+      canvas.height = Math.floor(height * pixelRatio);
+      this.setViewport(0, 0, width, height);
     };
     this.getCurrentViewport = function(target) {
       return target.copy(_currentViewport);
@@ -33402,22 +33405,22 @@ class WebGLRenderer {
     this.getViewport = function(target) {
       return target.copy(_viewport);
     };
-    this.setViewport = function(x, y, width, height2) {
+    this.setViewport = function(x, y, width, height) {
       if (x.isVector4) {
         _viewport.set(x.x, x.y, x.z, x.w);
       } else {
-        _viewport.set(x, y, width, height2);
+        _viewport.set(x, y, width, height);
       }
       state.viewport(_currentViewport.copy(_viewport).multiplyScalar(_pixelRatio).floor());
     };
     this.getScissor = function(target) {
       return target.copy(_scissor);
     };
-    this.setScissor = function(x, y, width, height2) {
+    this.setScissor = function(x, y, width, height) {
       if (x.isVector4) {
         _scissor.set(x.x, x.y, x.z, x.w);
       } else {
-        _scissor.set(x, y, width, height2);
+        _scissor.set(x, y, width, height);
       }
       state.scissor(_currentScissor.copy(_scissor).multiplyScalar(_pixelRatio).floor());
     };
@@ -34323,7 +34326,7 @@ class WebGLRenderer {
       }
       _currentMaterialId = -1;
     };
-    this.readRenderTargetPixels = function(renderTarget, x, y, width, height2, buffer, activeCubeFaceIndex) {
+    this.readRenderTargetPixels = function(renderTarget, x, y, width, height, buffer, activeCubeFaceIndex) {
       if (!(renderTarget && renderTarget.isWebGLRenderTarget)) {
         console.error("THREE.WebGLRenderer.readRenderTargetPixels: renderTarget is not THREE.WebGLRenderTarget.");
         return;
@@ -34349,8 +34352,8 @@ class WebGLRenderer {
             console.error("THREE.WebGLRenderer.readRenderTargetPixels: renderTarget is not in UnsignedByteType or implementation defined type.");
             return;
           }
-          if (x >= 0 && x <= renderTarget.width - width && (y >= 0 && y <= renderTarget.height - height2)) {
-            _gl.readPixels(x, y, width, height2, utils.convert(textureFormat), utils.convert(textureType), buffer);
+          if (x >= 0 && x <= renderTarget.width - width && (y >= 0 && y <= renderTarget.height - height)) {
+            _gl.readPixels(x, y, width, height, utils.convert(textureFormat), utils.convert(textureType), buffer);
           }
         } finally {
           const framebuffer2 = _currentRenderTarget !== null ? properties.get(_currentRenderTarget).__webglFramebuffer : null;
@@ -34361,14 +34364,14 @@ class WebGLRenderer {
     this.copyFramebufferToTexture = function(position, texture, level = 0) {
       const levelScale = Math.pow(2, -level);
       const width = Math.floor(texture.image.width * levelScale);
-      const height2 = Math.floor(texture.image.height * levelScale);
+      const height = Math.floor(texture.image.height * levelScale);
       textures.setTexture2D(texture, 0);
-      _gl.copyTexSubImage2D(_gl.TEXTURE_2D, level, 0, 0, position.x, position.y, width, height2);
+      _gl.copyTexSubImage2D(_gl.TEXTURE_2D, level, 0, 0, position.x, position.y, width, height);
       state.unbindTexture();
     };
     this.copyTextureToTexture = function(position, srcTexture, dstTexture, level = 0) {
       const width = srcTexture.image.width;
-      const height2 = srcTexture.image.height;
+      const height = srcTexture.image.height;
       const glFormat = utils.convert(dstTexture.format);
       const glType = utils.convert(dstTexture.type);
       textures.setTexture2D(dstTexture, 0);
@@ -34376,7 +34379,7 @@ class WebGLRenderer {
       _gl.pixelStorei(_gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, dstTexture.premultiplyAlpha);
       _gl.pixelStorei(_gl.UNPACK_ALIGNMENT, dstTexture.unpackAlignment);
       if (srcTexture.isDataTexture) {
-        _gl.texSubImage2D(_gl.TEXTURE_2D, level, position.x, position.y, width, height2, glFormat, glType, srcTexture.image.data);
+        _gl.texSubImage2D(_gl.TEXTURE_2D, level, position.x, position.y, width, height, glFormat, glType, srcTexture.image.data);
       } else {
         if (srcTexture.isCompressedTexture) {
           _gl.compressedTexSubImage2D(_gl.TEXTURE_2D, level, position.x, position.y, srcTexture.mipmaps[0].width, srcTexture.mipmaps[0].height, glFormat, srcTexture.mipmaps[0].data);
@@ -34393,7 +34396,7 @@ class WebGLRenderer {
         return;
       }
       const width = sourceBox.max.x - sourceBox.min.x + 1;
-      const height2 = sourceBox.max.y - sourceBox.min.y + 1;
+      const height = sourceBox.max.y - sourceBox.min.y + 1;
       const depth2 = sourceBox.max.z - sourceBox.min.z + 1;
       const glFormat = utils.convert(dstTexture.format);
       const glType = utils.convert(dstTexture.type);
@@ -34423,13 +34426,13 @@ class WebGLRenderer {
       _gl.pixelStorei(_gl.UNPACK_SKIP_ROWS, sourceBox.min.y);
       _gl.pixelStorei(_gl.UNPACK_SKIP_IMAGES, sourceBox.min.z);
       if (srcTexture.isDataTexture || srcTexture.isData3DTexture) {
-        _gl.texSubImage3D(glTarget, level, position.x, position.y, position.z, width, height2, depth2, glFormat, glType, image.data);
+        _gl.texSubImage3D(glTarget, level, position.x, position.y, position.z, width, height, depth2, glFormat, glType, image.data);
       } else {
         if (srcTexture.isCompressedArrayTexture) {
           console.warn("THREE.WebGLRenderer.copyTextureToTexture3D: untested support for compressed srcTexture.");
-          _gl.compressedTexSubImage3D(glTarget, level, position.x, position.y, position.z, width, height2, depth2, glFormat, image.data);
+          _gl.compressedTexSubImage3D(glTarget, level, position.x, position.y, position.z, width, height, depth2, glFormat, image.data);
         } else {
-          _gl.texSubImage3D(glTarget, level, position.x, position.y, position.z, width, height2, depth2, glFormat, glType, image);
+          _gl.texSubImage3D(glTarget, level, position.x, position.y, position.z, width, height, depth2, glFormat, glType, image);
         }
       }
       _gl.pixelStorei(_gl.UNPACK_ROW_LENGTH, unpackRowLen);
@@ -35217,10 +35220,10 @@ class Bone extends Object3D {
   }
 }
 class DataTexture extends Texture {
-  constructor(data2 = null, width = 1, height2 = 1, format2, type, mapping, wrapS, wrapT, magFilter = NearestFilter, minFilter = NearestFilter, anisotropy, colorSpace) {
+  constructor(data2 = null, width = 1, height = 1, format2, type, mapping, wrapS, wrapT, magFilter = NearestFilter, minFilter = NearestFilter, anisotropy, colorSpace) {
     super(null, mapping, wrapS, wrapT, magFilter, minFilter, format2, type, anisotropy, colorSpace);
     this.isDataTexture = true;
-    this.image = { data: data2, width, height: height2 };
+    this.image = { data: data2, width, height };
     this.generateMipmaps = false;
     this.flipY = false;
     this.unpackAlignment = 1;
@@ -35624,9 +35627,9 @@ class Line extends Object3D {
   updateMorphTargets() {
     const geometry = this.geometry;
     const morphAttributes = geometry.morphAttributes;
-    const keys2 = Object.keys(morphAttributes);
-    if (keys2.length > 0) {
-      const morphAttribute = morphAttributes[keys2[0]];
+    const keys = Object.keys(morphAttributes);
+    if (keys.length > 0) {
+      const morphAttribute = morphAttributes[keys[0]];
       if (morphAttribute !== void 0) {
         this.morphTargetInfluences = [];
         this.morphTargetDictionary = {};
@@ -35752,9 +35755,9 @@ class Points extends Object3D {
   updateMorphTargets() {
     const geometry = this.geometry;
     const morphAttributes = geometry.morphAttributes;
-    const keys2 = Object.keys(morphAttributes);
-    if (keys2.length > 0) {
-      const morphAttribute = morphAttributes[keys2[0]];
+    const keys = Object.keys(morphAttributes);
+    if (keys.length > 0) {
+      const morphAttribute = morphAttributes[keys[0]];
       if (morphAttribute !== void 0) {
         this.morphTargetInfluences = [];
         this.morphTargetDictionary = {};
@@ -35813,8 +35816,8 @@ class VideoTexture extends Texture {
   }
 }
 class FramebufferTexture extends Texture {
-  constructor(width, height2) {
-    super({ width, height: height2 });
+  constructor(width, height) {
+    super({ width, height });
     this.isFramebufferTexture = true;
     this.magFilter = NearestFilter;
     this.minFilter = NearestFilter;
@@ -35823,18 +35826,18 @@ class FramebufferTexture extends Texture {
   }
 }
 class CompressedTexture extends Texture {
-  constructor(mipmaps, width, height2, format2, type, mapping, wrapS, wrapT, magFilter, minFilter, anisotropy, colorSpace) {
+  constructor(mipmaps, width, height, format2, type, mapping, wrapS, wrapT, magFilter, minFilter, anisotropy, colorSpace) {
     super(null, mapping, wrapS, wrapT, magFilter, minFilter, format2, type, anisotropy, colorSpace);
     this.isCompressedTexture = true;
-    this.image = { width, height: height2 };
+    this.image = { width, height };
     this.mipmaps = mipmaps;
     this.flipY = false;
     this.generateMipmaps = false;
   }
 }
 class CompressedArrayTexture extends CompressedTexture {
-  constructor(mipmaps, width, height2, depth, format2, type) {
-    super(mipmaps, width, height2, format2, type);
+  constructor(mipmaps, width, height, depth, format2, type) {
+    super(mipmaps, width, height, format2, type);
     this.isCompressedArrayTexture = true;
     this.image.depth = depth;
     this.wrapR = ClampToEdgeWrapping;
@@ -37039,13 +37042,13 @@ class CircleGeometry extends BufferGeometry {
   }
 }
 class CylinderGeometry extends BufferGeometry {
-  constructor(radiusTop = 1, radiusBottom = 1, height2 = 1, radialSegments = 32, heightSegments = 1, openEnded = false, thetaStart = 0, thetaLength = Math.PI * 2) {
+  constructor(radiusTop = 1, radiusBottom = 1, height = 1, radialSegments = 32, heightSegments = 1, openEnded = false, thetaStart = 0, thetaLength = Math.PI * 2) {
     super();
     this.type = "CylinderGeometry";
     this.parameters = {
       radiusTop,
       radiusBottom,
-      height: height2,
+      height,
       radialSegments,
       heightSegments,
       openEnded,
@@ -37061,7 +37064,7 @@ class CylinderGeometry extends BufferGeometry {
     const uvs = [];
     let index = 0;
     const indexArray = [];
-    const halfHeight = height2 / 2;
+    const halfHeight = height / 2;
     let groupStart = 0;
     generateTorso();
     if (openEnded === false) {
@@ -37076,7 +37079,7 @@ class CylinderGeometry extends BufferGeometry {
       const normal = new Vector3();
       const vertex2 = new Vector3();
       let groupCount = 0;
-      const slope = (radiusBottom - radiusTop) / height2;
+      const slope = (radiusBottom - radiusTop) / height;
       for (let y = 0; y <= heightSegments; y++) {
         const indexRow = [];
         const v = y / heightSegments;
@@ -37087,7 +37090,7 @@ class CylinderGeometry extends BufferGeometry {
           const sinTheta = Math.sin(theta);
           const cosTheta = Math.cos(theta);
           vertex2.x = radius * sinTheta;
-          vertex2.y = -v * height2 + halfHeight;
+          vertex2.y = -v * height + halfHeight;
           vertex2.z = radius * cosTheta;
           vertices.push(vertex2.x, vertex2.y, vertex2.z);
           normal.set(sinTheta, slope, cosTheta).normalize();
@@ -37164,12 +37167,12 @@ class CylinderGeometry extends BufferGeometry {
   }
 }
 class ConeGeometry extends CylinderGeometry {
-  constructor(radius = 1, height2 = 1, radialSegments = 32, heightSegments = 1, openEnded = false, thetaStart = 0, thetaLength = Math.PI * 2) {
-    super(0, radius, height2, radialSegments, heightSegments, openEnded, thetaStart, thetaLength);
+  constructor(radius = 1, height = 1, radialSegments = 32, heightSegments = 1, openEnded = false, thetaStart = 0, thetaLength = Math.PI * 2) {
+    super(0, radius, height, radialSegments, heightSegments, openEnded, thetaStart, thetaLength);
     this.type = "ConeGeometry";
     this.parameters = {
       radius,
-      height: height2,
+      height,
       radialSegments,
       heightSegments,
       openEnded,
@@ -41543,12 +41546,12 @@ class AmbientLight extends Light {
   }
 }
 class RectAreaLight extends Light {
-  constructor(color2, intensity, width = 10, height2 = 10) {
+  constructor(color2, intensity, width = 10, height = 10) {
     super(color2, intensity);
     this.isRectAreaLight = true;
     this.type = "RectAreaLight";
     this.width = width;
-    this.height = height2;
+    this.height = height;
   }
   get power() {
     return this.intensity * this.width * this.height * Math.PI;
@@ -51847,9 +51850,9 @@ const isOrthographicCamera = (def) => def && def.isOrthographicCamera;
 const isRef = (obj) => obj && obj.hasOwnProperty("current");
 const useIsomorphicLayoutEffect = typeof window !== "undefined" && ((_window$document = window.document) != null && _window$document.createElement || ((_window$navigator = window.navigator) == null ? void 0 : _window$navigator.product) === "ReactNative") ? reactExports.useLayoutEffect : reactExports.useEffect;
 function useMutableCallback(fn) {
-  const ref2 = reactExports.useRef(fn);
-  useIsomorphicLayoutEffect(() => void (ref2.current = fn), [fn]);
-  return ref2;
+  const ref = reactExports.useRef(fn);
+  useIsomorphicLayoutEffect(() => void (ref.current = fn), [fn]);
+  return ref;
 }
 function Block({
   set: set2
@@ -52057,7 +52060,7 @@ function applyProps$1(instance, data2) {
   const prevHandlers = localState.eventCount;
   if (instance.__r3f) instance.__r3f.memoizedProps = memoized;
   for (let i2 = 0; i2 < changes.length; i2++) {
-    let [key, value, isEvent, keys2] = changes[i2];
+    let [key, value, isEvent, keys] = changes[i2];
     if (hasColorSpace(instance)) {
       const sRGBEncoding2 = 3001;
       const SRGBColorSpace2 = "srgb";
@@ -52072,10 +52075,10 @@ function applyProps$1(instance, data2) {
     }
     let currentInstance = instance;
     let targetProp = currentInstance[key];
-    if (keys2.length) {
-      targetProp = keys2.reduce((acc, key2) => acc[key2], instance);
+    if (keys.length) {
+      targetProp = keys.reduce((acc, key2) => acc[key2], instance);
       if (!(targetProp && targetProp.set)) {
-        const [name, ...reverseEntries] = keys2.reverse();
+        const [name, ...reverseEntries] = keys.reverse();
         currentInstance = reverseEntries.reverse().reduce((acc, key2) => acc[key2], instance);
         key = name;
       }
@@ -52481,18 +52484,18 @@ const createStore = (invalidate2, advance2) => {
     function getCurrentViewport(camera = get2().camera, target = defaultTarget, size = get2().size) {
       const {
         width,
-        height: height2,
+        height,
         top: top2,
         left: left2
       } = size;
-      const aspect2 = width / height2;
+      const aspect2 = width / height;
       if (target instanceof Vector3) tempTarget.copy(target);
       else tempTarget.set(...target);
       const distance2 = camera.getWorldPosition(position).distanceTo(tempTarget);
       if (isOrthographicCamera(camera)) {
         return {
           width: width / camera.zoom,
-          height: height2 / camera.zoom,
+          height: height / camera.zoom,
           top: top2,
           left: left2,
           factor: 1,
@@ -52502,7 +52505,7 @@ const createStore = (invalidate2, advance2) => {
       } else {
         const fov2 = camera.fov * Math.PI / 180;
         const h = 2 * Math.tan(fov2 / 2) * distance2;
-        const w = h * (width / height2);
+        const w = h * (width / height);
         return {
           width: w,
           height: h,
@@ -52585,11 +52588,11 @@ const createStore = (invalidate2, advance2) => {
           ...events
         }
       })),
-      setSize: (width, height2, updateStyle, top2, left2) => {
+      setSize: (width, height, updateStyle, top2, left2) => {
         const camera = get2().camera;
         const size = {
           width,
-          height: height2,
+          height,
           top: top2 || 0,
           left: left2 || 0,
           updateStyle
@@ -52636,11 +52639,11 @@ const createStore = (invalidate2, advance2) => {
         initialClick: [0, 0],
         initialHits: [],
         capturedMap: /* @__PURE__ */ new Map(),
-        subscribe: (ref2, priority, store) => {
+        subscribe: (ref, priority, store) => {
           const internal = get2().internal;
           internal.priority = internal.priority + (priority > 0 ? 1 : 0);
           internal.subscribers.push({
-            ref: ref2,
+            ref,
             priority,
             store
           });
@@ -52649,7 +52652,7 @@ const createStore = (invalidate2, advance2) => {
             const internal2 = get2().internal;
             if (internal2 != null && internal2.subscribers) {
               internal2.priority = internal2.priority - (priority > 0 ? 1 : 0);
-              internal2.subscribers = internal2.subscribers.filter((s) => s.ref !== ref2);
+              internal2.subscribers = internal2.subscribers.filter((s) => s.ref !== ref);
             }
           };
         }
@@ -52814,14 +52817,14 @@ function computeInitialSize(canvas, defaultSize) {
   if (defaultSize) {
     const {
       width,
-      height: height2,
+      height,
       top: top2,
       left: left2,
       updateStyle = defaultStyle
     } = defaultSize;
     return {
       width,
-      height: height2,
+      height,
       top: top2,
       left: left2,
       updateStyle
@@ -52829,13 +52832,13 @@ function computeInitialSize(canvas, defaultSize) {
   } else if (typeof HTMLCanvasElement !== "undefined" && canvas instanceof HTMLCanvasElement && canvas.parentElement) {
     const {
       width,
-      height: height2,
+      height,
       top: top2,
       left: left2
     } = canvas.parentElement.getBoundingClientRect();
     return {
       width,
-      height: height2,
+      height,
       top: top2,
       left: left2,
       updateStyle: defaultStyle
@@ -53492,9 +53495,9 @@ const CanvasImpl = /* @__PURE__ */ reactExports.forwardRef(function Canvas({
     }
   }, fallback)));
 });
-const Canvas2 = /* @__PURE__ */ reactExports.forwardRef(function CanvasWrapper(props, ref2) {
+const Canvas2 = /* @__PURE__ */ reactExports.forwardRef(function CanvasWrapper(props, ref) {
   return /* @__PURE__ */ reactExports.createElement(FiberProvider, null, /* @__PURE__ */ reactExports.createElement(CanvasImpl, _extends({}, props, {
-    ref: ref2
+    ref
   })));
 });
 function Particles({ speed = 0.2 }) {
@@ -53580,62 +53583,13 @@ const portraits = [
   { id: "luis", src: `${base}portraits/luis_portrait.png`, alt: "Portrait Luis" },
   { id: "jerome", src: `${base}portraits/jerome_portrait.png`, alt: "Portrait Jerome" }
 ];
-function resolveEl(input) {
-  if (!input || typeof document === "undefined") return null;
-  if (typeof input === "object" && "current" in input) input = input.current;
-  if (typeof Event !== "undefined" && input instanceof Event) {
-    input = input.currentTarget || input.target;
-  }
-  if (typeof input === "string") {
-    const node = document.querySelector(input);
-    if (node) return node;
-  }
-  if (input && input.nodeType === 1 && typeof input.getBoundingClientRect === "function") {
-    return input;
-  }
-  return null;
-}
-function burst(target, opts = {}) {
-  try {
-    const el = resolveEl(target) || document.body;
-    const { count = 14, reverse = false } = opts;
-    const rect = el.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    for (let i2 = 0; i2 < count; i2++) {
-      const node = document.createElement("span");
-      node.textContent = "🎉";
-      node.style.position = "fixed";
-      node.style.left = cx + "px";
-      node.style.top = cy + "px";
-      node.style.pointerEvents = "none";
-      node.style.zIndex = "9999";
-      node.style.fontSize = 14 + Math.floor(Math.random() * 10) + "px";
-      const angle = i2 / count * Math.PI * 2;
-      const dist = 60 + Math.random() * 80;
-      const dx = Math.cos(angle) * dist;
-      const dy = (reverse ? -1 : 1) * Math.sin(angle) * dist;
-      const duration = 600 + Math.random() * 500;
-      node.animate(
-        [
-          { transform: "translate(0,0) rotate(0deg)", opacity: 1 },
-          { transform: `translate(${dx}px, ${dy}px) rotate(${360 * (Math.random() > 0.5 ? 1 : -1)}deg)`, opacity: 0 }
-        ],
-        { duration, easing: "cubic-bezier(.2,.8,.2,1)", fill: "forwards" }
-      );
-      setTimeout(() => node.remove(), duration + 80);
-      document.body.appendChild(node);
-    }
-  } catch (_) {
-  }
-}
 function useScrollProgress() {
   const [progress2, setProgress] = reactExports.useState(0);
   reactExports.useEffect(() => {
     const onScroll = () => {
       const scrolled = window.scrollY;
-      const height2 = document.body.scrollHeight - window.innerHeight;
-      const p = height2 > 0 ? scrolled / height2 : 0;
+      const height = document.body.scrollHeight - window.innerHeight;
+      const p = height > 0 ? scrolled / height : 0;
       setProgress(Math.min(Math.max(p, 0), 1));
       document.body.classList.toggle("theme-fun", p > 0.25 && p < 0.9);
       document.body.classList.toggle("theme-corp", p <= 0.25 || p >= 0.9);
@@ -53646,18 +53600,7 @@ function useScrollProgress() {
   }, []);
   return progress2;
 }
-const GlitchLayer = React.lazy(() => __vitePreload(() => import("./GlitchLayer-B-tA4LDK.js"), true ? __vite__mapDeps([0,1]) : void 0));
-function safeBurst(el, opts = {}) {
-  try {
-    if (!el) return;
-    const count = Math.max(8, Math.min(200, Number(opts.count ?? 24)));
-    const reverse = !!opts.reverse;
-    burst(el, { count, reverse });
-  } catch (e) {
-    console.error("[confetti burst failed]", e);
-    if (typeof window !== "undefined") window.__SAFE_MODE__ = true;
-  }
-}
+const GlitchLayer = React.lazy(() => __vitePreload(() => import("./GlitchLayer-y4o0oI5k.js"), true ? __vite__mapDeps([0,1]) : void 0));
 const P = ({ id: id2, ...pos }) => {
   const p = portraits.find((x) => x.id === id2);
   if (!p) return null;
@@ -53676,11 +53619,6 @@ function App() {
     return Math.round(raw * 100);
   }, [progress2]);
   const heroRef = reactExports.useRef(null);
-  const onStart = () => {
-    safeBurst(heroRef.current, { count: 32, reverse: false });
-    setGlitch(true);
-    setTimeout(() => setGlitch(false), 1500);
-  };
   const sep = data?.["September"] ?? {};
   const oct = data?.["October"] ?? {};
   const sepCounts = reactExports.useMemo(() => splitCounts(sep), [sep]);
@@ -53688,21 +53626,11 @@ function App() {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "vhs", ref: heroRef, children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.Suspense, { fallback: null, children: /* @__PURE__ */ jsxRuntimeExports.jsx(GlitchLayer, { active: glitch }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(Ambient, {}),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("section", { className: "section", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "container", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "card", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "badge", children: "MIPs Journey" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "h1", children: "September → October" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "p", children: "We start buttoned-up. We detour through neon. We end with a handshake and a compliance-friendly smile." }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: "1rem", marginTop: "1rem" }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("a", { className: "button", href: "#recap", onClick: onStart, children: "Start the Tape ▷" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "caption", children: [
-          "Theme morph: ",
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("strong", { children: [
-            funRatio,
-            "% fun"
-          ] })
-        ] })
-      ] })
-    ] }) }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("section", { className: "section", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "container", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Bars, { data: sepCounts.list || [], progress: progress2 }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Bars, { data: octCounts.list || [], progress: progress2 }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: "1rem" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Counter, { value: funRatio, label: "Fun Morph" }) })
+    ] }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "section", "aria-hidden": "true", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "abhishek", x: 24, y: 24, delay: 0.2 }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "jesus", x: window.innerWidth - 140, y: 40, delay: 0.35 }),
@@ -53753,4 +53681,4 @@ export {
   jsxRuntimeExports as j,
   reactExports as r
 };
-//# sourceMappingURL=index-DQMh58eU.js.map
+//# sourceMappingURL=index-J0SQJe_Y.js.map
