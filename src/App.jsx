@@ -101,7 +101,7 @@ if (!SAFE_MODE) safeTry(() => safeBurst(ref?.current, { count: 28, reverse: fals
   }
 
   return (
-    <ErrorBoundary>
+    //<ErrorBoundary>
     <div className={'vhs'}>
    {!SAFE_MODE && safeTry(() => <Ambient />, 'Ambient')}
      {/* Glitch layer (disabled in safe mode) */}
@@ -246,6 +246,6 @@ if (!SAFE_MODE) safeTry(() => safeBurst(ref?.current, { count: 28, reverse: fals
         <P id="jerome" x={W.innerWidth-160} y={-10} delay={0.2} />
       </section>
     </div>
-    </ErrorBoundary>
+    //</ErrorBoundary>
   )
 }

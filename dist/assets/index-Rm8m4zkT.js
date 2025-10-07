@@ -51821,7 +51821,7 @@ function Block({
   }, [set2]);
   return null;
 }
-let ErrorBoundary$2 = class ErrorBoundary2 extends reactExports.Component {
+let ErrorBoundary$1 = class ErrorBoundary extends reactExports.Component {
   constructor(...args) {
     super(...args);
     this.state = {
@@ -51835,7 +51835,7 @@ let ErrorBoundary$2 = class ErrorBoundary2 extends reactExports.Component {
     return this.state.error ? null : this.props.children;
   }
 };
-ErrorBoundary$2.getDerivedStateFromError = () => ({
+ErrorBoundary$1.getDerivedStateFromError = () => ({
   error: true
 });
 const DEFAULT = "__default";
@@ -53416,7 +53416,7 @@ const CanvasImpl = /* @__PURE__ */ reactExports.forwardRef(function Canvas({
           onCreated == null ? void 0 : onCreated(state);
         }
       });
-      root2.current.render(/* @__PURE__ */ reactExports.createElement(Bridge, null, /* @__PURE__ */ reactExports.createElement(ErrorBoundary$2, {
+      root2.current.render(/* @__PURE__ */ reactExports.createElement(Bridge, null, /* @__PURE__ */ reactExports.createElement(ErrorBoundary$1, {
         set: setError
       }, /* @__PURE__ */ reactExports.createElement(reactExports.Suspense, {
         fallback: /* @__PURE__ */ reactExports.createElement(Block, {
@@ -53632,153 +53632,156 @@ function App() {
       }
     }
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(ErrorBoundary, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "vhs", children: [
-    !SAFE_MODE && safeTry(() => /* @__PURE__ */ jsxRuntimeExports.jsx(Ambient, {}), "Ambient"),
-    !SAFE_MODE && safeTry(() => /* @__PURE__ */ jsxRuntimeExports.jsx(GlitchLayer, { active: glitch }), "GlitchLayer"),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "section", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "container", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "card", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "badge", children: "MIPs Journey" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "h1", children: "September → October" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "p", children: "We start buttoned-up. We detour through neon. We end with a handshake and a compliance-friendly smile." }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: "1rem", marginTop: "1rem" }, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("a", { className: "button", href: "#recap", onClick: start2, children: "Start the Tape ▷" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "caption", children: [
-            "Theme morph: ",
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("strong", { children: [
-              Math.round(funRatio * 100),
-              "%"
-            ] }),
-            " fun"
-          ] })
-        ] })
-      ] }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "abhishek", x: 24, y: 24, delay: 0.2 }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "jesus", x: W.innerWidth - 140, y: 40, delay: 0.35 })
-    ] }),
-    safeTry(() => /* @__PURE__ */ jsxRuntimeExports.jsx(Leaderboard, {}), "Leaderboard"),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("section", { id: "recap", className: "section", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-      motion.div,
-      {
-        className: "container",
-        initial: { opacity: 0, y: 30 },
-        whileInView: { opacity: 1, y: 0 },
-        viewport: { once: true },
-        transition: { duration: 0.6 },
-        children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "card", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "badge", children: "Recap" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "h2", children: "September Numbers" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "p", children: "A clean close to the quarter — good completion rate, a few spikes in cycle time, and a quiet sigh of relief echoing through the halls." }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            Bars,
-            {
-              data: [
-                { label: "Completed", value: 12 },
-                { label: "Pending", value: 3 },
-                { label: "Blocked", value: 1 }
-              ]
-            }
-          )
-        ] })
-      }
-    ) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("section", { id: "leaderboard", className: "section", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-      motion.div,
-      {
-        className: "container",
-        initial: { opacity: 0, y: 30 },
-        whileInView: { opacity: 1, y: 0 },
-        viewport: { once: true },
-        transition: { duration: 0.6, delay: 0.15 },
-        children: /* @__PURE__ */ jsxRuntimeExports.jsx(Leaderboard, {})
-      }
-    ) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "section", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "container", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "card", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "h2", children: "October Recap" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-12", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Bars, { data: octCounts.list.map((d) => ({ metric: d.metric, October: d.value, September: 0 })), keys: ["October"] }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "col-6", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "badge", children: "Total MIP forms" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { fontSize: "3rem", fontWeight: 800, color: "var(--accent)" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Counter, { to: oct["Total MIP forms"] }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "p", children: [
-              "Line items: ",
-              /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: oct["Total Line Items"] }),
-              " • Avg per form: ",
-              /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: oct["Avg Line Items per MIP form"].toFixed(2) })
+  return (
+    //<ErrorBoundary>
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "vhs", children: [
+      !SAFE_MODE && safeTry(() => /* @__PURE__ */ jsxRuntimeExports.jsx(Ambient, {}), "Ambient"),
+      !SAFE_MODE && safeTry(() => /* @__PURE__ */ jsxRuntimeExports.jsx(GlitchLayer, { active: glitch }), "GlitchLayer"),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "section", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "container", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "card", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "badge", children: "MIPs Journey" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "h1", children: "September → October" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "p", children: "We start buttoned-up. We detour through neon. We end with a handshake and a compliance-friendly smile." }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: "1rem", marginTop: "1rem" }, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("a", { className: "button", href: "#recap", onClick: start2, children: "Start the Tape ▷" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "caption", children: [
+              "Theme morph: ",
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("strong", { children: [
+                Math.round(funRatio * 100),
+                "%"
+              ] }),
+              " fun"
             ] })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "p", children: [
-            "New Teams: ",
-            /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: oct["New Teams"] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
-            "Rejected: ",
-            /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: oct["Rejected"] }),
-            " • Late Requests: ",
-            /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: oct["Late Requests"] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
-            "Dissolves: ",
-            /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: oct["Dissolves"] })
-          ] }) })
-        ] })
-      ] }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "saily", x: 260, y: 30, delay: 0.45 })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "section", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "container", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "card", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "h2", children: "Month over Month" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "p", children: "Green is up where you want it. Red is a learning opportunity we pretend we asked for." }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-12", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Bars, { data: comparison.map((d) => ({ metric: d.metric, September: d.September, October: d.October })), keys: ["September", "October"] }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-12", children: /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: comparison.map((d) => {
-            const color2 = d.delta >= 0 ? "var(--success)" : "var(--danger)";
-            return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-              "li",
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "abhishek", x: 24, y: 24, delay: 0.2 }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "jesus", x: W.innerWidth - 140, y: 40, delay: 0.35 })
+      ] }),
+      safeTry(() => /* @__PURE__ */ jsxRuntimeExports.jsx(Leaderboard, {}), "Leaderboard"),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("section", { id: "recap", className: "section", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        motion.div,
+        {
+          className: "container",
+          initial: { opacity: 0, y: 30 },
+          whileInView: { opacity: 1, y: 0 },
+          viewport: { once: true },
+          transition: { duration: 0.6 },
+          children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "card", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "badge", children: "Recap" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "h2", children: "September Numbers" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "p", children: "A clean close to the quarter — good completion rate, a few spikes in cycle time, and a quiet sigh of relief echoing through the halls." }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              Bars,
               {
-                className: "p",
-                onMouseEnter: () => onSectionVisible(d.metric, d.delta, d.metric === "Rejected" ? refRejected : d.metric === "Late Requests" ? refLate : d.metric === "New Teams" ? refNew : null),
-                children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("strong", { children: [
-                    d.metric,
-                    ":"
-                  ] }),
-                  " ",
-                  d.September,
-                  " → ",
-                  d.October,
-                  " (",
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { color: color2 }, children: [
-                    d.delta >= 0 ? "+" : "",
-                    d.delta
-                  ] }),
-                  ")"
+                data: [
+                  { label: "Completed", value: 12 },
+                  { label: "Pending", value: 3 },
+                  { label: "Blocked", value: 1 }
                 ]
-              },
-              d.metric
-            );
-          }) }) })
-        ] })
-      ] }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "niki", x: W.innerWidth * 0.75, y: -10, delay: 0.3 })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "section", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "container", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "card", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "h2", children: "What’s Next" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "p", children: "Fewer forms, chunkier payloads. Keep the good drops: Late Requests and Rejected. Tame Dissolves. Nurture New Teams intake. We got this, with coffee." }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "p", children: /* @__PURE__ */ jsxRuntimeExports.jsx("em", { children: "Finalizing this communication requires your acceptance of the implied joy contained herein." }) })
-      ] }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "luis", x: 60, y: 20, delay: 0.25 })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "section", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "container", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "card", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "badge", children: "Executive Sign-Off" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "h2", children: "Thank you for your continued partnership" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "p", children: "Performance indicators will be monitored. Synergies will be leveraged. The tape stops now." })
-      ] }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "jerome", x: W.innerWidth - 160, y: -10, delay: 0.2 })
+              }
+            )
+          ] })
+        }
+      ) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("section", { id: "leaderboard", className: "section", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        motion.div,
+        {
+          className: "container",
+          initial: { opacity: 0, y: 30 },
+          whileInView: { opacity: 1, y: 0 },
+          viewport: { once: true },
+          transition: { duration: 0.6, delay: 0.15 },
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(Leaderboard, {})
+        }
+      ) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "section", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "container", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "card", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "h2", children: "October Recap" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-12", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Bars, { data: octCounts.list.map((d) => ({ metric: d.metric, October: d.value, September: 0 })), keys: ["October"] }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "col-6", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "badge", children: "Total MIP forms" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { fontSize: "3rem", fontWeight: 800, color: "var(--accent)" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Counter, { to: oct["Total MIP forms"] }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "p", children: [
+                "Line items: ",
+                /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: oct["Total Line Items"] }),
+                " • Avg per form: ",
+                /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: oct["Avg Line Items per MIP form"].toFixed(2) })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "p", children: [
+              "New Teams: ",
+              /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: oct["New Teams"] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+              "Rejected: ",
+              /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: oct["Rejected"] }),
+              " • Late Requests: ",
+              /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: oct["Late Requests"] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+              "Dissolves: ",
+              /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: oct["Dissolves"] })
+            ] }) })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "saily", x: 260, y: 30, delay: 0.45 })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "section", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "container", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "card", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "h2", children: "Month over Month" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "p", children: "Green is up where you want it. Red is a learning opportunity we pretend we asked for." }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-12", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Bars, { data: comparison.map((d) => ({ metric: d.metric, September: d.September, October: d.October })), keys: ["September", "October"] }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-12", children: /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: comparison.map((d) => {
+              const color2 = d.delta >= 0 ? "var(--success)" : "var(--danger)";
+              return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                "li",
+                {
+                  className: "p",
+                  onMouseEnter: () => onSectionVisible(d.metric, d.delta, d.metric === "Rejected" ? refRejected : d.metric === "Late Requests" ? refLate : d.metric === "New Teams" ? refNew : null),
+                  children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("strong", { children: [
+                      d.metric,
+                      ":"
+                    ] }),
+                    " ",
+                    d.September,
+                    " → ",
+                    d.October,
+                    " (",
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { color: color2 }, children: [
+                      d.delta >= 0 ? "+" : "",
+                      d.delta
+                    ] }),
+                    ")"
+                  ]
+                },
+                d.metric
+              );
+            }) }) })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "niki", x: W.innerWidth * 0.75, y: -10, delay: 0.3 })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "section", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "container", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "card", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "h2", children: "What’s Next" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "p", children: "Fewer forms, chunkier payloads. Keep the good drops: Late Requests and Rejected. Tame Dissolves. Nurture New Teams intake. We got this, with coffee." }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "p", children: /* @__PURE__ */ jsxRuntimeExports.jsx("em", { children: "Finalizing this communication requires your acceptance of the implied joy contained herein." }) })
+        ] }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "luis", x: 60, y: 20, delay: 0.25 })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "section", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "container", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "card", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "badge", children: "Executive Sign-Off" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "h2", children: "Thank you for your continued partnership" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "p", children: "Performance indicators will be monitored. Synergies will be leveraged. The tape stops now." })
+        ] }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "jerome", x: W.innerWidth - 160, y: -10, delay: 0.2 })
+      ] })
     ] })
-  ] }) });
+  );
 }
-let ErrorBoundary$1 = class ErrorBoundary3 extends React.Component {
+class ErrorBoundary2 extends React.Component {
   constructor(props) {
     super(props);
     this.state = { hasError: false, err: null };
@@ -53798,6 +53801,6 @@ let ErrorBoundary$1 = class ErrorBoundary3 extends React.Component {
     }
     return this.props.children;
   }
-};
-ReactDOM.createRoot(document.getElementById("root")).render(/* @__PURE__ */ jsxRuntimeExports.jsx(React.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(ErrorBoundary$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(App, {}) }) }));
-//# sourceMappingURL=index-B7BaqBvj.js.map
+}
+ReactDOM.createRoot(document.getElementById("root")).render(/* @__PURE__ */ jsxRuntimeExports.jsx(React.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(ErrorBoundary2, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(App, {}) }) }));
+//# sourceMappingURL=index-Rm8m4zkT.js.map
