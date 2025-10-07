@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/GlitchLayer-B3BI68m9.js","assets/GlitchLayer-C0dWx6zP.css"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/GlitchLayer-BnY2gVNH.js","assets/GlitchLayer-C0dWx6zP.css"])))=>i.map(i=>d[i]);
 (function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) return;
@@ -7440,7 +7440,7 @@ const cssVariableRegex = /var\s*\(\s*--[\w-]+(\s*,\s*(?:(?:[^)(]|\((?:[^)(]+|\([
 const getValueAsType = (value, type) => {
   return type && typeof value === "number" ? type.transform(value) : value;
 };
-const clamp$1 = (min, max, v) => Math.min(Math.max(v, min), max);
+const clamp$1 = (min, max2, v) => Math.min(Math.max(v, min), max2);
 const number = {
   test: (v) => typeof v === "number",
   parse: parseFloat,
@@ -9113,19 +9113,19 @@ function spring({ keyframes: keyframes2, restDelta, restSpeed, ...options }) {
     }
   };
 }
-function inertia({ keyframes: keyframes2, velocity = 0, power = 0.8, timeConstant = 325, bounceDamping = 10, bounceStiffness = 500, modifyTarget, min, max, restDelta = 0.5, restSpeed }) {
+function inertia({ keyframes: keyframes2, velocity = 0, power = 0.8, timeConstant = 325, bounceDamping = 10, bounceStiffness = 500, modifyTarget, min, max: max2, restDelta = 0.5, restSpeed }) {
   const origin = keyframes2[0];
   const state = {
     done: false,
     value: origin
   };
-  const isOutOfBounds = (v) => min !== void 0 && v < min || max !== void 0 && v > max;
+  const isOutOfBounds = (v) => min !== void 0 && v < min || max2 !== void 0 && v > max2;
   const nearestBoundary = (v) => {
     if (min === void 0)
-      return max;
-    if (max === void 0)
+      return max2;
+    if (max2 === void 0)
       return min;
-    return Math.abs(min - v) < Math.abs(max - v) ? min : max;
+    return Math.abs(min - v) < Math.abs(max2 - v) ? min : max2;
   };
   let amplitude = power * velocity;
   const ideal = origin + amplitude;
@@ -10631,18 +10631,18 @@ function calcRelativePosition(target, layout2, parent) {
   calcRelativeAxisPosition(target.x, layout2.x, parent.x);
   calcRelativeAxisPosition(target.y, layout2.y, parent.y);
 }
-function applyConstraints(point, { min, max }, elastic) {
+function applyConstraints(point, { min, max: max2 }, elastic) {
   if (min !== void 0 && point < min) {
     point = elastic ? mix(min, point, elastic.min) : Math.max(point, min);
-  } else if (max !== void 0 && point > max) {
-    point = elastic ? mix(max, point, elastic.max) : Math.min(point, max);
+  } else if (max2 !== void 0 && point > max2) {
+    point = elastic ? mix(max2, point, elastic.max) : Math.min(point, max2);
   }
   return point;
 }
-function calcRelativeAxisConstraints(axis, min, max) {
+function calcRelativeAxisConstraints(axis, min, max2) {
   return {
     min: min !== void 0 ? axis.min + min : void 0,
-    max: max !== void 0 ? axis.max + max - (axis.max - axis.min) : void 0
+    max: max2 !== void 0 ? axis.max + max2 - (axis.max - axis.min) : void 0
   };
 }
 function calcRelativeConstraints(layoutBox, { top, left, bottom, right }) {
@@ -10653,11 +10653,11 @@ function calcRelativeConstraints(layoutBox, { top, left, bottom, right }) {
 }
 function calcViewportAxisConstraints(layoutAxis, constraintsAxis) {
   let min = constraintsAxis.min - layoutAxis.min;
-  let max = constraintsAxis.max - layoutAxis.max;
+  let max2 = constraintsAxis.max - layoutAxis.max;
   if (constraintsAxis.max - constraintsAxis.min < layoutAxis.max - layoutAxis.min) {
-    [min, max] = [max, min];
+    [min, max2] = [max2, min];
   }
-  return { min, max };
+  return { min, max: max2 };
 }
 function calcViewportConstraints(layoutBox, constraintsBox) {
   return {
@@ -11069,8 +11069,8 @@ class VisualElementDragControls {
       const { projection } = this.visualElement;
       const axisValue = this.getAxisMotionValue(axis);
       if (projection && projection.layout) {
-        const { min, max } = projection.layout.layoutBox[axis];
-        axisValue.set(point[axis] - mix(min, max, 0.5));
+        const { min, max: max2 } = projection.layout.layoutBox[axis];
+        axisValue.set(point[axis] - mix(min, max2, 0.5));
       }
     });
   }
@@ -11104,8 +11104,8 @@ class VisualElementDragControls {
       if (!shouldDrag(axis, drag2, null))
         return;
       const axisValue = this.getAxisMotionValue(axis);
-      const { min, max } = this.constraints[axis];
-      axisValue.set(mix(min, max, boxProgress[axis]));
+      const { min, max: max2 } = this.constraints[axis];
+      axisValue.set(mix(min, max2, boxProgress[axis]));
     });
   }
   addListeners() {
@@ -11445,13 +11445,13 @@ function getRadius(values, radiusName) {
 }
 const easeCrossfadeIn = compress(0, 0.5, circOut);
 const easeCrossfadeOut = compress(0.5, 0.95, noop$1);
-function compress(min, max, easing) {
+function compress(min, max2, easing) {
   return (p) => {
     if (p < min)
       return 0;
-    if (p > max)
+    if (p > max2)
       return 1;
-    return easing(progress(min, max, p));
+    return easing(progress(min, max2, p));
   };
 }
 function copyAxisInto(axis, originAxis) {
@@ -13668,23 +13668,6 @@ const AnimatePresence = ({ children: children2, custom, initial = true, onExitCo
   });
   return reactExports.createElement(reactExports.Fragment, null, exitingChildren.size ? childrenToRender : childrenToRender.map((child) => reactExports.cloneElement(child)));
 };
-function Portrait({ src, alt = "cameo", x = 0, y = 0, delay: delay2 = 0, mode = "peeker" }) {
-  const size = 96;
-  const style = { position: "absolute", top: y, left: x, width: size, height: size };
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    motion.img,
-    {
-      src,
-      alt,
-      className: "portrait",
-      style,
-      initial: { opacity: 0, scale: 0.7, rotate: mode === "spin" ? -15 : 0, x, y },
-      whileInView: { opacity: 1, scale: 1, rotate: 0, x, y },
-      viewport: { once: true, margin: "-100px" },
-      transition: { delay: delay2, type: "spring", stiffness: 160, damping: 18 }
-    }
-  );
-}
 const base = "/mips-journey-site-v2/";
 const portraits = [
   { id: "abhishek", src: `${base}portraits/abhishek_portrait.png`, alt: "Portrait Abhishek" },
@@ -13695,41 +13678,29 @@ const portraits = [
   { id: "luis", src: `${base}portraits/luis_portrait.png`, alt: "Portrait Luis" },
   { id: "jerome", src: `${base}portraits/jerome_portrait.png`, alt: "Portrait Jerome" }
 ];
-const peeks = [
-  { id: "abhishek", side: "left", top: 120, delay: 0.15 },
-  { id: "jesus", side: "right", top: 160, delay: 0.25 },
-  { id: "thai", side: "left", top: 420, delay: 0.35 },
-  { id: "saily", side: "right", top: 520, delay: 0.45 },
-  { id: "niki", side: "left", top: 680, delay: 0.55 },
-  { id: "luis", side: "right", top: 780, delay: 0.65 },
-  { id: "jerome", side: "left", top: 920, delay: 0.75 }
-];
-function Peek({ id: id2, side = "left", top = 200, delay: delay2 = 0.2 }) {
-  const p = portraits.find((x) => x.id === id2);
-  if (!p) return null;
-  const fromX = side === "left" ? -80 : 80;
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+const faces = portraits.map((p, i2) => ({
+  ...p,
+  delay: i2 * 0.25,
+  side: i2 % 2 ? "left" : "right"
+}));
+function Peekers() {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "peekers", children: faces.map((f, i2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
     motion.div,
     {
-      initial: { x: fromX, opacity: 0 },
-      whileInView: { x: 0, opacity: 1 },
-      viewport: { once: true, margin: "-20% 0px -10% 0px" },
-      transition: { type: "spring", stiffness: 200, damping: 18, delay: delay2 },
-      style: {
-        position: "fixed",
-        top,
-        [side]: -16,
-        zIndex: 5,
-        pointerEvents: "auto"
+      className: `peeker ${f.side}`,
+      initial: { x: f.side === "left" ? -80 : 80, opacity: 0 },
+      animate: { x: 0, opacity: 1 },
+      transition: { delay: f.delay, type: "spring", stiffness: 70 },
+      whileHover: {
+        rotate: [0, 6, -4, 0],
+        scale: 1.05,
+        transition: { duration: 0.6 }
       },
-      whileHover: { x: side === "left" ? 8 : -8, rotate: side === "left" ? -2 : 2 },
-      title: "👀 boo!",
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { transform: side === "right" ? "scaleX(-1)" : "none" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Portrait, { ...p }) })
-    }
-  );
-}
-function Peekers() {
-  return peeks.map((cfg) => /* @__PURE__ */ jsxRuntimeExports.jsx(Peek, { ...cfg }, cfg.id));
+      title: `${f.name} peeks suspiciously`,
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: f.src, alt: f.name })
+    },
+    i2
+  )) });
 }
 var noop = { value: () => {
 } };
@@ -14765,12 +14736,12 @@ function hslConvert(o) {
   if (!o) return new Hsl();
   if (o instanceof Hsl) return o;
   o = o.rgb();
-  var r = o.r / 255, g2 = o.g / 255, b = o.b / 255, min = Math.min(r, g2, b), max = Math.max(r, g2, b), h = NaN, s = max - min, l = (max + min) / 2;
+  var r = o.r / 255, g2 = o.g / 255, b = o.b / 255, min = Math.min(r, g2, b), max2 = Math.max(r, g2, b), h = NaN, s = max2 - min, l = (max2 + min) / 2;
   if (s) {
-    if (r === max) h = (g2 - b) / s + (g2 < b) * 6;
-    else if (g2 === max) h = (b - r) / s + 2;
+    if (r === max2) h = (g2 - b) / s + (g2 < b) * 6;
+    else if (g2 === max2) h = (b - r) / s + 2;
     else h = (r - g2) / s + 4;
-    s /= l < 0.5 ? max + min : 2 - max - min;
+    s /= l < 0.5 ? max2 + min : 2 - max2 - min;
     h *= 60;
   } else {
     s = l > 0 && l < 1 ? 0 : h;
@@ -15768,32 +15739,34 @@ Transform.prototype = {
 };
 Transform.prototype;
 function Bars({ data: data2 = [], progress: progress2 = 0 }) {
-  const items = Array.isArray(data2) ? data2 : [];
-  const max = Math.max(1, ...items.map((d) => Number(d.value) || 0));
-  const avg = items.reduce((a, c) => a + (Number(c.value) || 0), 0) / Math.max(1, items.length);
-  function trendColor(v, avg2) {
-    if (v > avg2 * 1.05) return "var(--brand-2)";
-    if (v < avg2 * 0.95) return "#ef4444";
-    return "var(--brand)";
-  }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bars", children: items.map((d, i2) => {
-    const v = Number(d.value) || 0;
-    const w = `${v / max * 100}%`;
+}
+const items = Array.isArray(data) ? data : [];
+const max = Math.max(1, ...items.map((d) => Number(d.value) || 0));
+items.reduce((a, c) => a + (Number(c.value) || 0), 0) / Math.max(1, items.length);
+function trendColor(value, average) {
+  if (average == null) return "var(--brand)";
+  if (value > average * 1.05) return "var(--good)";
+  if (value < average * 0.95) return "var(--bad)";
+  return "var(--meh)";
+}
+{
+  data.map((d, i2) => {
+    const v = Number(d.value ?? 0);
+    const avg2 = Number(d.average ?? d.avg ?? null);
+    const pct = Math.max(3, Math.min(100, v / (max || 1) * 100));
+    const width = pct + "%";
     return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bar-row", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bar-label", children: d.metric }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bar-track", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         "div",
         {
           className: "bar-fill",
-          style: {
-            width: w,
-            background: trendColor(v, avg)
-          }
+          style: { width, background: trendColor(v, avg2) },
+          title: `${d.metric}: ${v}${avg2 ? ` (${v > avg2 ? "↑" : v < avg2 ? "↓" : "→"})` : ""}`
         }
-      ) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bar-val", children: v })
+      ) })
     ] }, i2);
-  }) });
+  });
 }
 function Counter({ value = 0, label = "", duration = 900 }) {
   const [n, setN] = reactExports.useState(0);
@@ -16073,8 +16046,8 @@ function generateUUID() {
   const uuid = _lut[d0 & 255] + _lut[d0 >> 8 & 255] + _lut[d0 >> 16 & 255] + _lut[d0 >> 24 & 255] + "-" + _lut[d1 & 255] + _lut[d1 >> 8 & 255] + "-" + _lut[d1 >> 16 & 15 | 64] + _lut[d1 >> 24 & 255] + "-" + _lut[d2 & 63 | 128] + _lut[d2 >> 8 & 255] + "-" + _lut[d2 >> 16 & 255] + _lut[d2 >> 24 & 255] + _lut[d3 & 255] + _lut[d3 >> 8 & 255] + _lut[d3 >> 16 & 255] + _lut[d3 >> 24 & 255];
   return uuid.toLowerCase();
 }
-function clamp(value, min, max) {
-  return Math.max(min, Math.min(max, value));
+function clamp(value, min, max2) {
+  return Math.max(min, Math.min(max2, value));
 }
 function euclideanModulo(n, m) {
   return (n % m + m) % m;
@@ -16098,16 +16071,16 @@ function damp(x, y, lambda, dt) {
 function pingpong(x, length = 1) {
   return length - Math.abs(euclideanModulo(x, length * 2) - length);
 }
-function smoothstep(x, min, max) {
+function smoothstep(x, min, max2) {
   if (x <= min) return 0;
-  if (x >= max) return 1;
-  x = (x - min) / (max - min);
+  if (x >= max2) return 1;
+  x = (x - min) / (max2 - min);
   return x * x * (3 - 2 * x);
 }
-function smootherstep(x, min, max) {
+function smootherstep(x, min, max2) {
   if (x <= min) return 0;
-  if (x >= max) return 1;
-  x = (x - min) / (max - min);
+  if (x >= max2) return 1;
+  x = (x - min) / (max2 - min);
   return x * x * x * (x * (x * 6 - 15) + 10);
 }
 function randInt(low, high) {
@@ -16378,9 +16351,9 @@ class Vector2 {
     this.y = Math.max(this.y, v.y);
     return this;
   }
-  clamp(min, max) {
-    this.x = Math.max(min.x, Math.min(max.x, this.x));
-    this.y = Math.max(min.y, Math.min(max.y, this.y));
+  clamp(min, max2) {
+    this.x = Math.max(min.x, Math.min(max2.x, this.x));
+    this.y = Math.max(min.y, Math.min(max2.y, this.y));
     return this;
   }
   clampScalar(minVal, maxVal) {
@@ -16388,9 +16361,9 @@ class Vector2 {
     this.y = Math.max(minVal, Math.min(maxVal, this.y));
     return this;
   }
-  clampLength(min, max) {
+  clampLength(min, max2) {
     const length = this.length();
-    return this.divideScalar(length || 1).multiplyScalar(Math.max(min, Math.min(max, length)));
+    return this.divideScalar(length || 1).multiplyScalar(Math.max(min, Math.min(max2, length)));
   }
   floor() {
     this.x = Math.floor(this.x);
@@ -17490,11 +17463,11 @@ class Vector4 {
     this.w = Math.max(this.w, v.w);
     return this;
   }
-  clamp(min, max) {
-    this.x = Math.max(min.x, Math.min(max.x, this.x));
-    this.y = Math.max(min.y, Math.min(max.y, this.y));
-    this.z = Math.max(min.z, Math.min(max.z, this.z));
-    this.w = Math.max(min.w, Math.min(max.w, this.w));
+  clamp(min, max2) {
+    this.x = Math.max(min.x, Math.min(max2.x, this.x));
+    this.y = Math.max(min.y, Math.min(max2.y, this.y));
+    this.z = Math.max(min.z, Math.min(max2.z, this.z));
+    this.w = Math.max(min.w, Math.min(max2.w, this.w));
     return this;
   }
   clampScalar(minVal, maxVal) {
@@ -17504,9 +17477,9 @@ class Vector4 {
     this.w = Math.max(minVal, Math.min(maxVal, this.w));
     return this;
   }
-  clampLength(min, max) {
+  clampLength(min, max2) {
     const length = this.length();
-    return this.divideScalar(length || 1).multiplyScalar(Math.max(min, Math.min(max, length)));
+    return this.divideScalar(length || 1).multiplyScalar(Math.max(min, Math.min(max2, length)));
   }
   floor() {
     this.x = Math.floor(this.x);
@@ -18372,10 +18345,10 @@ class Vector3 {
     this.z = Math.max(this.z, v.z);
     return this;
   }
-  clamp(min, max) {
-    this.x = Math.max(min.x, Math.min(max.x, this.x));
-    this.y = Math.max(min.y, Math.min(max.y, this.y));
-    this.z = Math.max(min.z, Math.min(max.z, this.z));
+  clamp(min, max2) {
+    this.x = Math.max(min.x, Math.min(max2.x, this.x));
+    this.y = Math.max(min.y, Math.min(max2.y, this.y));
+    this.z = Math.max(min.z, Math.min(max2.z, this.z));
     return this;
   }
   clampScalar(minVal, maxVal) {
@@ -18384,9 +18357,9 @@ class Vector3 {
     this.z = Math.max(minVal, Math.min(maxVal, this.z));
     return this;
   }
-  clampLength(min, max) {
+  clampLength(min, max2) {
     const length = this.length();
-    return this.divideScalar(length || 1).multiplyScalar(Math.max(min, Math.min(max, length)));
+    return this.divideScalar(length || 1).multiplyScalar(Math.max(min, Math.min(max2, length)));
   }
   floor() {
     this.x = Math.floor(this.x);
@@ -18587,14 +18560,14 @@ class Vector3 {
 const _vector$b = /* @__PURE__ */ new Vector3();
 const _quaternion$4 = /* @__PURE__ */ new Quaternion();
 class Box3 {
-  constructor(min = new Vector3(Infinity, Infinity, Infinity), max = new Vector3(-Infinity, -Infinity, -Infinity)) {
+  constructor(min = new Vector3(Infinity, Infinity, Infinity), max2 = new Vector3(-Infinity, -Infinity, -Infinity)) {
     this.isBox3 = true;
     this.min = min;
-    this.max = max;
+    this.max = max2;
   }
-  set(min, max) {
+  set(min, max2) {
     this.min.copy(min);
-    this.max.copy(max);
+    this.max.copy(max2);
     return this;
   }
   setFromArray(array2) {
@@ -18723,29 +18696,29 @@ class Box3 {
     return _vector$a.distanceToSquared(sphere.center) <= sphere.radius * sphere.radius;
   }
   intersectsPlane(plane) {
-    let min, max;
+    let min, max2;
     if (plane.normal.x > 0) {
       min = plane.normal.x * this.min.x;
-      max = plane.normal.x * this.max.x;
+      max2 = plane.normal.x * this.max.x;
     } else {
       min = plane.normal.x * this.max.x;
-      max = plane.normal.x * this.min.x;
+      max2 = plane.normal.x * this.min.x;
     }
     if (plane.normal.y > 0) {
       min += plane.normal.y * this.min.y;
-      max += plane.normal.y * this.max.y;
+      max2 += plane.normal.y * this.max.y;
     } else {
       min += plane.normal.y * this.max.y;
-      max += plane.normal.y * this.min.y;
+      max2 += plane.normal.y * this.min.y;
     }
     if (plane.normal.z > 0) {
       min += plane.normal.z * this.min.z;
-      max += plane.normal.z * this.max.z;
+      max2 += plane.normal.z * this.max.z;
     } else {
       min += plane.normal.z * this.max.z;
-      max += plane.normal.z * this.min.z;
+      max2 += plane.normal.z * this.min.z;
     }
-    return min <= -plane.constant && max >= -plane.constant;
+    return min <= -plane.constant && max2 >= -plane.constant;
   }
   intersectsTriangle(triangle) {
     if (this.isEmpty()) {
@@ -21248,17 +21221,17 @@ class Color {
   getHSL(target, colorSpace = ColorManagement.workingColorSpace) {
     ColorManagement.fromWorkingColorSpace(_color.copy(this), colorSpace);
     const r = _color.r, g2 = _color.g, b = _color.b;
-    const max = Math.max(r, g2, b);
+    const max2 = Math.max(r, g2, b);
     const min = Math.min(r, g2, b);
     let hue, saturation;
-    const lightness = (min + max) / 2;
-    if (min === max) {
+    const lightness = (min + max2) / 2;
+    if (min === max2) {
       hue = 0;
       saturation = 0;
     } else {
-      const delta = max - min;
-      saturation = lightness <= 0.5 ? delta / (max + min) : delta / (2 - max - min);
-      switch (max) {
+      const delta = max2 - min;
+      saturation = lightness <= 0.5 ? delta / (max2 + min) : delta / (2 - max2 - min);
+      switch (max2) {
         case r:
           hue = (g2 - b) / delta + (g2 < b ? 6 : 0);
           break;
@@ -25889,8 +25862,8 @@ function _createPlanes(lodMax) {
     sigmas.push(sigma);
     const texelSize = 1 / (sizeLod - 2);
     const min = -texelSize;
-    const max = 1 + texelSize;
-    const uv1 = [min, min, max, min, max, max, min, min, max, max, min, max];
+    const max2 = 1 + texelSize;
+    const uv1 = [min, min, max2, min, max2, max2, min, min, max2, max2, min, max2];
     const cubeFaces = 6;
     const vertices = 6;
     const positionSize = 3;
@@ -36553,9 +36526,9 @@ class PolyhedronGeometry extends BufferGeometry {
         const x0 = uvBuffer[i2 + 0];
         const x1 = uvBuffer[i2 + 2];
         const x2 = uvBuffer[i2 + 4];
-        const max = Math.max(x0, x1, x2);
+        const max2 = Math.max(x0, x1, x2);
         const min = Math.min(x0, x1, x2);
-        if (max > 0.9 && min < 0.1) {
+        if (max2 > 0.9 && min < 0.1) {
           if (x0 < 0.2) uvBuffer[i2 + 0] += 1;
           if (x1 < 0.2) uvBuffer[i2 + 2] += 1;
           if (x2 < 0.2) uvBuffer[i2 + 4] += 1;
@@ -37354,7 +37327,7 @@ class ShapeUtils {
   static triangulateShape(contour, holes) {
     const vertices = [];
     const holeIndices = [];
-    const faces = [];
+    const faces2 = [];
     removeDupEndPts(contour);
     addContour(vertices, contour);
     let holeIndex = contour.length;
@@ -37366,9 +37339,9 @@ class ShapeUtils {
     }
     const triangles = Earcut.triangulate(vertices, holeIndices);
     for (let i2 = 0; i2 < triangles.length; i2 += 3) {
-      faces.push(triangles.slice(i2, i2 + 3));
+      faces2.push(triangles.slice(i2, i2 + 3));
     }
-    return faces;
+    return faces2;
   }
 }
 function removeDupEndPts(points) {
@@ -37444,7 +37417,7 @@ class ExtrudeGeometry extends BufferGeometry {
           }
         }
       }
-      const faces = ShapeUtils.triangulateShape(vertices, holes);
+      const faces2 = ShapeUtils.triangulateShape(vertices, holes);
       const contour = vertices;
       for (let h = 0, hl = holes.length; h < hl; h++) {
         const ahole = holes[h];
@@ -37454,7 +37427,7 @@ class ExtrudeGeometry extends BufferGeometry {
         if (!vec) console.error("THREE.ExtrudeGeometry: vec does not exist");
         return pt.clone().addScaledVector(vec, size);
       }
-      const vlen = vertices.length, flen = faces.length;
+      const vlen = vertices.length, flen = faces2.length;
       function getBevelVec(inPt, inPrev, inNext) {
         let v_trans_x, v_trans_y, shrink_by;
         const v_prev_x = inPt.x - inPrev.x, v_prev_y = inPt.y - inPrev.y;
@@ -37596,22 +37569,22 @@ class ExtrudeGeometry extends BufferGeometry {
           let layer = 0;
           let offset = vlen * layer;
           for (let i2 = 0; i2 < flen; i2++) {
-            const face = faces[i2];
+            const face = faces2[i2];
             f3(face[2] + offset, face[1] + offset, face[0] + offset);
           }
           layer = steps2 + bevelSegments * 2;
           offset = vlen * layer;
           for (let i2 = 0; i2 < flen; i2++) {
-            const face = faces[i2];
+            const face = faces2[i2];
             f3(face[0] + offset, face[1] + offset, face[2] + offset);
           }
         } else {
           for (let i2 = 0; i2 < flen; i2++) {
-            const face = faces[i2];
+            const face = faces2[i2];
             f3(face[2], face[1], face[0]);
           }
           for (let i2 = 0; i2 < flen; i2++) {
-            const face = faces[i2];
+            const face = faces2[i2];
             f3(face[0] + vlen * steps2, face[1] + vlen * steps2, face[2] + vlen * steps2);
           }
         }
@@ -38043,7 +38016,7 @@ class ShapeGeometry extends BufferGeometry {
           shapeHoles[i2] = shapeHole.reverse();
         }
       }
-      const faces = ShapeUtils.triangulateShape(shapeVertices, shapeHoles);
+      const faces2 = ShapeUtils.triangulateShape(shapeVertices, shapeHoles);
       for (let i2 = 0, l = shapeHoles.length; i2 < l; i2++) {
         const shapeHole = shapeHoles[i2];
         shapeVertices = shapeVertices.concat(shapeHole);
@@ -38054,8 +38027,8 @@ class ShapeGeometry extends BufferGeometry {
         normals.push(0, 0, 1);
         uvs.push(vertex2.x, vertex2.y);
       }
-      for (let i2 = 0, l = faces.length; i2 < l; i2++) {
-        const face = faces[i2];
+      for (let i2 = 0, l = faces2.length; i2 < l; i2++) {
+        const face = faces2[i2];
         const a = face[0] + indexOffset;
         const b = face[1] + indexOffset;
         const c = face[2] + indexOffset;
@@ -40307,8 +40280,8 @@ class CompressedTextureLoader extends Loader {
       loader.load(url, function(buffer) {
         const texDatas = scope.parse(buffer, true);
         if (texDatas.isCubemap) {
-          const faces = texDatas.mipmaps.length / texDatas.mipmapCount;
-          for (let f = 0; f < faces; f++) {
+          const faces2 = texDatas.mipmaps.length / texDatas.mipmapCount;
+          for (let f = 0; f < faces2; f++) {
             images[f] = { mipmaps: [] };
             for (let i2 = 0; i2 < texDatas.mipmapCount; i2++) {
               images[f].mipmaps.push(texDatas.mipmaps[f * texDatas.mipmapCount + i2]);
@@ -44173,14 +44146,14 @@ class Cylindrical {
 }
 const _vector$4 = /* @__PURE__ */ new Vector2();
 class Box2 {
-  constructor(min = new Vector2(Infinity, Infinity), max = new Vector2(-Infinity, -Infinity)) {
+  constructor(min = new Vector2(Infinity, Infinity), max2 = new Vector2(-Infinity, -Infinity)) {
     this.isBox2 = true;
     this.min = min;
-    this.max = max;
+    this.max = max2;
   }
-  set(min, max) {
+  set(min, max2) {
     this.min.copy(min);
-    this.max.copy(max);
+    this.max.copy(max2);
     return this;
   }
   setFromPoints(points) {
@@ -44872,31 +44845,31 @@ class BoxHelper extends LineSegments {
     }
     if (_box.isEmpty()) return;
     const min = _box.min;
-    const max = _box.max;
+    const max2 = _box.max;
     const position = this.geometry.attributes.position;
     const array2 = position.array;
-    array2[0] = max.x;
-    array2[1] = max.y;
-    array2[2] = max.z;
+    array2[0] = max2.x;
+    array2[1] = max2.y;
+    array2[2] = max2.z;
     array2[3] = min.x;
-    array2[4] = max.y;
-    array2[5] = max.z;
+    array2[4] = max2.y;
+    array2[5] = max2.z;
     array2[6] = min.x;
     array2[7] = min.y;
-    array2[8] = max.z;
-    array2[9] = max.x;
+    array2[8] = max2.z;
+    array2[9] = max2.x;
     array2[10] = min.y;
-    array2[11] = max.z;
-    array2[12] = max.x;
-    array2[13] = max.y;
+    array2[11] = max2.z;
+    array2[12] = max2.x;
+    array2[13] = max2.y;
     array2[14] = min.z;
     array2[15] = min.x;
-    array2[16] = max.y;
+    array2[16] = max2.y;
     array2[17] = min.z;
     array2[18] = min.x;
     array2[19] = min.y;
     array2[20] = min.z;
-    array2[21] = max.x;
+    array2[21] = max2.x;
     array2[22] = min.y;
     array2[23] = min.z;
     position.needsUpdate = true;
@@ -45809,11 +45782,11 @@ function create(createState2) {
   Object.assign(useStore, api);
   useStore[Symbol.iterator] = function() {
     console.warn("[useStore, api] = create() is deprecated and will be removed in v4");
-    const items = [useStore, api];
+    const items2 = [useStore, api];
     return {
       next() {
-        const done = items.length <= 0;
-        return { value: items.shift(), done };
+        const done = items2.length <= 0;
+        return { value: items2.shift(), done };
       }
     };
   };
@@ -52795,20 +52768,20 @@ function Ambient() {
 }
 const September = { "New Teams": 100, "Ops Leader updates": 1, "DL Promotions": 16, "DL Alignment updates": 166, "Rejected": 11, "Dissolves": 67, "Site changes": 31, "Late Requests": 9, "Total MIP forms": 108, "Total Line Items": 403, "Avg Line Items per MIP form": 3.7314 };
 const October = { "New Teams": 66, "Ops Leader updates": 0, "DL Promotions": 18, "DL Alignment updates": 169, "Rejected": 8, "Dissolves": 68, "Site changes": 22, "Late Requests": 4, "Total MIP forms": 87, "Total Line Items": 354, "Avg Line Items per MIP form": 4.0689 };
-const data = {
+const data$1 = {
   September,
   October
 };
 function Leaderboard() {
   const rank = reactExports.useMemo(() => {
-    const items = [
-      { name: "Line Items", score: data["October"]["Total Line Items"] * 1 },
-      { name: "New Teams", score: data["October"]["New Teams"] * 0.8 },
-      { name: "Avg Heft", score: data["October"]["Avg Line Items per MIP form"] * 120 },
-      { name: "Alignments", score: data["October"]["DL Alignment updates"] * 0.3 },
-      { name: "Dissolves (inverse)", score: 200 - data["October"]["Dissolves"] }
+    const items2 = [
+      { name: "Line Items", score: data$1["October"]["Total Line Items"] * 1 },
+      { name: "New Teams", score: data$1["October"]["New Teams"] * 0.8 },
+      { name: "Avg Heft", score: data$1["October"]["Avg Line Items per MIP form"] * 120 },
+      { name: "Alignments", score: data$1["October"]["DL Alignment updates"] * 0.3 },
+      { name: "Dissolves (inverse)", score: 200 - data$1["October"]["Dissolves"] }
     ];
-    return items.sort((a, b) => b.score - a.score).slice(0, 5);
+    return items2.sort((a, b) => b.score - a.score).slice(0, 5);
   }, []);
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "leaderboard", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "lb-card", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "badge", children: "Org Leaderboard" }),
@@ -52830,6 +52803,72 @@ function Leaderboard() {
     )) })
   ] }) });
 }
+function Portrait({ src, alt = "cameo", x = 0, y = 0, delay: delay2 = 0, mode = "peeker" }) {
+  const size = 96;
+  const style = { position: "absolute", top: y, left: x, width: size, height: size };
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    motion.img,
+    {
+      src,
+      alt,
+      className: "portrait",
+      style,
+      initial: { opacity: 0, scale: 0.7, rotate: mode === "spin" ? -15 : 0, x, y },
+      whileInView: { opacity: 1, scale: 1, rotate: 0, x, y },
+      viewport: { once: true, margin: "-100px" },
+      transition: { delay: delay2, type: "spring", stiffness: 160, damping: 18 }
+    }
+  );
+}
+function resolveEl(input) {
+  if (!input || typeof document === "undefined") return null;
+  if (typeof input === "object" && "current" in input) input = input.current;
+  if (typeof Event !== "undefined" && input instanceof Event) {
+    input = input.currentTarget || input.target;
+  }
+  if (typeof input === "string") {
+    const node = document.querySelector(input);
+    if (node) return node;
+  }
+  if (input && input.nodeType === 1 && typeof input.getBoundingClientRect === "function") {
+    return input;
+  }
+  return null;
+}
+function burst(target, opts = {}) {
+  try {
+    const el = resolveEl(target) || document.body;
+    const { count = 14, reverse = false } = opts;
+    const rect = el.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    for (let i2 = 0; i2 < count; i2++) {
+      const node = document.createElement("span");
+      node.textContent = "🎉";
+      node.style.position = "fixed";
+      node.style.left = cx + "px";
+      node.style.top = cy + "px";
+      node.style.pointerEvents = "none";
+      node.style.zIndex = "9999";
+      node.style.fontSize = 14 + Math.floor(Math.random() * 10) + "px";
+      const angle = i2 / count * Math.PI * 2;
+      const dist = 60 + Math.random() * 80;
+      const dx = Math.cos(angle) * dist;
+      const dy = (reverse ? -1 : 1) * Math.sin(angle) * dist;
+      const duration = 600 + Math.random() * 500;
+      node.animate(
+        [
+          { transform: "translate(0,0) rotate(0deg)", opacity: 1 },
+          { transform: `translate(${dx}px, ${dy}px) rotate(${360 * (Math.random() > 0.5 ? 1 : -1)}deg)`, opacity: 0 }
+        ],
+        { duration, easing: "cubic-bezier(.2,.8,.2,1)", fill: "forwards" }
+      );
+      setTimeout(() => node.remove(), duration + 80);
+      document.body.appendChild(node);
+    }
+  } catch (_) {
+  }
+}
 function useScrollProgress() {
   const [progress2, setProgress] = reactExports.useState(0);
   reactExports.useEffect(() => {
@@ -52847,7 +52886,18 @@ function useScrollProgress() {
   }, []);
   return progress2;
 }
-const GlitchLayer = React.lazy(() => __vitePreload(() => import("./GlitchLayer-B3BI68m9.js"), true ? __vite__mapDeps([0,1]) : void 0));
+const GlitchLayer = React.lazy(() => __vitePreload(() => import("./GlitchLayer-BnY2gVNH.js"), true ? __vite__mapDeps([0,1]) : void 0));
+function safeBurst(el, opts = {}) {
+  try {
+    if (!el) return;
+    const count = Math.max(8, Math.min(200, Number(opts.count ?? 24)));
+    const reverse = !!opts.reverse;
+    burst(el, { count, reverse });
+  } catch (e) {
+    console.error("[confetti burst failed]", e);
+    if (typeof window !== "undefined") window.__SAFE_MODE__ = true;
+  }
+}
 const P = ({ id: id2, ...pos }) => {
   const p = portraits.find((x) => x.id === id2);
   if (!p) return null;
@@ -52861,13 +52911,21 @@ function splitCounts(obj) {
 function App() {
   const progress2 = useScrollProgress ? useScrollProgress() : 0;
   const [glitch, setGlitch] = reactExports.useState(false);
+  reactExports.useEffect(() => {
+    const up = (octCounts.list || []).filter((d) => {
+      const v = Number(d.value ?? 0);
+      const avg = Number(d.average ?? d.avg ?? NaN);
+      return !Number.isNaN(avg) && v > avg * 1.05;
+    }).length;
+    if (up >= 5) safeBurst(heroRef.current, { count: 50, reverse: true });
+  }, [octCounts.list]);
   const funRatio = reactExports.useMemo(() => {
     const raw = Math.max(0, Math.min(1, (progress2 - 0.2) / 0.6));
     return Math.round(raw * 100);
   }, [progress2]);
   const heroRef = reactExports.useRef(null);
-  const sep = data?.["September"] ?? {};
-  const oct = data?.["October"] ?? {};
+  const sep = data$1?.["September"] ?? {};
+  const oct = data$1?.["October"] ?? {};
   const sepCounts = reactExports.useMemo(() => splitCounts(sep), [sep]);
   const octCounts = reactExports.useMemo(() => splitCounts(oct), [oct]);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "vhs", ref: heroRef, children: [
@@ -52929,4 +52987,4 @@ export {
   jsxRuntimeExports as j,
   reactExports as r
 };
-//# sourceMappingURL=index-Dngz_d5O.js.map
+//# sourceMappingURL=index-CvxqI0fX.js.map

@@ -52,6 +52,15 @@ export default function App() {
   const progress = useScrollProgress ? useScrollProgress() : 0;
   const [glitch, setGlitch] = useState(false);
 
+  useEffect(() => {
+  const up = (octCounts.list || []).filter(d => {
+    const v = Number(d.value ?? 0);
+    const avg = Number(d.average ?? d.avg ?? NaN);
+    return !Number.isNaN(avg) && v > avg * 1.05;
+  }).length;
+  if (up >= 5) safeBurst(heroRef.current, { count: 50, reverse: true });
+}, [octCounts.list]);
+
   // simple “fun” morph; capped and smooth-ish
   const funRatio = useMemo(() => {
     const raw = Math.max(0, Math.min(1, (progress - 0.2) / 0.6));
