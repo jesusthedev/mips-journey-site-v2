@@ -43,3 +43,24 @@ body{
 .bar-track{ height:10px; border-radius:999px; background: rgba(2,6,23,.08); overflow:hidden }
 .bar-fill{ height:100%; border-radius:999px; transition: width .6s cubic-bezier(.2,.7,.2,1) }
 .bar-val{ min-width:3.5rem; text-align:right; font-variant-numeric: tabular-nums; color: var(--ink) }
+
+.bars .row { display:grid; grid-template-columns: 180px 1fr; gap:14px; align-items:center; margin:10px 0; }
+.bars .label { opacity:.9; font-weight:500; letter-spacing:.2px }
+.track { position:relative; height:10px; border-radius:999px; background:rgba(255,255,255,.08); overflow:hidden; }
+.track.up   { background:linear-gradient(90deg, rgba(76,255,170,.20), rgba(76,255,170,.10)) }
+.track.down { background:linear-gradient(90deg, rgba(255,120,120,.20), rgba(255,120,120,.10)) }
+.fill { position:absolute; inset:0 auto 0 0; height:100%;
+        background: linear-gradient(90deg, rgba(255,255,255,.75), rgba(255,255,255,.25));
+        border-radius:inherit; transform-origin:left center; transition: width .8s cubic-bezier(.17,.67,.2,1); }
+.val { position:absolute; right:8px; top:50%; transform:translateY(-50%);
+       font-size:.85rem; opacity:.8; }
+
+       .button { position:relative; overflow:hidden }
+.button::after {
+  content:''; position:absolute; inset:auto -40% -40% auto; width:80%; height:200%;
+  background: radial-gradient(closest-side, rgba(255,255,255,.7), transparent 70%);
+  transform: rotate(25deg) translateX(-120%);
+  transition: transform .8s ease;
+}
+.button:hover::after { transform: rotate(25deg) translateX(40%); }
+

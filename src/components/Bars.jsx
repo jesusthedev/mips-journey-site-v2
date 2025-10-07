@@ -1,6 +1,25 @@
 import React, { useEffect, useRef } from 'react'
 import * as d3 from 'd3'
-export default function Bars({ data = [], progress = 0 }) {}
+export default function Bars({ data = [], progress = 0 }) {
+  return (
+    <div className="bars">
+      {data.map(({ metric, value, delta }) => {
+        const v = Number(value ?? 0);
+        const w = Math.max(6, Math.min(100, v)); // normalize if you're not already
+        const up = Number(delta ?? 0) > 0;
+        return (
+          <div key={metric} className="row">
+            <span className="label">{metric}</span>
+            <div className={`track ${up ? 'up' : 'down'}`}>
+              <div className="fill" style={{ width: `${w}%` }} />
+              <span className="val">{v}</span>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
   // Normalize and compute basic metrics
   const items = Array.isArray(data) ? data : [];
   const max = Math.max(1, ...items.map(d => Number(d.value) || 0));

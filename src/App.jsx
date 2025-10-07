@@ -103,8 +103,6 @@ export default function App() {
   </div>
 </section>
 
-
-
       {/* Sprinkled portraits (quiet if file/id missing) */}
       <section className="section" aria-hidden="true">
         <P id="abhishek" x={24} y={24} delay={0.2} />
@@ -115,6 +113,8 @@ export default function App() {
         <P id="luis" x={window.innerWidth - 180} y={520} delay={0.75} />
         <P id="jerome" x={60} y={560} delay={0.85} />
       </section>
+
+<Peekers />
 
       {/* Leaderboard (safe to render anytime) */}
       <section className="section">
