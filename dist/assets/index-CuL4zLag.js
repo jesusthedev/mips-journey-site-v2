@@ -1,3 +1,4 @@
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/GlitchLayer-Ux5PhOMH.js","assets/GlitchLayer-C0dWx6zP.css"])))=>i.map(i=>d[i]);
 (function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) return;
@@ -7049,6 +7050,60 @@ function requireClient() {
 }
 var clientExports = requireClient();
 const ReactDOM = /* @__PURE__ */ getDefaultExportFromCjs(clientExports);
+const scriptRel = "modulepreload";
+const assetsURL = function(dep) {
+  return "/mips-journey-site-v2/" + dep;
+};
+const seen = {};
+const __vitePreload = function preload(baseModule, deps, importerUrl) {
+  let promise = Promise.resolve();
+  if (deps && deps.length > 0) {
+    let allSettled = function(promises$2) {
+      return Promise.all(promises$2.map((p) => Promise.resolve(p).then((value$1) => ({
+        status: "fulfilled",
+        value: value$1
+      }), (reason) => ({
+        status: "rejected",
+        reason
+      }))));
+    };
+    document.getElementsByTagName("link");
+    const cspNonceMeta = document.querySelector("meta[property=csp-nonce]");
+    const cspNonce = cspNonceMeta?.nonce || cspNonceMeta?.getAttribute("nonce");
+    promise = allSettled(deps.map((dep) => {
+      dep = assetsURL(dep);
+      if (dep in seen) return;
+      seen[dep] = true;
+      const isCss = dep.endsWith(".css");
+      const cssSelector = isCss ? '[rel="stylesheet"]' : "";
+      if (document.querySelector(`link[href="${dep}"]${cssSelector}`)) return;
+      const link = document.createElement("link");
+      link.rel = isCss ? "stylesheet" : scriptRel;
+      if (!isCss) link.as = "script";
+      link.crossOrigin = "";
+      link.href = dep;
+      if (cspNonce) link.setAttribute("nonce", cspNonce);
+      document.head.appendChild(link);
+      if (isCss) return new Promise((res, rej) => {
+        link.addEventListener("load", res);
+        link.addEventListener("error", () => rej(/* @__PURE__ */ new Error(`Unable to preload CSS for ${dep}`)));
+      });
+    }));
+  }
+  function handlePreloadError(err$2) {
+    const e$1 = new Event("vite:preloadError", { cancelable: true });
+    e$1.payload = err$2;
+    window.dispatchEvent(e$1);
+    if (!e$1.defaultPrevented) throw err$2;
+  }
+  return promise.then((res) => {
+    for (const item of res || []) {
+      if (item.status !== "rejected") continue;
+      handlePreloadError(item.reason);
+    }
+    return baseModule().catch(handlePreloadError);
+  });
+};
 const MotionConfigContext = reactExports.createContext({
   transformPagePoint: (p) => p,
   isStatic: false,
@@ -7106,8 +7161,8 @@ function useVisualElement(Component, visualState, props, createVisualElement) {
   });
   return visualElement;
 }
-function isRefObject(ref2) {
-  return typeof ref2 === "object" && Object.prototype.hasOwnProperty.call(ref2, "current");
+function isRefObject(ref) {
+  return typeof ref === "object" && Object.prototype.hasOwnProperty.call(ref, "current");
 }
 function useMotionRef(visualState, visualElement, externalRef) {
   return reactExports.useCallback(
@@ -7717,14 +7772,14 @@ function useSVGProps(props, visualState, _isStatic, Component) {
   return visualProps;
 }
 function createUseRender(forwardMotionProps = false) {
-  const useRender = (Component, props, ref2, { latestValues }, isStatic) => {
+  const useRender = (Component, props, ref, { latestValues }, isStatic) => {
     const useVisualProps = isSVGComponent(Component) ? useSVGProps : useHTMLProps;
     const visualProps = useVisualProps(props, latestValues, isStatic, Component);
     const filteredProps = filterProps(props, typeof Component === "string", forwardMotionProps);
     const elementProps = {
       ...filteredProps,
       ...visualProps,
-      ref: ref2
+      ref
     };
     const { children: children2 } = props;
     const renderedChildren = reactExports.useMemo(() => isMotionValue(children2) ? children2.get() : children2, [children2]);
@@ -7805,11 +7860,11 @@ function resolveVariantFromProps(props, definition, custom, currentValues = {}, 
   return definition;
 }
 function useConstant(init2) {
-  const ref2 = reactExports.useRef(null);
-  if (ref2.current === null) {
-    ref2.current = init2();
+  const ref = reactExports.useRef(null);
+  if (ref.current === null) {
+    ref.current = init2();
   }
-  return ref2.current;
+  return ref.current;
 }
 const isKeyframesTarget = (v) => {
   return Array.isArray(v);
@@ -12604,7 +12659,7 @@ function shouldAnimatePositionOnly(animationType, snapshot, layout2) {
   return animationType === "position" || animationType === "preserve-aspect" && !isNear(aspectRatio(snapshot), aspectRatio(layout2), 0.2);
 }
 const DocumentProjectionNode = createProjectionNode({
-  attachResizeListener: (ref2, notify) => addDomEvent(ref2, "resize", notify),
+  attachResizeListener: (ref, notify) => addDomEvent(ref, "resize", notify),
   measureScroll: () => ({
     x: document.documentElement.scrollLeft || document.body.scrollLeft,
     y: document.documentElement.scrollTop || document.body.scrollTop
@@ -13447,7 +13502,7 @@ class PopChildMeasure extends reactExports.Component {
 }
 function PopChild({ children: children2, isPresent }) {
   const id2 = reactExports.useId();
-  const ref2 = reactExports.useRef(null);
+  const ref = reactExports.useRef(null);
   const size = reactExports.useRef({
     width: 0,
     height: 0,
@@ -13456,9 +13511,9 @@ function PopChild({ children: children2, isPresent }) {
   });
   reactExports.useInsertionEffect(() => {
     const { width, height, top: top2, left: left2 } = size.current;
-    if (isPresent || !ref2.current || !width || !height)
+    if (isPresent || !ref.current || !width || !height)
       return;
-    ref2.current.dataset.motionPopId = id2;
+    ref.current.dataset.motionPopId = id2;
     const style = document.createElement("style");
     document.head.appendChild(style);
     if (style.sheet) {
@@ -13476,7 +13531,7 @@ function PopChild({ children: children2, isPresent }) {
       document.head.removeChild(style);
     };
   }, [isPresent]);
-  return reactExports.createElement(PopChildMeasure, { isPresent, childRef: ref2, sizeRef: size }, reactExports.cloneElement(children2, { ref: ref2 }));
+  return reactExports.createElement(PopChildMeasure, { isPresent, childRef: ref, sizeRef: size }, reactExports.cloneElement(children2, { ref }));
 }
 const PresenceChild = ({ children: children2, initial, isPresent, onExitComplete, custom, presenceAffectsLayout, mode }) => {
   const presenceChildren = useConstant(newChildrenMap);
@@ -16415,8 +16470,8 @@ Transform.prototype = {
   applyY: function(y) {
     return y * this.k + this.y;
   },
-  invert: function(location2) {
-    return [(location2[0] - this.x) / this.k, (location2[1] - this.y) / this.k];
+  invert: function(location) {
+    return [(location[0] - this.x) / this.k, (location[1] - this.y) / this.k];
   },
   invertX: function(x) {
     return (x - this.x) / this.k;
@@ -16436,10 +16491,10 @@ Transform.prototype = {
 };
 Transform.prototype;
 function Bars({ data: data2, keys, height = 340 }) {
-  const ref2 = reactExports.useRef(null);
+  const ref = reactExports.useRef(null);
   reactExports.useEffect(() => {
-    if (!ref2.current) return;
-    const el = ref2.current;
+    if (!ref.current) return;
+    const el = ref.current;
     el.innerHTML = "";
     const width = el.clientWidth;
     const margin = { top: 18, right: 12, bottom: 48, left: 60 };
@@ -16464,7 +16519,7 @@ function Bars({ data: data2, keys, height = 340 }) {
       row.append("text").text(k2).attr("x", 18).attr("y", 10).attr("fill", "#ccd3e0").attr("font-size", 12);
     });
   }, [data2, keys, height]);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: ref2, style: { width: "100%" } });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref, style: { width: "100%" } });
 }
 function Counter({ to = 0, duration = 900, prefix = "", suffix = "" }) {
   const [n, setN] = reactExports.useState(0);
@@ -16482,20 +16537,6 @@ function Counter({ to = 0, duration = 900, prefix = "", suffix = "" }) {
     prefix,
     n,
     suffix
-  ] });
-}
-function GlitchLayer({ bigDelta = 0 }) {
-  const rootRef = reactExports.useRef(null);
-  reactExports.useEffect(() => {
-    const node = rootRef.current;
-    if (!node) return;
-    const intensity = Math.min(1, Math.max(0, Math.abs(bigDelta) / 0.5));
-    node.style.setProperty("--glitch-intensity", intensity.toString());
-  }, [bigDelta]);
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { ref: rootRef, className: "glitch-wrap", "aria-hidden": "true", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "glitch-noise" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "glitch-scanlines" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "glitch-chroma" })
   ] });
 }
 /**
@@ -27184,12 +27225,11 @@ function WebGLMorphtargets(gl, capabilities, textures) {
       const morphTargetsCount = morphAttribute !== void 0 ? morphAttribute.length : 0;
       let entry = morphTextures.get(geometry);
       if (entry === void 0 || entry.count !== morphTargetsCount) {
-        let disposeTexture2 = function() {
+        let disposeTexture = function() {
           texture.dispose();
           morphTextures.delete(geometry);
-          geometry.removeEventListener("dispose", disposeTexture2);
+          geometry.removeEventListener("dispose", disposeTexture);
         };
-        var disposeTexture = disposeTexture2;
         if (entry !== void 0) entry.texture.dispose();
         const hasMorphPosition = geometry.morphAttributes.position !== void 0;
         const hasMorphNormals = geometry.morphAttributes.normal !== void 0;
@@ -27248,7 +27288,7 @@ function WebGLMorphtargets(gl, capabilities, textures) {
           size: new Vector2(width, height)
         };
         morphTextures.set(geometry, entry);
-        geometry.addEventListener("dispose", disposeTexture2);
+        geometry.addEventListener("dispose", disposeTexture);
       }
       let morphInfluencesSum = 0;
       for (let i2 = 0; i2 < objectInfluences.length; i2++) {
@@ -51808,9 +51848,9 @@ const isOrthographicCamera = (def) => def && def.isOrthographicCamera;
 const isRef = (obj) => obj && obj.hasOwnProperty("current");
 const useIsomorphicLayoutEffect = typeof window !== "undefined" && ((_window$document = window.document) != null && _window$document.createElement || ((_window$navigator = window.navigator) == null ? void 0 : _window$navigator.product) === "ReactNative") ? reactExports.useLayoutEffect : reactExports.useEffect;
 function useMutableCallback(fn) {
-  const ref2 = reactExports.useRef(fn);
-  useIsomorphicLayoutEffect(() => void (ref2.current = fn), [fn]);
-  return ref2;
+  const ref = reactExports.useRef(fn);
+  useIsomorphicLayoutEffect(() => void (ref.current = fn), [fn]);
+  return ref;
 }
 function Block({
   set: set2
@@ -52597,11 +52637,11 @@ const createStore = (invalidate2, advance2) => {
         initialClick: [0, 0],
         initialHits: [],
         capturedMap: /* @__PURE__ */ new Map(),
-        subscribe: (ref2, priority, store) => {
+        subscribe: (ref, priority, store) => {
           const internal = get2().internal;
           internal.priority = internal.priority + (priority > 0 ? 1 : 0);
           internal.subscribers.push({
-            ref: ref2,
+            ref,
             priority,
             store
           });
@@ -52610,7 +52650,7 @@ const createStore = (invalidate2, advance2) => {
             const internal2 = get2().internal;
             if (internal2 != null && internal2.subscribers) {
               internal2.priority = internal2.priority - (priority > 0 ? 1 : 0);
-              internal2.subscribers = internal2.subscribers.filter((s) => s.ref !== ref2);
+              internal2.subscribers = internal2.subscribers.filter((s) => s.ref !== ref);
             }
           };
         }
@@ -53108,11 +53148,11 @@ function j({ debounce: n, scroll: t, polyfill: o, offsetSize: i2 } = { debounce:
   const L = (r) => {
     !r || r === e.current.element || (v(), e.current.element = r, e.current.scrollContainers = E(r), b());
   };
-  return X(s, !!t), W$1(m), reactExports.useEffect(() => {
+  return X(s, !!t), W(m), reactExports.useEffect(() => {
     v(), b();
   }, [t, s, m]), reactExports.useEffect(() => v, []), [L, c, z];
 }
-function W$1(n) {
+function W(n) {
   reactExports.useEffect(() => {
     const t = n;
     return window.addEventListener("resize", t), () => void window.removeEventListener("resize", t);
@@ -53453,9 +53493,9 @@ const CanvasImpl = /* @__PURE__ */ reactExports.forwardRef(function Canvas({
     }
   }, fallback)));
 });
-const Canvas2 = /* @__PURE__ */ reactExports.forwardRef(function CanvasWrapper(props, ref2) {
+const Canvas2 = /* @__PURE__ */ reactExports.forwardRef(function CanvasWrapper(props, ref) {
   return /* @__PURE__ */ reactExports.createElement(FiberProvider, null, /* @__PURE__ */ reactExports.createElement(CanvasImpl, _extends({}, props, {
-    ref: ref2
+    ref
   })));
 });
 function Particles({ speed = 0.2 }) {
@@ -53541,6 +53581,55 @@ const portraits = [
   { id: "luis", src: `${base}portraits/luis_portrait.png`, alt: "Portrait Luis" },
   { id: "jerome", src: `${base}portraits/jerome_portrait.png`, alt: "Portrait Jerome" }
 ];
+function resolveEl(input) {
+  if (!input || typeof document === "undefined") return null;
+  if (typeof input === "object" && "current" in input) input = input.current;
+  if (typeof Event !== "undefined" && input instanceof Event) {
+    input = input.currentTarget || input.target;
+  }
+  if (typeof input === "string") {
+    const node = document.querySelector(input);
+    if (node) return node;
+  }
+  if (input && input.nodeType === 1 && typeof input.getBoundingClientRect === "function") {
+    return input;
+  }
+  return null;
+}
+function burst(target, opts = {}) {
+  try {
+    const el = resolveEl(target) || document.body;
+    const { count = 14, reverse = false } = opts;
+    const rect = el.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    for (let i2 = 0; i2 < count; i2++) {
+      const node = document.createElement("span");
+      node.textContent = "🎉";
+      node.style.position = "fixed";
+      node.style.left = cx + "px";
+      node.style.top = cy + "px";
+      node.style.pointerEvents = "none";
+      node.style.zIndex = "9999";
+      node.style.fontSize = 14 + Math.floor(Math.random() * 10) + "px";
+      const angle = i2 / count * Math.PI * 2;
+      const dist = 60 + Math.random() * 80;
+      const dx = Math.cos(angle) * dist;
+      const dy = (reverse ? -1 : 1) * Math.sin(angle) * dist;
+      const duration = 600 + Math.random() * 500;
+      node.animate(
+        [
+          { transform: "translate(0,0) rotate(0deg)", opacity: 1 },
+          { transform: `translate(${dx}px, ${dy}px) rotate(${360 * (Math.random() > 0.5 ? 1 : -1)}deg)`, opacity: 0 }
+        ],
+        { duration, easing: "cubic-bezier(.2,.8,.2,1)", fill: "forwards" }
+      );
+      setTimeout(() => node.remove(), duration + 80);
+      document.body.appendChild(node);
+    }
+  } catch (_) {
+  }
+}
 function useScrollProgress() {
   const [progress2, setProgress] = reactExports.useState(0);
   reactExports.useEffect(() => {
@@ -53558,14 +53647,16 @@ function useScrollProgress() {
   }, []);
   return progress2;
 }
-const SAFE_MODE = typeof window !== "undefined" && (window.__SAFE_MODE__ === true || new URLSearchParams(location.search).has("safe"));
-function safeTry(fn, tag) {
+const GlitchLayer = React.lazy(() => __vitePreload(() => import("./GlitchLayer-Ux5PhOMH.js"), true ? __vite__mapDeps([0,1]) : void 0));
+function safeBurst(el, opts = {}) {
   try {
-    return fn();
+    if (!el) return;
+    const count = Math.max(8, Math.min(200, Number(opts.count ?? 24)));
+    const reverse = !!opts.reverse;
+    burst(el, { count, reverse });
   } catch (e) {
-    console.error(`[render fail] ${tag}`, e);
-    window.__SAFE_MODE__ = true;
-    return null;
+    console.error("[confetti burst failed]", e);
+    if (typeof window !== "undefined") window.__SAFE_MODE__ = true;
   }
 }
 const P = ({ id: id2, ...pos }) => {
@@ -53573,213 +53664,67 @@ const P = ({ id: id2, ...pos }) => {
   if (!p) return null;
   return /* @__PURE__ */ jsxRuntimeExports.jsx(Portrait, { ...p, ...pos });
 };
-function safeBurst(el, opts = {}) {
-  try {
-    if (!el) return;
-    const count = Math.max(8, Math.min(200, Number(opts.count ?? 24)));
-    const reverse = !!opts.reverse;
-    if (!SAFE_MODE) safeTry(() => safeBurst(ref?.current, { count: 28, reverse: false }), "confetti");
-  } catch (e) {
-    console.error("confetti burst failed", e);
-    window.__SAFE_MODE__ = true;
-  }
-}
 function splitCounts(obj) {
   const rateKey = "Avg Line Items per MIP form";
   const entries = Object.entries(obj).filter(([k2]) => k2 !== rateKey);
-  return {
-    list: entries.map(([metric, value]) => ({ metric, value })),
-    rate: obj[rateKey]
-  };
+  return { list: entries.map(([metric, value]) => ({ metric, value })) };
 }
 function App() {
-  const progress2 = useScrollProgress();
-  reactExports.useEffect(() => {
-    const p = Math.max(0, Math.min(1, progress2));
-    document.documentElement.style.setProperty("--fun", String(p));
-  }, [progress2]);
+  const progress2 = useScrollProgress ? useScrollProgress() : 0;
   const [glitch, setGlitch] = reactExports.useState(false);
-  const start2 = () => {
+  const funRatio = reactExports.useMemo(() => {
+    const raw = Math.max(0, Math.min(1, (progress2 - 0.2) / 0.6));
+    return Math.round(raw * 100);
+  }, [progress2]);
+  const heroRef = reactExports.useRef(null);
+  const onStart = () => {
+    safeBurst(heroRef.current, { count: 32, reverse: false });
     setGlitch(true);
-    setTimeout(() => setGlitch(false), 800);
+    setTimeout(() => setGlitch(false), 1500);
   };
-  const sep = data["September"];
-  const oct = data["October"];
-  reactExports.useMemo(() => splitCounts(sep), []);
-  const octCounts = reactExports.useMemo(() => splitCounts(oct), []);
-  const comparison = reactExports.useMemo(() => {
-    const keys = Object.keys(sep).filter((k2) => k2 !== "Avg Line Items per MIP form");
-    return keys.map((k2) => ({ metric: k2, September: sep[k2], October: oct[k2], delta: oct[k2] - sep[k2] }));
-  }, []);
-  const funRatio = Math.min(Math.max((progress2 - 0.2) / 0.6, 0), 1);
-  const bigDelta = (name, delta) => {
-    const n = Math.abs(delta);
-    return name === "New Teams" && n >= 30 || name === "Late Requests" && n >= 5 || name === "Rejected" && n >= 3;
-  };
-  const triggerGlitch = () => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    setGlitch(true);
-    setTimeout(() => setGlitch(false), 240);
-  };
-  const refRejected = reactExports.useRef(null);
-  const refLate = reactExports.useRef(null);
-  const refNew = reactExports.useRef(null);
-  const onSectionVisible = (name, delta, ref2) => {
-    if (bigDelta(name, delta)) {
-      triggerGlitch();
-      if (ref2?.current) {
-        if (!SAFE_MODE) safeTry(() => safeBurst(ref2?.current, { count: 28, reverse: false }), "confetti");
-      }
-    }
-  };
-  return (
-    //<ErrorBoundary>
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "vhs", children: [
-      !SAFE_MODE && safeTry(() => /* @__PURE__ */ jsxRuntimeExports.jsx(Ambient, {}), "Ambient"),
-      !SAFE_MODE && safeTry(() => /* @__PURE__ */ jsxRuntimeExports.jsx(GlitchLayer, { active: glitch }), "GlitchLayer"),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "section", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "container", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "card", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "badge", children: "MIPs Journey" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "h1", children: "September → October" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "p", children: "We start buttoned-up. We detour through neon. We end with a handshake and a compliance-friendly smile." }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: "1rem", marginTop: "1rem" }, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("a", { className: "button", href: "#recap", onClick: start2, children: "Start the Tape ▷" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "caption", children: [
-              "Theme morph: ",
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("strong", { children: [
-                Math.round(funRatio * 100),
-                "%"
-              ] }),
-              " fun"
-            ] })
+  const sep = data?.["September"] ?? {};
+  const oct = data?.["October"] ?? {};
+  const sepCounts = reactExports.useMemo(() => splitCounts(sep), [sep]);
+  const octCounts = reactExports.useMemo(() => splitCounts(oct), [oct]);
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "vhs", ref: heroRef, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.Suspense, { fallback: null, children: /* @__PURE__ */ jsxRuntimeExports.jsx(GlitchLayer, { active: glitch }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Ambient, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("section", { className: "section", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "container", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "card", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "badge", children: "MIPs Journey" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "h1", children: "September → October" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "p", children: "We start buttoned-up. We detour through neon. We end with a handshake and a compliance-friendly smile." }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", gap: "1rem", marginTop: "1rem" }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("a", { className: "button", href: "#recap", onClick: onStart, children: "Start the Tape ▷" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "caption", children: [
+          "Theme morph: ",
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("strong", { children: [
+            funRatio,
+            "% fun"
           ] })
-        ] }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "abhishek", x: 24, y: 24, delay: 0.2 }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "jesus", x: W.innerWidth - 140, y: 40, delay: 0.35 })
-      ] }),
-      safeTry(() => /* @__PURE__ */ jsxRuntimeExports.jsx(Leaderboard, {}), "Leaderboard"),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("section", { id: "recap", className: "section", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-        motion.div,
-        {
-          className: "container",
-          initial: { opacity: 0, y: 30 },
-          whileInView: { opacity: 1, y: 0 },
-          viewport: { once: true },
-          transition: { duration: 0.6 },
-          children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "card", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "badge", children: "Recap" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "h2", children: "September Numbers" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "p", children: "A clean close to the quarter — good completion rate, a few spikes in cycle time, and a quiet sigh of relief echoing through the halls." }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              Bars,
-              {
-                data: [
-                  { label: "Completed", value: 12 },
-                  { label: "Pending", value: 3 },
-                  { label: "Blocked", value: 1 }
-                ]
-              }
-            )
-          ] })
-        }
-      ) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("section", { id: "leaderboard", className: "section", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-        motion.div,
-        {
-          className: "container",
-          initial: { opacity: 0, y: 30 },
-          whileInView: { opacity: 1, y: 0 },
-          viewport: { once: true },
-          transition: { duration: 0.6, delay: 0.15 },
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx(Leaderboard, {})
-        }
-      ) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "section", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "container", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "card", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "h2", children: "October Recap" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-12", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Bars, { data: octCounts.list.map((d) => ({ metric: d.metric, October: d.value, September: 0 })), keys: ["October"] }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "col-6", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "badge", children: "Total MIP forms" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { fontSize: "3rem", fontWeight: 800, color: "var(--accent)" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Counter, { to: oct["Total MIP forms"] }) }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "p", children: [
-                "Line items: ",
-                /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: oct["Total Line Items"] }),
-                " • Avg per form: ",
-                /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: oct["Avg Line Items per MIP form"].toFixed(2) })
-              ] })
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "p", children: [
-              "New Teams: ",
-              /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: oct["New Teams"] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
-              "Rejected: ",
-              /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: oct["Rejected"] }),
-              " • Late Requests: ",
-              /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: oct["Late Requests"] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
-              "Dissolves: ",
-              /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: oct["Dissolves"] })
-            ] }) })
-          ] })
-        ] }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "saily", x: 260, y: 30, delay: 0.45 })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "section", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "container", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "card", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "h2", children: "Month over Month" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "p", children: "Green is up where you want it. Red is a learning opportunity we pretend we asked for." }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-12", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Bars, { data: comparison.map((d) => ({ metric: d.metric, September: d.September, October: d.October })), keys: ["September", "October"] }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-12", children: /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { children: comparison.map((d) => {
-              const color2 = d.delta >= 0 ? "var(--success)" : "var(--danger)";
-              return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                "li",
-                {
-                  className: "p",
-                  onMouseEnter: () => onSectionVisible(d.metric, d.delta, d.metric === "Rejected" ? refRejected : d.metric === "Late Requests" ? refLate : d.metric === "New Teams" ? refNew : null),
-                  children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs("strong", { children: [
-                      d.metric,
-                      ":"
-                    ] }),
-                    " ",
-                    d.September,
-                    " → ",
-                    d.October,
-                    " (",
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { color: color2 }, children: [
-                      d.delta >= 0 ? "+" : "",
-                      d.delta
-                    ] }),
-                    ")"
-                  ]
-                },
-                d.metric
-              );
-            }) }) })
-          ] })
-        ] }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "niki", x: W.innerWidth * 0.75, y: -10, delay: 0.3 })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "section", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "container", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "card", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "h2", children: "What’s Next" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "p", children: "Fewer forms, chunkier payloads. Keep the good drops: Late Requests and Rejected. Tame Dissolves. Nurture New Teams intake. We got this, with coffee." }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "p", children: /* @__PURE__ */ jsxRuntimeExports.jsx("em", { children: "Finalizing this communication requires your acceptance of the implied joy contained herein." }) })
-        ] }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "luis", x: 60, y: 20, delay: 0.25 })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "section", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "container", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "card", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "badge", children: "Executive Sign-Off" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "h2", children: "Thank you for your continued partnership" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "p", children: "Performance indicators will be monitored. Synergies will be leveraged. The tape stops now." })
-        ] }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "jerome", x: W.innerWidth - 160, y: -10, delay: 0.2 })
+        ] })
       ] })
-    ] })
-  );
+    ] }) }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "section", "aria-hidden": "true", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "abhishek", x: 24, y: 24, delay: 0.2 }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "jesus", x: window.innerWidth - 140, y: 40, delay: 0.35 }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "thai", x: 120, y: 280, delay: 0.45 }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "saily", x: window.innerWidth - 220, y: 260, delay: 0.55 }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "niki", x: 220, y: 480, delay: 0.65 }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "luis", x: window.innerWidth - 180, y: 520, delay: 0.75 }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(P, { id: "jerome", x: 60, y: 560, delay: 0.85 })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("section", { className: "section", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Leaderboard,
+      {
+        september: sepCounts.list,
+        october: octCounts.list
+      }
+    ) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("section", { className: "section", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "container", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Bars, { progress: progress2 }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginTop: "1rem" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Counter, { value: funRatio, label: "Fun Morph" }) })
+    ] }) })
+  ] });
 }
 class ErrorBoundary2 extends React.Component {
   constructor(props) {
@@ -53803,4 +53748,8 @@ class ErrorBoundary2 extends React.Component {
   }
 }
 ReactDOM.createRoot(document.getElementById("root")).render(/* @__PURE__ */ jsxRuntimeExports.jsx(React.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(ErrorBoundary2, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(App, {}) }) }));
-//# sourceMappingURL=index-Rm8m4zkT.js.map
+export {
+  jsxRuntimeExports as j,
+  reactExports as r
+};
+//# sourceMappingURL=index-CuL4zLag.js.map
